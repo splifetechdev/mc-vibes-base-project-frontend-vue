@@ -106,7 +106,6 @@ export default {
      async loadCompanyMaster() {
       const result = await api.getCompanyMaster(localStorage.getItem(server.COMPANYID));
       this.company = result.data;
-      console.log(this.company)
     },
   },
 };
