@@ -2,13 +2,13 @@
   <div>
     <!--  <v-app-bar app clipped-left color="#88BDBC" dense class="colortextheader"> -->
     <v-app-bar app color="#ffffff" dense class="colortextheader" height="50px">
-      <!-- <v-app-bar-nav-icon
+      <v-app-bar-nav-icon
         color="#1F51FF"
         @click="$store.state.navMenu = !$store.state.navMenu"
-      ></v-app-bar-nav-icon> -->
+      ></v-app-bar-nav-icon>
 
       <v-toolbar-title class="colortextheader"
-        >{{ title }} V{{ version }}</v-toolbar-title
+        >{{ title }} V{{ version }} {{ company[0].name_th || "" }}</v-toolbar-title
       >
 
       <v-spacer></v-spacer>
@@ -65,10 +65,14 @@
 </template>
 
 <script>
+import api from "@/services/api";
+import { server } from "@/services/constants";
+
 export default {
   name: "Header",
   data() {
     return {
+      company: [],
       user: {
         initials: this.$store.getters["username"].split(" ")[0].substring(0, 1)
           ? this.$store.getters["username"].split(" ")[0].substring(0, 1)
@@ -87,7 +91,9 @@ export default {
       return process.env.VUE_APP_TITLE;
     },
   },
-  mounted() {},
+   async mounted() {
+   await this.loadCompanyMaster();
+  },
   methods: {
     onClickLogOff() {
       this.$store.state.navMenu = false;
@@ -96,6 +102,11 @@ export default {
     resetPassword() {
       // alert("Reset Password");
       this.$router.push("/reset-password");
+    },
+     async loadCompanyMaster() {
+      const result = await api.getCompanyMaster(localStorage.getItem(server.COMPANYID));
+      this.company = result.data;
+      console.log(this.company)
     },
   },
 };

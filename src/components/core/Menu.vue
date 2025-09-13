@@ -1,7 +1,8 @@
 <template>
   <nav>
     <!-- <v-navigation-drawer clipped app permanent dark color="#DFDFDF">  #2a4bc1 -->
-    <v-navigation-drawer app permanent dark color="#ffffff" width="70px">
+      <!-- width="70px" -->
+    <v-navigation-drawer app permanent dark color="#ffffff" >
       <!-- <v-row class="ma-5" align="center" justify="center" >
         <v-col>  -->
       <router-link to="/" exact>
@@ -41,42 +42,42 @@
             bottom
             :offset-x="!item.route"
           >
-            <template v-slot:activator="{ on, attrs }">
+           <template v-slot:activator="{ on, attrs }">
               <v-list-item
-                :style="{
-                  justifyContent: 'center',
-                }"
                 v-on="on"
                 v-bind="attrs"
                 @click="onClickMenuItem(item)"
               >
-                <v-tooltip right color="#2a4bc1">
-                  <template v-slot:activator="{ on }">
-                    <!-- <v-list-item-icon > -->
-                    <v-icon v-text="item.action" v-on="on"></v-icon>
-                    <!-- </v-list-item-icon> -->
+                <v-list-item-icon>
+                  <v-icon v-text="item.action"></v-icon>
+                  <v-badge
+                    v-if="
+                      item.title == 'Approval' &&
+                        $store.state.alertapprovalmenu != 0
+                    "
+                    color="red"
+                    :content="$store.state.alertapprovalmenu.toString()"
+                  >
+                  </v-badge>
 
-                    <!-- <v-list-item-content> -->
-                    <!-- ชื่อเมนู -->
-                    <!-- <v-list-item-title v-text="item.title"></v-list-item-title> -->
-                    <!-- </v-list-item-content> -->
-                    <v-badge
-                      v-if="
-                        item.title == 'Approval' &&
-                          $store.state.alertapprovalmenu != 0
-                      "
-                      color="red"
-                      :content="$store.state.alertapprovalmenu.toString()"
-                      class="badgeapprover"
-                    >
-                    </v-badge>
-                  </template>
-                  <span>{{ item.title }}</span>
-                </v-tooltip>
-                <!-- <v-list-item-icon v-if="!item.route"> -->
-                <!-- ไอคอนขวา แสดงว่ามีเมนูย่อย -->
-                <!-- <v-icon>mdi-chevron-right</v-icon> -->
-                <!-- </v-list-item-icon> -->
+                  <v-badge
+                    v-if="
+                      item.title == 'Approval Template' &&
+                        $store.state.alertapprovaltemplatemenu != 0
+                    "
+                    color="red"
+                    :content="$store.state.alertapprovaltemplatemenu.toString()"
+                  >
+                  </v-badge>
+                </v-list-item-icon>
+
+                <v-list-item-content>
+                  <v-list-item-title v-text="item.title"></v-list-item-title>
+                </v-list-item-content>
+
+                <v-list-item-icon v-if="!item.route">
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-list-item-icon>
               </v-list-item>
               <!-- <v-divider></v-divider> -->
             </template>
@@ -1772,7 +1773,7 @@ export default {
 <style scoped>
 .theme--dark.v-list-item:not(.v-list-item--active):not(.v-list-item--disabled):not(.v-list-item__icon) {
   color: #254e58 !important;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .v-icon {
