@@ -255,14 +255,14 @@
                 ></v-text-field>
               </v-col>
 
-              <v-col cols="12" sm="2" md="2" class="pl-2">
+              <!-- <v-col cols="12" sm="2" md="2" class="pl-2">
                 <v-text-field
                   v-model="itemadd.qty_kg"
                   label="QTY KG"
                   outlined
                   dense
                 ></v-text-field>
-              </v-col>
+              </v-col> -->
 
               <v-col cols="12" sm="2" md="2" class="pl-2">
                 <v-text-field
