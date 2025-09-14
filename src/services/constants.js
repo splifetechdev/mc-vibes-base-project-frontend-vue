@@ -8,9 +8,9 @@ export const UPLOAD_PHOTO_FAIL_MESSAGE =
 export const NOT_CONNECT_NETWORK = "NOT_CONNECT_NETWORK";
 
 // Local Server
-export const apiUrl = "http://localhost:9771";
-export const imageUrl = "http://localhost:9771/image";
-export const companyimagemasterTMUrl = "http://localhost:9771/companyimage";
+// export const apiUrl = "http://localhost:9771";
+// export const imageUrl = "http://localhost:9771/image";
+// export const companyimagemasterTMUrl = "http://localhost:9771/companyimage";
 
 // 192.168.1.6 Server
 // export const apiUrl = "http://192.168.1.6:8081/api_mc_vibe_dev";
@@ -19,10 +19,10 @@ export const companyimagemasterTMUrl = "http://localhost:9771/companyimage";
 //   "http://192.168.1.6:8081/api_mc_vibe_dev/companyimage";
 
 // Dev Server
-// export const apiUrl = "https://api.m-vibe.com/api_mvibe_dev";
-// export const imageUrl = "https://api.m-vibe.com/api_mvibe_dev/image";
-// export const companyimagemasterTMUrl =
-//   "https://api.m-vibe.com/api_mc_vibe_dev/compantimage";
+export const apiUrl = "https://api.m-vibe.com/api_mvibe_base_dev";
+export const imageUrl = "https://api.m-vibe.com/api_mvibe_base_dev/image";
+export const companyimagemasterTMUrl =
+  "https://api.m-vibe.com/api_mc_vibe_dev/compantimage";
 
 export const udgroup = {
   WORK_CENTER: `WorkCenter`,
