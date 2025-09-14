@@ -155,6 +155,13 @@
             </v-btn>
           </v-toolbar>
         </template>
+      <template v-slot:item.machine_id="{ item }">
+            {{ (machines.find(m => m.id === item.mch_id) || {}).machine_id }}
+        </template>
+
+         <template v-slot:item.machine_name="{ item }">
+            {{ (machines.find(m => m.id === item.mch_id) || {}).name }}
+        </template>
         <template v-slot:item.status="{ item }">
           <v-chip :color="getStatusColor(item)">
             {{ item.status }}
@@ -247,6 +254,8 @@ export default {
     headers: [
       { text: "Doc Group", value: "documentGroup" },
       { text: "Doc No", value: "documentNo" },
+      { text: "Machine ID", value: "machine_id" },
+      { text: "Machine Name", value: "machine_name" },
       { text: "Doc Date", value: "documentDate" },
       { text: "Create Date", value: "createdAt" },
       { text: "Status", value: "status" },

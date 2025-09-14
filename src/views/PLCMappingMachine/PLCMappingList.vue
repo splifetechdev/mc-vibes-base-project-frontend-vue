@@ -55,9 +55,9 @@
             </v-btn> -->
           </v-toolbar>
         </template>
-        <template v-slot:[`item.tbl_mch.machine_id`]="{ item }">
+        <!-- <template v-slot:[`item.tbl_mch.machine_id`]="{ item }">
          {{item.tbl_mch.machine_id}}:{{item.tbl_mch.name}}
-        </template>
+        </template> -->
         <template v-slot:[`item.actions`]="{ item }">
           <v-icon
           small
@@ -209,6 +209,7 @@ export default {
         value: "plc_id",
       },
       { text: "Machine ID", value: "tbl_mch.machine_id" },
+      { text: "Machine Name", value: "tbl_mch.name" },
       { text: "Actions", value: "actions", sortable: false },
     ],
     repalceId: 0,
