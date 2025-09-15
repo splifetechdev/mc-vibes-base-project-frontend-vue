@@ -6,7 +6,7 @@
     <v-navigation-drawer app permanent dark color="#ffffff" :width="drawerWidth" :mini-variant="!$store.state.navMenu">
       <!-- <v-row class="ma-5" align="center" justify="center" >
         <v-col>  -->
-      <router-link to="/" exact>
+      <router-link to="/dashboard" exact>
         <div
           :style="{
             backgroundColor: '#ffffff',
