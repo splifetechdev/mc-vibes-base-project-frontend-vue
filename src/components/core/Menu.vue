@@ -72,7 +72,7 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                  <v-list-item-title v-text="item.title"></v-list-item-title>
+                  <v-list-item-title class="ma-0" v-text="item.title"></v-list-item-title>
                 </v-list-item-content>
 
                 <v-list-item-icon v-if="!item.route">
@@ -1782,6 +1782,10 @@ export default {
 
 .v-list-item__icon {
   color: white;
+}
+
+.v-application--is-ltr .v-list-item__action:first-child, .v-application--is-ltr .v-list-item__icon:first-child {
+    margin-right:10px;
 }
 
 .bg-active {
