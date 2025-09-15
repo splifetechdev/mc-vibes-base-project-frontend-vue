@@ -2,7 +2,8 @@
   <nav>
     <!-- <v-navigation-drawer clipped app permanent dark color="#DFDFDF">  #2a4bc1 -->
       <!-- width="70px" -->
-    <v-navigation-drawer app permanent dark color="#ffffff" >
+       <!--  v-bind="{ width: $store.state.navMenu ? '70px' : undefined }"-->
+    <v-navigation-drawer app permanent dark color="#ffffff" :width="drawerWidth" :mini-variant="!$store.state.navMenu">
       <!-- <v-row class="ma-5" align="center" justify="center" >
         <v-col>  -->
       <router-link to="/" exact>
@@ -44,12 +45,15 @@
           >
            <template v-slot:activator="{ on, attrs }">
               <v-list-item
+              v-if="drawerWidthnavMenu"
                 v-on="on"
                 v-bind="attrs"
                 @click="onClickMenuItem(item)"
               >
                 <v-list-item-icon>
-                  <v-icon v-text="item.action"></v-icon>
+                   <v-tooltip right color="#2a4bc1">
+                  <template v-slot:activator="{ on }">
+                     <v-icon v-text="item.action" v-on="on"></v-icon>
                   <v-badge
                     v-if="
                       item.title == 'Approval' &&
@@ -59,16 +63,10 @@
                     :content="$store.state.alertapprovalmenu.toString()"
                   >
                   </v-badge>
+</template>
+                   <span>{{ item.title }}</span>
+                </v-tooltip>
 
-                  <v-badge
-                    v-if="
-                      item.title == 'Approval Template' &&
-                        $store.state.alertapprovaltemplatemenu != 0
-                    "
-                    color="red"
-                    :content="$store.state.alertapprovaltemplatemenu.toString()"
-                  >
-                  </v-badge>
                 </v-list-item-icon>
 
                 <v-list-item-content>
@@ -79,8 +77,38 @@
                   <v-icon>mdi-chevron-right</v-icon>
                 </v-list-item-icon>
               </v-list-item>
-              <!-- <v-divider></v-divider> -->
-            </template>
+              
+         
+
+          
+              <v-list-item
+              v-if="!drawerWidthnavMenu"
+                :style="{
+                  justifyContent: 'center',
+                }"
+                v-on="on"
+                v-bind="attrs"
+                @click="onClickMenuItem(item)"
+              >
+                <v-tooltip right color="#2a4bc1">
+                  <template v-slot:activator="{ on }">
+                    <v-icon v-text="item.action" v-on="on"></v-icon>
+                    <v-badge
+                      v-if="
+                        item.title == 'Approval' &&
+                          $store.state.alertapprovalmenu != 0
+                      "
+                      color="red"
+                      :content="$store.state.alertapprovalmenu.toString()"
+                      class="badgeapprover"
+                    >
+                    </v-badge>
+                  </template>
+                   <span>{{ item.title }}</span>
+                </v-tooltip>
+              </v-list-item>
+ </template>
+                
 
             <v-list v-if="!item.route">
               <v-list-item-content
@@ -1767,6 +1795,19 @@ export default {
       // alert(this.selectedMenu);
     },
   },
+  computed: {
+    drawerWidthnavMenu (){
+    return this.$store.state.isLogged;
+    },
+    drawerWidth () {
+      // ถ้า login แล้ว → ไม่ต้องใส่ width (ใช้ default ของ Vuetify)
+      if (this.$store.state.isLogged) {
+        return undefined
+      }
+      // ถ้า toggle เปิด → กำหนด 70px, ถ้าปิด → null (ไม่ใส่ width)
+      return '70px';
+    }
+  }
 };
 </script>
 

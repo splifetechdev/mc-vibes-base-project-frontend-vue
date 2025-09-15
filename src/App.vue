@@ -1,7 +1,8 @@
 <template>
   <v-app>
     <Header v-if="$store.state.isLogged" />
-    <Menu v-if="$store.state.navMenu" />
+       <!-- v-if="$store.state.navMenu" -->
+    <Menu   v-if="$store.state.isLogged"/>
     <Content />
   </v-app>
 </template>
