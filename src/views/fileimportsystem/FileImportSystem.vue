@@ -20,7 +20,12 @@
         />
                  
             </v-col>
-              <v-col cols="12" xs="12" sm="8" md="6">{{ this.fileNameemployee || 'No file chosen' }}</v-col>
+              <v-col cols="12" xs="12" sm="8" md="3">{{ this.fileNameemployee || 'No file chosen' }}</v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
+                         <v-btn color="green" rounded  class="white--text" @click="loadTemplete('employeeimport.xlsx')">
+              <span>Download Template</span>
+            </v-btn>
+               </v-col>
             <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
               <v-btn :disabled="fileNameemployee == ''" color="#0730e9" @click="onclickImportExcel(`employee`)" class="white--text">Upload</v-btn>
             </v-col>
@@ -44,7 +49,12 @@
         />
                  
             </v-col>
-              <v-col cols="12" xs="12" sm="8" md="6">{{ this.fileNameworker || 'No file chosen' }}</v-col>
+              <v-col cols="12" xs="12" sm="8" md="3">{{ this.fileNameworker || 'No file chosen' }}</v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
+                         <v-btn color="green" rounded  class="white--text" @click="loadTemplete('workerimport.xlsx')">
+              <span>Download Template</span>
+            </v-btn>
+               </v-col>
             <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
               <v-btn :disabled="fileNameworker == ''" color="#0730e9" @click="onclickImportExcel(`worker`)" class="white--text">Upload</v-btn>
             </v-col>
@@ -68,7 +78,12 @@
         />
                  
             </v-col>
-              <v-col cols="12" xs="12" sm="8" md="6">{{ this.fileNameitemmaster || 'No file chosen' }}</v-col>
+              <v-col cols="12" xs="12" sm="8" md="3">{{ this.fileNameitemmaster || 'No file chosen' }}</v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
+                         <v-btn color="green" rounded  class="white--text" @click="loadTemplete('itemmasterimport.xlsx')">
+              <span>Download Template</span>
+            </v-btn>
+               </v-col>
             <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
               <v-btn :disabled="fileNameitemmaster == ''" color="#0730e9" @click="onclickImportExcel(`itemmaster`)" class="white--text">Upload</v-btn>
             </v-col>
@@ -92,7 +107,12 @@
         />
                  
             </v-col>
-              <v-col cols="12" xs="12" sm="8" md="6">{{ this.fileNameworkcentergroup || 'No file chosen' }}</v-col>
+              <v-col cols="12" xs="12" sm="8" md="3">{{ this.fileNameworkcentergroup || 'No file chosen' }}</v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
+                         <v-btn color="green" rounded  class="white--text" @click="loadTemplete('workcentergroupimport.xlsx')">
+              <span>Download Template</span>
+            </v-btn>
+               </v-col>
             <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
               <v-btn :disabled="fileNameworkcentergroup == ''" color="#0730e9" @click="onclickImportExcel(`workcentergroup`)" class="white--text">Upload</v-btn>
             </v-col>
@@ -116,7 +136,12 @@
         />
                  
             </v-col>
-              <v-col cols="12" xs="12" sm="8" md="6">{{ this.fileNameworkcenter || 'No file chosen' }}</v-col>
+              <v-col cols="12" xs="12" sm="8" md="3">{{ this.fileNameworkcenter || 'No file chosen' }}</v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
+                         <v-btn color="green" rounded  class="white--text" @click="loadTemplete('workcenterimport.xlsx')">
+              <span>Download Template</span>
+            </v-btn>
+               </v-col>
             <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
               <v-btn :disabled="fileNameworkcenter == ''" color="#0730e9" @click="onclickImportExcel(`workcenter`)" class="white--text">Upload</v-btn>
             </v-col>
@@ -140,7 +165,12 @@
         />
                  
             </v-col>
-              <v-col cols="12" xs="12" sm="8" md="6">{{ this.fileNamemachine || 'No file chosen' }}</v-col>
+              <v-col cols="12" xs="12" sm="8" md="3">{{ this.fileNamemachine || 'No file chosen' }}</v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
+                         <v-btn color="green" rounded  class="white--text" @click="loadTemplete('machineimport.xlsx')">
+              <span>Download Template</span>
+            </v-btn>
+               </v-col>
             <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
               <v-btn :disabled="fileNamemachine == ''" color="#0730e9" @click="onclickImportExcel(`machine`)" class="white--text">Upload</v-btn>
             </v-col>
@@ -165,7 +195,12 @@
         />
                  
             </v-col>
-              <v-col cols="12" xs="12" sm="8" md="6">{{ this.fileNamedefect_cause || 'No file chosen' }}</v-col>
+              <v-col cols="12" xs="12" sm="8" md="3">{{ this.fileNamedefect_cause || 'No file chosen' }}</v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
+                         <v-btn color="green" rounded  class="white--text" @click="loadTemplete('defect_causeimport.xlsx')">
+              <span>Download Template</span>
+            </v-btn>
+               </v-col>
             <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
               <v-btn :disabled="fileNamedefect_cause == ''" color="#0730e9" @click="onclickImportExcel(`defect_cause`)" class="white--text">Upload</v-btn>
             </v-col>
@@ -189,7 +224,12 @@
         />
                  
             </v-col>
-              <v-col cols="12" xs="12" sm="8" md="6">{{ this.fileNamedowntime_cause || 'No file chosen' }}</v-col>
+              <v-col cols="12" xs="12" sm="8" md="3">{{ this.fileNamedowntime_cause || 'No file chosen' }}</v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
+                         <v-btn color="green" rounded  class="white--text" @click="loadTemplete('downtime_causeimport.xlsx')">
+              <span>Download Template</span>
+            </v-btn>
+               </v-col>
             <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
               <v-btn :disabled="fileNamedowntime_cause == ''" color="#0730e9" @click="onclickImportExcel(`downtime_cause`)" class="white--text">Upload</v-btn>
             </v-col>
@@ -213,7 +253,12 @@
         />
                  
             </v-col>
-              <v-col cols="12" xs="12" sm="8" md="6">{{ this.fileNamerouting || 'No file chosen' }}</v-col>
+              <v-col cols="12" xs="12" sm="8" md="3">{{ this.fileNamerouting || 'No file chosen' }}</v-col>
+               <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
+                         <v-btn color="green" rounded  class="white--text" @click="loadTemplete('routingimport.xlsx')">
+              <span>Download Template</span>
+            </v-btn>
+               </v-col>
             <v-col cols="12" xs="12" sm="12" md="3" class="text-right">
               <v-btn :disabled="fileNamerouting == ''" color="#0730e9" @click="onclickImportExcel(`routing`)" class="white--text">Upload</v-btn>
             </v-col>
@@ -247,7 +292,7 @@ import readXlsxFile from "read-excel-file";
 import SuccessDialog from "@/components/cards/SuccessDialog";
 import SuccessDialogPush from "@/components/cards/SuccessDialogPush";
 import api from "@/services/api";
-import { server } from "@/services/constants";
+import { server,fileimportsystem } from "@/services/constants";
 import { imageUrl } from "@/services/constants";
 
 export default {
@@ -1201,6 +1246,27 @@ export default {
     },
     initialize() {
       this.$hideLoader();
+    },
+     async loadTemplete(xlsxname) {
+        try {
+          const delay = (delayInms) => {
+            return new Promise(resolve => setTimeout(resolve, delayInms));
+          };
+
+          const downloaddata = async () => {
+            this.$showLoader();
+            // await delay(2000);
+            window.open(`${fileimportsystem}/${xlsxname}`, `_blank`); // เปิดแท็บใหม่
+            this.$hideLoader();
+            // await delay(2000);
+            
+          };
+
+         await downloaddata();
+
+      } catch (error) {
+        console.error("An error occurred while loading template:", error);
+      }
     },
   },
   beforeCreate() {
