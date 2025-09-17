@@ -32,6 +32,14 @@
                       <v-text-field v-model="itemadd.work_center_group_name" label="Work Center Group Name" outlined
                         dense></v-text-field>
                     </v-col>
+                     <v-col cols="12" sm="12" md="4">
+                          <v-checkbox
+                        class="mt-1"
+                        color="blue"
+                        v-model="itemadd.outsource"
+                        :label="`จ้างผลิต`"
+                      ></v-checkbox>
+                    </v-col>
                   </v-row>
                 </div>
 
@@ -294,6 +302,8 @@ export default {
         this.itemadd.work_center_group_id = result.data[0].work_center_group_id;
         this.itemadd.work_center_group_name =
           result.data[0].work_center_group_name;
+           this.itemadd.outsource =
+          result.data[0].outsource;
 
         //itemdfine
         this.itemaddudefine.u_define_module_id = this.main_u_define_module_id;

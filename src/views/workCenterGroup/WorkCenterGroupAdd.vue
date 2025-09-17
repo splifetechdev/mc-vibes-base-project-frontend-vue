@@ -32,6 +32,14 @@
                       <v-text-field v-model="itemadd.work_center_group_name" label="Work Center Group Name" outlined
                         dense></v-text-field>
                     </v-col>
+                        <v-col cols="12" sm="12" md="4">
+                          <v-checkbox
+                        class="mt-1"
+                        color="blue"
+                        v-model="itemadd.outsource"
+                        :label="`จ้างผลิต`"
+                      ></v-checkbox>
+                    </v-col>
                   </v-row>
                 </div>
                 <div v-if="activetab === 3" class="tabcontent">
@@ -133,6 +141,7 @@ export default {
     itemadd: {
       work_center_group_id: null,
       work_center_group_name: null,
+      outsource:0,
       company_id: localStorage.getItem(server.COMPANYID),
       user_create: localStorage.getItem(server.USER_ID),
       created_at: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
