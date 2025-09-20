@@ -42,7 +42,7 @@ axios.interceptors.response.use(
       return response;
     }
     // console.log(JSON.stringify(error, undefined, 2));
-    router.push("/dashboard");
+    router.push("/");
     if (axios.isCancel(error)) {
       return Promise.reject(error);
     } else if (!error.response) {
