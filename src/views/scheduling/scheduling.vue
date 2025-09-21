@@ -169,7 +169,7 @@
 </div> -->
 <!-- v-if="seriesData.length > 0" -->
 <div :style="{ visibility: seriesData.length > 0 ? 'visible' : 'hidden' }"  id="chart-timeline" >
-        <apexchart type="rangeBar" width="100%"
+        <apexchart v-if="seriesData && seriesData.length > 0" type="rangeBar" width="100%"
       height="430" :options="chartOptionsData" :series="seriesData" @click="clickHandler"></apexchart>
       </div>
 
