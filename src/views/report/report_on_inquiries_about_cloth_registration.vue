@@ -166,7 +166,7 @@
                         scope="colgroup"
                         class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
-                        หน้าผ้า
+                        Batch
                       </th>
                       <th
                         scope="colgroup"
@@ -843,7 +843,7 @@ export default {
       { text: "รหัสสินค้า", value: "item_id" },
       { text: "ชื่่อสินค้า", value: "item_name" },
       { text: "MCH", value: "machine_id" },
-      { text: "หน้าผ้า", value: "line_of_mch" },
+      { text: "Batch", value: "line_of_mch" },
       { text: "จำนวนสั่ง", value: "order_qty" },
       { text: "ลูก", value: "ordcntbatch" },
       { text: "จำนวนรับ", value: "sumqty" },
@@ -1112,7 +1112,7 @@ export default {
       wb.Sheets.summary_activity_report.B1 = { t: "s", v: "รหัสสินค้า" };
       wb.Sheets.summary_activity_report.C1 = { t: "s", v: "ชื่่อสินค้า" };
       wb.Sheets.summary_activity_report.D1 = { t: "s", v: "MCH" };
-      wb.Sheets.summary_activity_report.E1 = { t: "s", v: "หน้าผ้า" };
+      wb.Sheets.summary_activity_report.E1 = { t: "s", v: "Batch" };
       wb.Sheets.summary_activity_report.F1 = { t: "s", v: "จำนวนสั่ง" };
       wb.Sheets.summary_activity_report.G1 = { t: "s", v: "ลูก" };
       wb.Sheets.summary_activity_report.H1 = { t: "s", v: "จำนวนรับ" };

@@ -760,7 +760,7 @@ export default {
     getWoRunningNo(timecards) {
       const woRunningNo = timecards.map(
         (tc) =>
-          `${tc.wo_running_no} หน้าผ้า ${tc.tbl_opn_ord?.tbl_ord.line_of_mch ||
+          `${tc.wo_running_no} Batch ${tc.tbl_opn_ord?.tbl_ord.line_of_mch ||
             0}`
       );
       return [...new Set(woRunningNo)].join(",");
