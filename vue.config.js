@@ -1,4 +1,9 @@
 module.exports = {
+  devServer: {
+    client: {
+      overlay: false  // ปิด error/warning overlay บนหน้า
+    }
+  },
   transpileDependencies: ["vuetify"],
   lintOnSave: false,
   publicPath: process.env.NODE_ENV === "production" ? "/" : "/",
