@@ -43,15 +43,15 @@
               <v-btn block dark type="submit" color="#1F51FF"> Login </v-btn>
             </v-row>
 
-             <v-row class="mt-n2">
+             <v-row class="mt-2">
               <!-- #254e58 -->
-               <v-col cols="12" md="6" class="justify-center align-center">
-              <v-btn style="color:#1F51FF;margin-top:18px;font-size: 12px;" text @click.prevent="forgotPassword()">Forgot Password
+               <v-col cols="6" md="6" class="justify-center align-center">
+              <v-btn style="color:#1F51FF;font-size: 12px;" text @click.prevent="forgotPassword()">Forgot Password
                 ?</v-btn>
                 </v-col>
-                 <v-col cols="12" md="6" class="justify-center align-center">
+                 <v-col cols="6" md="6" class="justify-center align-center">
                   <!-- @click.prevent="forgotPassword()" -->
-                     <v-btn style="color:#1F51FF;margin-top:18px;font-size: 12px;" text >Contact Support
+                     <v-btn style="color:#1F51FF;font-size: 12px;" text >Contact Support
                 ?</v-btn>
                  </v-col>
             </v-row>
