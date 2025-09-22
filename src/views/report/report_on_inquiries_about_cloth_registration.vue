@@ -1439,6 +1439,7 @@ export default {
       // console.log(this.setdatatoshow);
     },
     async exportToPDFPreview(orientation) {
+      this.$showLoader();
       this.showprint = "";
       let element;
       if (orientation == "landscape") {
@@ -1491,6 +1492,7 @@ export default {
       let blob = await fetch(abcd).then((r) => r.blob());
       this.showprint = "display:none;";
       this.showtemplatehtml = false;
+      this.$hideLoader();
       // return blob;
     },
     chkBtnPreviewStatus(item) {
