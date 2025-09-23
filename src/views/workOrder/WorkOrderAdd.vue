@@ -541,7 +541,10 @@ export default {
     },
     async loadDocRunning() {
       const res_get = await api.getAllByGroupPD();
-      this.doc_running_list = res_get.data;
+      if(res_get.data.length > 0){
+       this.doc_running_list = res_get.data.filter(item => item.status == "A");
+      }
+      // this.doc_running_list = res_get.data;
       // console.log(
       //   "this.doc_running_list",
       //   JSON.stringify(this.doc_running_list)
