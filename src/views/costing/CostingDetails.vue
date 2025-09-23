@@ -1301,6 +1301,7 @@ export default {
   },
   methods: {
     async exportToPDFPreview() {
+      this.$showLoader();
       this.showprint = "";
       const element = document.getElementById("mydivhtmltobase");
 
@@ -1347,6 +1348,7 @@ export default {
       let blob = await fetch(abcd).then((r) => r.blob());
       this.showprint = "display:none;";
       this.showtemplatehtml = false;
+      this.$hideLoader();
       // return blob;
     },
     async SearchData(doc_running_no) {
