@@ -1000,6 +1000,7 @@ export default {
           }
           return {
             ...log,
+            worker_id:Number(response.data.worker_ids),
             time_card_date: dayjs(log.time_card_date).format("YYYY-MM-DD"),
             opn_desc: ordDesc,
           };
