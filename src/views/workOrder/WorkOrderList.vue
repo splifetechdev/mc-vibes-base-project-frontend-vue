@@ -33,6 +33,17 @@
               </v-col>
 
               <v-col cols="12" sm="3" md="3">
+                <v-autocomplete
+                  v-model="doc_module_name_select"
+                  :items="doc_module_name_list"
+                  outlined
+                  dense
+                  label="Document Group"
+                  clearable
+                ></v-autocomplete>
+              </v-col>
+
+              <v-col cols="12" sm="3" md="3">
                 <v-btn color="#254E58" dark class="mb-2 mr-2" @click="onSearch">
                   <v-icon>mdi-magnify</v-icon>
                   Search
@@ -206,6 +217,8 @@ import { server } from "@/services/constants";
 import { imageUrl } from "@/services/constants";
 export default {
   data: () => ({
+    doc_module_name_list: [],
+    doc_module_name_select: "",
     select_doc_status: "",
     dialogchangeapproval: false,
     initial_data2: "",
@@ -646,6 +659,19 @@ export default {
       } else {
         qr = `and ord.status = '${this.select_doc_status}'`;
       }
+
+      if (
+        this.doc_module_name_select != null &&
+        this.doc_module_name_select != ""
+      ) {
+        if (qr == "") {
+          qr = `and ord.doc_module_name = '${this.doc_module_name_select}'`;
+        } else {
+          qr =
+            qr + ` and ord.doc_module_name = '${this.doc_module_name_select}'`;
+        }
+      }
+
       let data_query = {
         company_id: localStorage.getItem(server.COMPANYID),
         doc_status: qr,
@@ -675,6 +701,12 @@ export default {
         localStorage.getItem(server.COMPANYID)
       );
       // console.log("result:" + JSON.stringify(result.data));
+
+      //distinct doc_module_name
+      this.doc_module_name_list = [
+        ...new Set(result.data.map((item) => item.doc_module_name)),
+      ];
+
       this.desserts = result.data;
       //console.log(this.approver)
       // result.data.forEach((item) => {
