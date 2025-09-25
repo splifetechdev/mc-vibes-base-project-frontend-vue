@@ -51,7 +51,7 @@ import SuccessDialog from "@/components/cards/SuccessDialog";
 export default {
   mounted() {
     if (api.isLoggedIn()) {
-      this.$router.push("/dashboard");
+      this.$router.push("/oee-dashboard");
     }
 
     this.$hideLoader();

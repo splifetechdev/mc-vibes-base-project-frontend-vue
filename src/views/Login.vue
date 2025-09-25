@@ -68,7 +68,7 @@ import api from "@/services/api";
 export default {
   mounted() {
     if (api.isLoggedIn()) {
-      this.$router.push("/dashboard");
+      this.$router.push("/oee-dashboard");
     }
 
     this.$hideLoader();
@@ -85,7 +85,7 @@ export default {
   methods: {
     submit() {
       this.$showLoader();
-      // this.$router.push("/dashboard");
+      // this.$router.push("/oee-dashboard");
       this.$store
         .dispatch({
           type: "doLogin",
@@ -93,7 +93,7 @@ export default {
           password: this.account.password,
         })
         .then(() => {
-          this.$router.push("/dashboard");
+          this.$router.push("/oee-dashboard");
         });
     },
     forgotPassword() {

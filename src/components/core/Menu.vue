@@ -6,7 +6,7 @@
     <v-navigation-drawer app permanent dark color="#ffffff" :width="drawerWidth" :mini-variant="!$store.state.navMenu">
       <!-- <v-row class="ma-5" align="center" justify="center" >
         <v-col>  -->
-      <router-link to="/dashboard" exact>
+      <router-link to="/oee-dashboard" exact>
         <div
           :style="{
             backgroundColor: '#ffffff',
@@ -156,6 +156,25 @@ export default {
     );
     this.authorize = res_get.data;
     this.authorize.forEach((item) => {
+    // cut Dashboard  Menu
+      if (item.cmd_route == "dashboard" && item.smd_view == 0) {
+        this.subdashboarddashboard = true;
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+          if (itemmenu.title == "Dashboard") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "Dashboard") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
       // cut Scheduling  Menu
       if (item.cmd_route == "scheduling" && item.smd_view == 0) {
         this.subdashboardscheduling = true;
@@ -254,6 +273,7 @@ export default {
 
       // cut dashboard
       if (
+        this.subdashboarddashboard &&
         this.subdashboardmaindashboard &&
         this.subdashboardscheduling &&
         this.subdashboardavailabilitydashboard &&
@@ -1287,6 +1307,7 @@ export default {
       subproductionorderproductionstatusreport: false,
       subproductionorderrecalcosting: false,
       subdashboardmaindashboard: false,
+      subdashboarddashboard:false,
       subdashboardscheduling: false,
       subdashboardavailabilitydashboard: false,
       subdashboardproductivitydashboard:false,

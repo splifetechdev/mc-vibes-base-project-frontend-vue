@@ -76,7 +76,7 @@ import SuccessDialogPush from "@/components/cards/SuccessDialogPush";
 export default {
   mounted() {
     // if (api.isLoggedIn()) {
-    //   this.$router.push("/dashboard");
+    //   this.$router.push("/oee-dashboard");
     // }
 
     this.$hideLoader();
@@ -144,7 +144,7 @@ export default {
           "Success!!!",
           "Update data success",
           "text-h5 green--text text-center",
-          "/dashboard"
+          "/oee-dashboard"
         );
       } else {
         this.$store.state.global_dialog = true;

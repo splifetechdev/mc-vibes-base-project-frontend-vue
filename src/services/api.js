@@ -94,7 +94,7 @@ const login = async (values) => {
       // localStorage.setItem(server.COMPANY_NAME, result.data.company_name);
       // localStorage.setItem(server.DEPARTMENT_NAME, result.data.department_name);
       // localStorage.setItem(server.ACC_PLAN_STA, result.data.acc_plan);
-      router.push("/dashboard");
+      router.push("/oee-dashboard");
       return true;
     } else if (result.status == 406) {
       alert("Program Expired. Please Contact Provider");
