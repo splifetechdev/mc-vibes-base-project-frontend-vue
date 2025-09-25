@@ -156,6 +156,15 @@ export default {
     };
   },
   async mounted() {
+     const userId = localStorage.getItem(server.USER_ID);
+    if (userId && api.isLoggedIn()) {
+      this.$store.state.navMenu = true;
+      // this.$router.push("/");
+    } else {
+      localStorage.clear();
+      this.$store.state.isLogged = false;
+      this.$router.push("/login");
+    }
     this.loadWorkCenterGroup();
     this.loadWorkCenter();
     this.loadItemGroupList();
