@@ -49,18 +49,6 @@
                   Search
                 </v-btn>
               </v-col>
-
-              <v-col cols="12" sm="3" md="3">
-                <v-btn
-                  color="#254E58"
-                  dark
-                  class="mb-2 mr-2"
-                  @click="$router.push(`/production-order-add`)"
-                  :disabled="!authorize_add"
-                >
-                  Add Production Order
-                </v-btn>
-              </v-col>
             </v-row>
           </v-toolbar>
         </v-col>
@@ -79,6 +67,30 @@
           nextIcon: 'mdi-plus',
         }"
       >
+        <template v-slot:top>
+          <v-toolbar flat>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="#254E58"
+              dark
+              class="mb-2 mr-2"
+              @click="$router.push(`/production-order-add`)"
+              :disabled="!authorize_add"
+            >
+              Add Production Order
+            </v-btn>
+
+            <!-- <v-btn
+              color="#254E58"
+              dark
+              class="mb-2"
+              @click="onInsertORDEcons()"
+              :disabled="!authorize_add"
+            >
+              ADD ORD Econs
+            </v-btn> -->
+          </v-toolbar>
+        </template>
         <template v-slot:item.new_qty_remain="{ item }">
           <!-- <v-chip
           :color="item.status == 'A' ? 'success' : 'error'"
@@ -207,6 +219,28 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+      <v-dialog v-model="dialogconfirminsertordecons" max-width="500px">
+        <v-card>
+          <v-card-title class="text-h6"
+            >Are you sure you want to add ord econs
+            {{ edit_item_doc_no }} ?</v-card-title
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="blue darken-1"
+              text
+              @click="dialogconfirminsertordecons = false"
+              >Cancel</v-btn
+            >
+            <v-btn color="blue darken-1" text @click="ConfirmAddORDEcons"
+              >OK</v-btn
+            >
+            <v-spacer></v-spacer>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-card>
   </v-container>
 </template>
@@ -260,6 +294,7 @@ export default {
       backgroundColor: "rgb(255,255,255)",
     },
     status_list: ["Active", "Inactive"],
+    dialogconfirminsertordecons: false,
     dialog: false,
     dialogDelete: false,
     dialogEdit: false,
@@ -659,6 +694,10 @@ export default {
       } else {
         qr = `and ord.status = '${this.select_doc_status}'`;
       }
+      let data_query = {
+        company_id: localStorage.getItem(server.COMPANYID),
+        doc_status: qr,
+      };
 
       if (
         this.doc_module_name_select != null &&
@@ -671,11 +710,6 @@ export default {
             qr + ` and ord.doc_module_name = '${this.doc_module_name_select}'`;
         }
       }
-
-      let data_query = {
-        company_id: localStorage.getItem(server.COMPANYID),
-        doc_status: qr,
-      };
 
       const result = await api.getOrderByQuery(
         localStorage.getItem(server.COMPANYID),
@@ -700,13 +734,13 @@ export default {
       const result = await api.getOrderByCompanyID(
         localStorage.getItem(server.COMPANYID)
       );
-      // console.log("result:" + JSON.stringify(result.data));
 
       //distinct doc_module_name
       this.doc_module_name_list = [
         ...new Set(result.data.map((item) => item.doc_module_name)),
       ];
 
+      // console.log("result:" + JSON.stringify(result.data));
       this.desserts = result.data;
       //console.log(this.approver)
       // result.data.forEach((item) => {
@@ -764,7 +798,39 @@ export default {
       this.showsig1 = true;
       this.showbuttonsavesig1 = true;
     },
-
+    async onInsertORDEcons() {
+      this.dialogconfirminsertordecons = true;
+    },
+    async ConfirmAddORDEcons() {
+      this.$showLoader();
+      const result = await api.InsertdataFromEcons();
+      if (result.status == 200 || result.status == 201) {
+        this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Success!!!",
+          `Add data Success!!! <br/>
+          Data All ${result.data.total} Record <br/>
+          Data Success ${result.data.success} Record  <br/>
+          Data Fail ${result.data.fail} Record`,
+          "text-h5 green--text text-center"
+        );
+        this.$hideLoader();
+        this.dialogconfirminsertordecons = false;
+        return;
+      } else {
+        this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Failed!!!",
+          "Add data Failed",
+          "text-h5 red--text text-center"
+        );
+        this.$hideLoader();
+        this.dialogconfirminsertordecons = false;
+        return;
+      }
+    },
     initialize() {
       this.desserts = [
         {
