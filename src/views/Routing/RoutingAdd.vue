@@ -1501,9 +1501,23 @@ export default {
       this.modedata = "edit";
       this.ideditmode = item.id;
     },
-    deleteItem(item) {
+   async deleteItem(item) {
+     const result =  await api.V_check_rtg_usefordelete({rtg_id:item.id});
+     if(result.data.length > 0){
+      this.$store.state.global_dialog = true;
+          this.setupAlertDialog(
+            true,
+            "Failed!!!",
+            "ไม่สามารถลบรายการได้ เนื่องจากมีการใช้งาน Operation นี้ค้างอยู่ในระบบ",
+            "text-h5 red--text text-center"
+          );
+          return;
+
+     }else{
       this.delete_item_id = item.id;
       this.dialogDelete = true;
+     }
+    
     },
     closeDelete() {
       this.delete_item_id = 0;

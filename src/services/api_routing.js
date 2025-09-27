@@ -46,3 +46,7 @@ export const getRoutingItemhavestdCost = (item_master_id, company_id) => {
 export const import_Routing = (data) => {
   return httpClient.post(server.ROUTING + `/import_routing`,data);
 };
+
+export const V_check_rtg_usefordelete = (data) => {
+  return httpClient.post(server.ROUTING + `/get_v_check_rtg_use`,data);
+};
