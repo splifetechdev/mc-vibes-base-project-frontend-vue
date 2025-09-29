@@ -40,3 +40,7 @@ export const DeleteItemMaster= (id) => {
 export const import_Item_Master = (data) => {
   return httpClient.post(server.ITEMMASTER + `/import_item_master`,data);
 };
+
+export const InsertItemMasterdataFromEcons = (data) => {
+  return httpClient.post(server.ITEMMASTER + `/InsertItemMasterdataFromEcons`, data);
+};

@@ -44,6 +44,16 @@
                 Add Item Master
               </v-btn>
 
+               <v-btn
+                  color="#254E58"
+                  dark
+                  class="mb-2"
+                  @click="onInsertItemMasterEcons()"
+                  :disabled="!authorize_add"
+                >
+                  ADD Item Master Econs
+                </v-btn>
+
             <!-- <v-btn
               color="#254E58"
               dark
@@ -145,6 +155,24 @@
           </v-card-actions>
         </v-card>
       </v-dialog>
+
+          <v-dialog v-model="dialogconfirminsertordecons" max-width="500px">
+        <v-card>
+          <v-card-title class="text-h6"
+            >Are you sure you want to add item master econs?</v-card-title
+          >
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="dialogconfirminsertordecons=false"
+              >Cancel</v-btn
+            >
+            <v-btn color="blue darken-1" text @click="ConfirmAddItemMasterecons()"
+              >OK</v-btn
+            >
+            <v-spacer></v-spacer>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
   </v-card>
 </v-container>
 </template>
@@ -155,6 +183,7 @@ import { server } from "@/services/constants";
 import { imageUrl } from "@/services/constants";
 export default {
   data: () => ({
+    dialogconfirminsertordecons:false,
     dialogchangeapproval:false,
     initial_data2: "",
     initial_dataimage: "",
@@ -1133,6 +1162,40 @@ approver_active_show:[],
     },
    cancelchangeapproval(){
       this.dialogchangeapproval = false;
+    },
+    async onInsertItemMasterEcons() {
+      this.dialogconfirminsertordecons = true;
+
+    },
+    async ConfirmAddItemMasterecons() {
+        this.$showLoader();
+        const result = await api.InsertItemMasterdataFromEcons();
+        if(result.status == 200 || result.status == 201){
+           this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Success!!!",
+          `Add data Success!!! <br/>
+          Data All ${result.data.total} Record <br/>
+          Data Success ${result.data.success} Record  <br/>
+          Data Fail ${result.data.fail} Record`,
+          "text-h5 green--text text-center"
+        );
+         this.$hideLoader();
+         this.dialogconfirminsertordecons = false;
+        return;
+        }else{
+          this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Failed!!!",
+          "Add data Failed",
+          "text-h5 red--text text-center"
+        );
+          this.$hideLoader();
+        this.dialogconfirminsertordecons = false;
+        return;
+        }
     },
     setupAlertDialog(status, title, message, text_color) {
       this.title = title;
