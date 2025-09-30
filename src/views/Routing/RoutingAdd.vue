@@ -260,7 +260,7 @@
                         <h4 class="ml-n4">{{ showunitname }}</h4>
                       </v-col>
 
-                      <v-col cols="12" sm="12" md="3">
+                      <v-col cols="12" sm="12" md="2">
                         <v-text-field
                           type="number"
                           min="0"
@@ -268,9 +268,22 @@
                           label="PCS/HR"
                           outlined
                           dense
+                          @input="calculatepcs_hr(itemadd.pcs_hr)"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="12" md="1"> </v-col>
+
+                       <v-col cols="12" sm="12" md="2">
+                        <v-text-field
+                          type="number"
+                          min="0"
+                          v-model="itemadd.hr_pcs"
+                          label="HR/PCS"
+                          outlined
+                          dense
+                          @input="calculatehr_pcs(itemadd.hr_pcs)"
+                        ></v-text-field>
+                      </v-col>
+                      <!-- <v-col cols="12" sm="12" md="1"> </v-col> -->
                     </v-row>
 
                     <v-row class="mb-n10 mt-6">
@@ -363,7 +376,7 @@
                           type="number"
                           min="0"
                           v-model="itemadd.iot_um_conv"
-                          label="Convert pick to m. *"
+                          label="Convert Unit (Multiple) *"
                           outlined
                           dense
                         ></v-text-field>
@@ -620,6 +633,7 @@ export default {
       setup_timehr_per: "O",
       eoq: null,
       pcs_hr: null,
+      hr_pcs:null,
       qty_per: 1,
       qty_by: 1,
       scrap: null,
@@ -652,6 +666,7 @@ export default {
       setup_timehr_per: "O",
       eoq: null,
       pcs_hr: null,
+      hr_pcs:null,
       qty_per: 1,
       qty_by: 1,
       scrap: null,
@@ -761,7 +776,7 @@ export default {
       { text: "Batch", value: "batch" },
       { text: "OverLap Time", value: "over_lap_time" },
       { text: "OverLap Unit", value: "over_lap_unit" },
-      { text: "Convert pick to m.", value: "iot_um_conv" },
+      { text: "Convert Unit (Multiple)", value: "iot_um_conv" },
       { text: "action", value: "actions" },
     ],
     datarouting: [],
@@ -937,6 +952,7 @@ export default {
           this.itemadd.setup_timehr_per = "O";
           this.itemadd.eoq = null;
           this.itemadd.pcs_hr = null;
+          this.itemadd.hr_pcs = null;
           this.itemadd.qty_per = 1;
           this.itemadd.qty_by = 1;
           this.itemadd.scrap = null;
@@ -1129,6 +1145,17 @@ export default {
         return;
       }
 
+      if (this.itemadd.hr_pcs == null|| this.itemadd.hr_pcs == 0 || this.itemadd.hr_pcs == "") {
+        this.$store.state.global_dialog = true;
+        this.setupAlertDialog(
+          true,
+          "Failed!!!",
+          "Please enter HR/PCS",
+          "text-h5 red--text text-center"
+        );
+        return;
+      }
+
       if (
         this.itemadd.setup_timehr_per == "O" ||
         this.itemadd.setup_timehr_per == "Q"
@@ -1182,7 +1209,7 @@ export default {
         this.setupAlertDialog(
           true,
           "Failed!!!",
-         "Please enter Convert pick to m.",
+         "Please enter Convert Unit (Multiple)",
           "text-h5 red--text text-center"
         );
         return;
@@ -1223,6 +1250,7 @@ export default {
 
       this.itemadd.eoq = this.itemadd.eoq ? this.itemadd.eoq : null;
       this.itemadd.pcs_hr = this.itemadd.pcs_hr ? this.itemadd.pcs_hr : null;
+      this.itemadd.hr_pcs = this.itemadd.hr_pcs ? this.itemadd.hr_pcs : null;
       this.itemadd.scrap = this.itemadd.scrap ? this.itemadd.scrap : null;
       this.itemadd.over_lap_time = this.itemadd.over_lap_time
         ? this.itemadd.over_lap_time
@@ -1456,6 +1484,7 @@ export default {
       this.itemadd.setup_timehr_per = item.setup_timehr_per;
       this.itemadd.eoq = item.eoq;
       this.itemadd.pcs_hr = item.pcs_hr;
+      this.itemadd.hr_pcs = item.hr_pcs;
       this.itemadd.qty_per = item.qty_per;
       this.itemadd.qty_by = item.qty_by;
       this.itemadd.scrap = item.scrap;
@@ -1624,6 +1653,20 @@ export default {
       } catch (error) {
         // console.log("onFileSelected error:", error);
       }
+    },
+    async calculatepcs_hr(val){
+      const num = parseFloat(val);
+  if (isNaN(num) || num === 0) {
+    return 'Error: invalid number';
+  }
+    this.itemadd.hr_pcs = 1 / num;
+    },
+     async calculatehr_pcs(val){
+    const num = parseFloat(val);
+  if (isNaN(num) || num === 0) {
+    return 'Error: invalid number';
+  }
+    this.itemadd.pcs_hr = 1 / num;
     },
     getgroupnameitemmaster(item) {
       return `${item.item_id}`;
