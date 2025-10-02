@@ -502,7 +502,7 @@
                             <div
                               style="font-size: 20px; font-weight: bold; margin-left: 5px;"
                             >
-                              {{ detailQty[item.id] || "0.00" }}
+                              {{ Number(detailQty[item.id] || "0.00").toLocaleString() }}
                             </div>
                             <v-icon
                               color="green"
@@ -644,7 +644,7 @@
                                 >received qty</strong
                               >
                               <span style="font-size: 20px;">{{
-                                item.qty
+                                Number(item.qty).toLocaleString()
                               }}</span>
                             </div>
                           </v-col>

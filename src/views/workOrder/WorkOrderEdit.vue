@@ -563,6 +563,17 @@
 
       <div class="pa-2 div-iterator" v-if="doc_running">
         <v-data-table :headers="headers" :items="items" class="elevation-1">
+            <template v-slot:item.freal_qty_order_scrap_by_opn="{ item }">
+              <span class="text-right" style="display: block;">
+                {{ Number(item.freal_qty_order_scrap_by_opn).toLocaleString() }}
+              </span>
+            </template>
+            <template v-for="col in ['batch_count', 'fsetup_time', 'pcs_hr', 'ftime_process_by_opn']" v-slot:[`item.${col}`]="{ item }">
+              <span class="text-right" style="display: block;">
+                {{ item[col] }}
+              </span>
+            </template>
+
           <template v-slot:[`item.adjusts`]="{ item }">
             <v-menu
               left

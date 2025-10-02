@@ -1,25 +1,12 @@
 <template>
   <v-card class="ma-3">
-    <v-data-table
-      :headers="headers"
-      :items="desserts"
-      :search="search"
-      sort-by="fullname"
-      class="elevation-1"
-    >
+    <v-data-table :headers="headers" :items="desserts" :search="search" sort-by="fullname" class="elevation-1">
       <template v-slot:top>
         <v-toolbar flat>
           <v-toolbar-title>Receive From Production : </v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            outlined
-            dense
-            hide-details
-          ></v-text-field>
+          <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line outlined dense
+            hide-details></v-text-field>
 
           <v-spacer></v-spacer>
 
@@ -34,6 +21,17 @@
           </v-btn> -->
         </v-toolbar>
       </template>
+      <template v-for="col in ['order_qty', 'receive_qty', 'remain_qty']" v-slot:[`item.${col}`]="{ item }">
+        <span class="text-right" style="display: block;">
+          {{ Number(item[col]).toLocaleString() }}
+        </span>
+      </template>
+      <template v-for="coll in ['batch_count']" v-slot:[`item.${coll}`]="{ item }">
+              <span class="text-right" style="display: block;">
+                {{ item[coll] }}
+              </span>
+            </template>
+
       <template v-slot:[`item.actions`]="{ item }">
         <v-icon class="mr-2" @click="openeditItem(item)" v-if="authorize_edit">
           mdi-home-silo-outline
@@ -56,34 +54,18 @@
           <v-container>
             <v-row no-gutters>
               <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  v-model="itemadd.wh_id"
-                  label="Warehouse ID"
-                  outlined
-                ></v-text-field>
+                <v-text-field v-model="itemadd.wh_id" label="Warehouse ID" outlined></v-text-field>
               </v-col>
             </v-row>
             <v-row no-gutters>
               <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  v-model="itemadd.wh_name"
-                  label="Warehouse Desc"
-                  outlined
-                ></v-text-field>
+                <v-text-field v-model="itemadd.wh_name" label="Warehouse Desc" outlined></v-text-field>
               </v-col>
             </v-row>
             <v-row no-gutters>
               <v-col cols="12" sm="12" md="12">
-                <v-select
-                  v-validate="'required'"
-                  :items="statusall"
-                  label="Status"
-                  item-text="text"
-                  item-value="value"
-                  v-model="itemadd.wh_status"
-                  outlined
-                  required
-                ></v-select>
+                <v-select v-validate="'required'" :items="statusall" label="Status" item-text="text" item-value="value"
+                  v-model="itemadd.wh_status" outlined required></v-select>
               </v-col>
             </v-row>
           </v-container>
@@ -104,35 +86,18 @@
           <v-container>
             <v-row no-gutters>
               <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  v-model="itemedit.wh_id"
-                  label="Warehouse ID"
-                  outlined
-                  disabled
-                ></v-text-field>
+                <v-text-field v-model="itemedit.wh_id" label="Warehouse ID" outlined disabled></v-text-field>
               </v-col>
             </v-row>
             <v-row no-gutters>
               <v-col cols="12" sm="12" md="12">
-                <v-text-field
-                  v-model="itemedit.wh_name"
-                  label="Warehouse Name"
-                  outlined
-                ></v-text-field>
+                <v-text-field v-model="itemedit.wh_name" label="Warehouse Name" outlined></v-text-field>
               </v-col>
             </v-row>
             <v-row no-gutters>
               <v-col cols="12" sm="12" md="12">
-                <v-select
-                  v-validate="'required'"
-                  :items="statusall"
-                  label="Status"
-                  item-text="text"
-                  item-value="value"
-                  v-model="itemedit.wh_status"
-                  outlined
-                  required
-                ></v-select>
+                <v-select v-validate="'required'" :items="statusall" label="Status" item-text="text" item-value="value"
+                  v-model="itemedit.wh_status" outlined required></v-select>
               </v-col>
             </v-row>
           </v-container>
@@ -148,26 +113,17 @@
 
     <v-dialog v-model="dialogDelete" max-width="500px">
       <v-card>
-        <v-card-title class="text-h5"
-          >Are you sure you want to delete this item?</v-card-title
-        >
+        <v-card-title class="text-h5">Are you sure you want to delete this item?</v-card-title>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
-          <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-            >OK</v-btn
-          >
+          <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
           <v-spacer></v-spacer>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
-    <SuccessDialog
-      :status="dialogAdd"
-      :text_color="text_color"
-      :title="title"
-      :message="message"
-    />
+    <SuccessDialog :status="dialogAdd" :text_color="text_color" :title="title" :message="message" />
   </v-card>
 </template>
 <script>

@@ -9,38 +9,18 @@
 
             <v-row class="pt-6">
               <v-col cols="12" sm="3" md="3">
-                <v-text-field
-                  v-model="search"
-                  label="Search"
-                  append-icon="mdi-magnify"
-                  hide-details
-                  outlined
-                  dense
-                ></v-text-field>
+                <v-text-field v-model="search" label="Search" append-icon="mdi-magnify" hide-details outlined
+                  dense></v-text-field>
               </v-col>
 
               <v-col cols="12" sm="3" md="3">
-                <v-autocomplete
-                  v-model="select_doc_status"
-                  :items="doc_status"
-                  outlined
-                  dense
-                  label="Status"
-                  item-text="status_name"
-                  item-value="id"
-                  clearable
-                ></v-autocomplete>
+                <v-autocomplete v-model="select_doc_status" :items="doc_status" outlined dense label="Status"
+                  item-text="status_name" item-value="id" clearable></v-autocomplete>
               </v-col>
 
               <v-col cols="12" sm="3" md="3">
-                <v-autocomplete
-                  v-model="doc_module_name_select"
-                  :items="doc_module_name_list"
-                  outlined
-                  dense
-                  label="Document Group"
-                  clearable
-                ></v-autocomplete>
+                <v-autocomplete v-model="doc_module_name_select" :items="doc_module_name_list" outlined dense
+                  label="Document Group" clearable></v-autocomplete>
               </v-col>
 
               <v-col cols="12" sm="3" md="3">
@@ -53,30 +33,19 @@
           </v-toolbar>
         </v-col>
       </v-row>
-      <v-data-table
-        :headers="headers"
-        :items="desserts"
-        :search="search"
-        sort-by="fullname"
-        class="elevation-1"
+      <v-data-table :headers="headers" :items="desserts" :search="search" sort-by="fullname" class="elevation-1"
         :footer-props="{
           showFirstLastPage: true,
           firstIcon: 'mdi-arrow-collapse-left',
           lastIcon: 'mdi-arrow-collapse-right',
           prevIcon: 'mdi-minus',
           nextIcon: 'mdi-plus',
-        }"
-      >
+        }">
         <template v-slot:top>
           <v-toolbar flat>
             <v-spacer></v-spacer>
-            <v-btn
-              color="#254E58"
-              dark
-              class="mb-2 mr-2"
-              @click="$router.push(`/production-order-add`)"
-              :disabled="!authorize_add"
-            >
+            <v-btn color="#254E58" dark class="mb-2 mr-2" @click="$router.push(`/production-order-add`)"
+              :disabled="!authorize_add">
               Add Production Order
             </v-btn>
 
@@ -91,46 +60,42 @@
             </v-btn> -->
           </v-toolbar>
         </template>
+        <template v-for="col in ['order_qty', 'it_qty']" v-slot:[`item.${col}`]="{ item }">
+          <span class="text-right" style="display: block;">
+            {{ Number(item[col]).toLocaleString() }}
+          </span>
+        </template>
         <template v-slot:item.new_qty_remain="{ item }">
           <!-- <v-chip
           :color="item.status == 'A' ? 'success' : 'error'"
           dark
           >{{ item.status == 'A' ? 'Active' : 'Inactive' }}</v-chip
         > -->
-
-          {{ item.order_qty - item.it_qty }}
+          <span class="text-right" style="display: block;">
+            {{ (item.order_qty - item.it_qty).toLocaleString() }}
+          </span>
+        </template>
+        <template v-slot:item.it_batch="{ item }">
+          <span class="text-right" style="display: block;">
+            {{ item.it_batch }}
+          </span>
         </template>
 
         <template v-slot:[`item.actions`]="{ item }">
-          <v-icon
-            :disabled="!chkBtnPreviewStatus(item)"
-            class="ml-1"
-            :style="{
-              color: '#B37A4C',
-            }"
-            @click="onClickedEdit(item)"
-          >
+          <v-icon :disabled="!chkBtnPreviewStatus(item)" class="ml-1" :style="{
+            color: '#B37A4C',
+          }" @click="onClickedEdit(item)">
             mdi-folder-open
           </v-icon>
-          <v-icon
-            :disabled="!chkBtnEditStatus(item)"
-            class="ml-1"
-            :style="{
-              color: '#2196F3',
-            }"
-            @click="onClickedEdit(item)"
-          >
+          <v-icon :disabled="!chkBtnEditStatus(item)" class="ml-1" :style="{
+            color: '#2196F3',
+          }" @click="onClickedEdit(item)">
             mdi-pencil
           </v-icon>
 
-          <v-icon
-            class="ml-1"
-            :style="{
-              color: '#F44336',
-            }"
-            @click="deleteItem(item)"
-            v-if="chkBtnDelStatus(item)"
-          >
+          <v-icon class="ml-1" :style="{
+            color: '#F44336',
+          }" @click="deleteItem(item)" v-if="chkBtnDelStatus(item)">
             mdi-delete
           </v-icon>
         </template>
@@ -141,27 +106,16 @@
         </template>
       </v-data-table>
 
-      <SuccessDialog
-        :status="dialogAdd"
-        :text_color="text_color"
-        :title="title"
-        :message="message"
-      />
+      <SuccessDialog :status="dialogAdd" :text_color="text_color" :title="title" :message="message" />
 
       <v-dialog v-model="dialogDelete" max-width="500px">
         <v-card>
-          <v-card-title class="text-h6"
-            >Are you sure you want to delete this Work Order
-            {{ edit_item_doc_no }} ?</v-card-title
-          >
+          <v-card-title class="text-h6">Are you sure you want to delete this Work Order
+            {{ edit_item_doc_no }} ?</v-card-title>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="closeDelete"
-              >Cancel</v-btn
-            >
-            <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-              >OK</v-btn
-            >
+            <v-btn color="blue darken-1" text @click="closeDelete">Cancel</v-btn>
+            <v-btn color="blue darken-1" text @click="deleteItemConfirm">OK</v-btn>
             <v-spacer></v-spacer>
           </v-card-actions>
         </v-card>
@@ -179,30 +133,16 @@
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <!-- v-validate="'required'"  :rules="commonRules" -->
-                  <v-select
-                    :items="approver_all_show"
-                    label="Old Approval"
-                    item-text="name"
-                    item-value="id"
-                    v-model="itemchangeapproval.oldapproval"
-                    outlined
-                    required
-                  ></v-select>
+                  <v-select :items="approver_all_show" label="Old Approval" item-text="name" item-value="id"
+                    v-model="itemchangeapproval.oldapproval" outlined required></v-select>
                 </v-col>
               </v-row>
 
               <v-row>
                 <v-col cols="12" sm="12" md="12">
                   <!-- v-validate="'required'"  :rules="commonRules" -->
-                  <v-select
-                    :items="approver_active_show"
-                    label="New Approval"
-                    item-text="name"
-                    item-value="id"
-                    v-model="itemchangeapproval.newapproval"
-                    outlined
-                    required
-                  ></v-select>
+                  <v-select :items="approver_active_show" label="New Approval" item-text="name" item-value="id"
+                    v-model="itemchangeapproval.newapproval" outlined required></v-select>
                 </v-col>
               </v-row>
             </v-container>
@@ -210,33 +150,20 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue darken-1" text @click="cancelchangeapproval()"
-              >Cancel</v-btn
-            >
-            <v-btn color="blue darken-1" text @click="savechangeapproval()"
-              >Save</v-btn
-            >
+            <v-btn color="blue darken-1" text @click="cancelchangeapproval()">Cancel</v-btn>
+            <v-btn color="blue darken-1" text @click="savechangeapproval()">Save</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
       <v-dialog v-model="dialogconfirminsertordecons" max-width="500px">
         <v-card>
-          <v-card-title class="text-h6"
-            >Are you sure you want to add ord econs
-            {{ edit_item_doc_no }} ?</v-card-title
-          >
+          <v-card-title class="text-h6">Are you sure you want to add ord econs
+            {{ edit_item_doc_no }} ?</v-card-title>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="blue darken-1"
-              text
-              @click="dialogconfirminsertordecons = false"
-              >Cancel</v-btn
-            >
-            <v-btn color="blue darken-1" text @click="ConfirmAddORDEcons"
-              >OK</v-btn
-            >
+            <v-btn color="blue darken-1" text @click="dialogconfirminsertordecons = false">Cancel</v-btn>
+            <v-btn color="blue darken-1" text @click="ConfirmAddORDEcons">OK</v-btn>
             <v-spacer></v-spacer>
           </v-card-actions>
         </v-card>
@@ -425,6 +352,8 @@ export default {
     approver_active_show: [],
   }),
 
+
+
   computed: {
     formTitle() {
       return this.editedIndex === -1 ? "เพิ่มพนักงาน" : "แก้ไขข้อมูลพนักงาน";
@@ -460,6 +389,8 @@ export default {
       val || this.closeReplace();
     },
   },
+
+
 
   async created() {
     this.initialize();
