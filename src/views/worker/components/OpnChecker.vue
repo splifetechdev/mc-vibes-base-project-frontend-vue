@@ -13,13 +13,24 @@
       <v-row no-gutters>
         <v-col cols="12">
           <v-card style="padding: 5px;">
-            <h3 style="text-align: center; ">
+            <h3 style="text-align: center;">
               {{ getMachineName(machineId) }}
             </h3>
+
+            <v-text-field
+              v-model="searchTexts[machineId]"                        
+              label="Search"
+              append-icon="mdi-magnify"
+              hide-details
+              outlined
+              dense
+              clearable
+            ></v-text-field>
+
             <div style="max-height: 400px; min-height: 400px; overflow: auto;">
               <v-checkbox
                 v-model="selectedMachineOpn.planed[machineId]"
-                v-for="opn in machineOPNs[machineId]"
+                v-for="opn in getFilteredOPNs(machineId)"
                 :key="opn.id"
                 :label="opn.label"
                 :value="opn.id"
@@ -27,6 +38,10 @@
                 @change="onOpnChange(machineId, opn.id)"
               >
               </v-checkbox>
+              
+              <div v-if="getFilteredOPNs(machineId).length === 0" class="pa-4 text-center grey--text">
+                ไม่พบรายการที่ค้นหา
+              </div>
             </div>
 
             <v-autocomplete
@@ -57,11 +72,25 @@ export default {
     selectedMachines: Array,
     operations: Array,
     selectedOpnIds: Array,
-    operations: Array,
     selectedMachineOpn: Object,
     machineOpnRunning: Object,
   },
+  data() {
+    return {
+      searchTexts: {},
+    };
+  },
   watch: {
+    selectedMachines: {
+      handler(machines) {
+        machines.forEach(machineId => {
+          if (!this.searchTexts[machineId]) {
+            this.$set(this.searchTexts, machineId, '');
+          }
+        });
+      },
+      immediate: true
+    },
     machineOpnRunning: function(val) {
       Object.keys(val).forEach((mchId) => {
         if (val[mchId]) {
@@ -90,6 +119,20 @@ export default {
     },
   },
   methods: {
+    getFilteredOPNs(machineId) {
+      const searchText = this.searchTexts[machineId];
+      const opns = this.machineOPNs[machineId] || [];
+      
+      if (!searchText || searchText.trim() === '') {
+        return opns;
+      }
+      
+      const searchLower = searchText.toLowerCase();
+      return opns.filter(opn => 
+        opn.label.toLowerCase().includes(searchLower) ||
+        opn.id.toString().toLowerCase().includes(searchLower)
+      );
+    },
     checkOpn() {
       this.$emit("checkOpn", this.opn);
     },
