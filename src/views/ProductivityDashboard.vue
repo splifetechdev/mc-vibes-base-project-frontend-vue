@@ -274,9 +274,19 @@ export default {
         acc[2] += Number(cur.actual_pcs)
         return acc
       }, [0, 0, 0])
-      this.totalRunHours = Number(totalRunHours).toFixed(2)
-      this.totalStandardPcs = this.formatCurrencyWithoutSymbol(totalStandardPcs)
-      this.totalActualPcs = this.formatCurrencyWithoutSymbol(totalActualPcs)
+     this.totalRunHours = Number(totalRunHours).toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
+      this.totalStandardPcs = Number(totalStandardPcs).toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
+
+this.totalActualPcs = Number(totalActualPcs).toLocaleString(undefined, {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2
+});
       this.performance = (Math.round(((totalActualPcs / totalStandardPcs) * 100) * 100) / 100) || 0
     },
     async loadDowntime() {

@@ -27,8 +27,8 @@
             </v-menu>
           </v-col>
           <v-col cols="12" md="3">
-            <v-autocomplete class="mx-2" label="Work Center Group" v-model="selectedWorkCenterGroup" hide-details outlined
-              dense :items="workCenterGroups" item-text="label" item-value="id" clearable></v-autocomplete>
+            <v-autocomplete class="mx-2" label="Work Center Group" v-model="selectedWorkCenterGroup" hide-details
+              outlined dense :items="workCenterGroups" item-text="label" item-value="id" clearable></v-autocomplete>
           </v-col>
           <v-col cols="12" md="3">
             <v-autocomplete class="mx-2" label="Work Center" v-model="selectedWorkCenter" hide-details outlined dense
@@ -51,26 +51,27 @@
       <v-row>
         <v-col cols="12" md="12" justify-self='center'>
           <SummaryQuality :totalQTY="summaryData.qty" :totalGoodProduct="summaryData.good_product_count"
-            :totalDefect="summaryData.defect_count" :defectRate="summaryData.defect_rate" :qualityRate="summaryData.quality_rate" />
+            :totalDefect="summaryData.defect_count" :defectRate="summaryData.defect_rate"
+            :qualityRate="summaryData.quality_rate" />
         </v-col>
       </v-row>
       <v-row class="fill-height">
         <v-col cols="12" md="6" class="fill-height">
-          <DailyChartWithTarget :data="dailyChartWithTargetData" chartName="Quality Rate By Period"/>
+          <DailyChartWithTarget :data="dailyChartWithTargetData" chartName="Quality Rate By Period" />
         </v-col>
         <v-col cols="12" md="6" class="fill-height">
-          <BarCharts :data="defectByWorkCenter" chartName="Defect By Work Center" category="pcs."/>
+          <BarCharts :data="defectByWorkCenter" chartName="Defect By Work Center" category="pcs." />
         </v-col>
       </v-row>
       <v-row class="fill-height">
         <v-col cols="12" md="4" class="fill-height">
-          <BarCharts :data="qualityRateByItemGroup" chartName="Quality Rate By Item Group" category="%Q"/>
+          <BarCharts :data="qualityRateByItemGroup" chartName="Quality Rate By Item Group" category="%Q" />
         </v-col>
         <v-col cols="12" md="4" class="fill-height">
-          <BarCharts :data="qualityRateByItem" chartName="Quality Rate By Item ID" category="%Q"/>
+          <BarCharts :data="qualityRateByItem" chartName="Quality Rate By Item ID" category="%Q" />
         </v-col>
         <v-col cols="12" md="4" class="fill-height">
-          <BarCharts :data="top10Defect" chartName="Top 10 Defect Cause" category="pcs."/>
+          <BarCharts :data="top10Defect" chartName="Top 10 Defect Cause" category="pcs." />
         </v-col>
       </v-row>
       <v-row>
@@ -131,14 +132,14 @@ export default {
         { text: "%Q", value: "quality_rate" },
       ],
       mockBarChartData: {
-        value: [1,2,3],
-        label: ['1','2','3']
+        value: [1, 2, 3],
+        label: ['1', '2', '3']
       },
       qualityRateByItemGroup: {
         value: [],
         label: []
       },
-      qualityRateByItem:{
+      qualityRateByItem: {
         value: [],
         label: []
       },
@@ -151,11 +152,11 @@ export default {
         label: []
       },
       summaryData: {
-        qty:0,
-        good_product_count:0,
-        defect_count:0,
-        quality_rate:0,
-        defect_rate:0,
+        qty: 0,
+        good_product_count: 0,
+        defect_count: 0,
+        quality_rate: 0,
+        defect_rate: 0,
       },
       workCenterGroups: [],
       workCenters: [],
@@ -193,8 +194,8 @@ export default {
     // loadQualityDashboardData
     this.loadOpn()
     this.$hideLoader();
-    this.mockBarChartData.value = [1,2,3,4,5]
-    this.mockBarChartData.label = ['1','2','3','4','5']
+    this.mockBarChartData.value = [1, 2, 3, 4, 5]
+    this.mockBarChartData.label = ['1', '2', '3', '4', '5']
   },
   computed: {
     filteredWorkerCenter() {
@@ -379,7 +380,7 @@ export default {
         acc.actual.push(cur.quality_rate)
         return acc
       }, { date: [], target: [], actual: [] })
-      this.dailyChartWithTargetData  = result
+      this.dailyChartWithTargetData = result
     },
     async loadQualityRateByItemGroup() {
       const response = await api.getQualityRateByItemGroup({
@@ -415,7 +416,7 @@ export default {
       }, { label: [], value: [] })
       this.qualityRateByItem = result
     },
-    async loadTop10Defect () {
+    async loadTop10Defect() {
       const response = await api.getTop10Defect({
         start: this.start,
         end: this.end,
@@ -427,24 +428,39 @@ export default {
       }, { label: [], value: [] })
       this.top10Defect = result
     },
-    async getSummaryData () {
+    async getSummaryData() {
       const result = this.data.reduce((acc, cur) => {
         acc.total_qty += Number(cur.qty)
         acc.total_good_product_count += Number(cur.good_product_count)
         acc.total_defect_count += Number(cur.defect_count)
         return acc
-      }, {total_qty: 0, total_good_product_count: 0, total_defect_count: 0})
+      }, { total_qty: 0, total_good_product_count: 0, total_defect_count: 0 })
       const quality_rate =
         Math.round((result.total_good_product_count / result.total_qty) * 100 * 100) / 100 || 0;
       const defect_rate =
         Math.round((result.total_defect_count / result.total_good_product_count) * 100 * 100) / 100 || 0;
       this.summaryData = {
-        qty: result.total_qty,
-        good_product_count: result.total_good_product_count,
-        defect_count: result.total_defect_count,
-        quality_rate: quality_rate.toFixed(2),
-        defect_rate: defect_rate.toFixed(2)
-      }
+        qty: Number(result.total_qty).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }),
+        good_product_count: Number(result.total_good_product_count).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }),
+        defect_count: Number(result.total_defect_count).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }),
+        quality_rate: Number(quality_rate).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }),
+        defect_rate: Number(defect_rate).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        })
+      };
     },
     async loadQualityDashboardData() {
       const response = await api.getQualityDashboardData({

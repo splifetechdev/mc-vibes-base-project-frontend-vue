@@ -3,7 +3,7 @@
     <v-card class="ma-3 pa-3">
       <v-row class="fill-height">
         <v-col cols="12" md="4" class="d-flex align-center justify-center">
-          <h1>Quality</h1>
+          <h1>OEE</h1>
         </v-col>
         <v-col cols="12" md="8" class="d-flex flex-wrap justify-end">
           <v-col cols="12" md="3">

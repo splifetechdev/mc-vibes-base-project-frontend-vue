@@ -32,6 +32,12 @@
           nextIcon: 'mdi-plus',
         }"
       >
+      <template v-for="col in ['order_qty', 'qty_receive' , 'qty_remain']" v-slot:[`item.${col}`]="{ item }">
+          <span class="text-right" style="display: block;">
+            {{ Number(item[col]).toLocaleString() }}
+          </span>
+        </template>
+      >
         <template v-slot:[`item.actions`]="{ item }">
           <v-icon
             class="ml-1"
