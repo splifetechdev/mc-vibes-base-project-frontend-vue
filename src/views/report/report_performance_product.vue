@@ -2,17 +2,21 @@
   <v-container fluid>
     <v-card class="ma-3">
      <v-row class="mt-5 ml-5 mr-5 mb-3">
-  <v-col cols="12" md="12">
-    <v-row align="center" justify="center" class="mb-3 mt-3">
-      <v-toolbar-title class="text-h6">รายงานประสิทธิภาพการผลิต</v-toolbar-title>
-    </v-row>
+       <v-col cols="12" md="12" >
+   <v-row>
+              <v-col cols="12" md="2" class="pa-0 pt-3" >
+            <v-toolbar-title class="text-h6 mt-4" 
+              >รายงานประสิทธิภาพการผลิต :
+            </v-toolbar-title>
+            <!-- <v-divider class="mx-4" inset vertical></v-divider> -->
+            </v-col>
 
-    <v-row dense>
-      <v-col cols="12" md="3">
+
+      <v-col cols="12" md="2">
         <v-autocomplete
           label="Work Center Group"
           v-model="datasearch.work_center_group_id"
-          hide-details outlined dense
+          outlined dense
           :items="workCenterGroups"
           item-text="label"
           item-value="id"
@@ -29,9 +33,9 @@
         ></v-autocomplete>
       </v-col>
 
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="2">
         <v-autocomplete
-          required outlined dense hide-details
+          required outlined dense
           :items="workcenterlist"
           v-model="datasearch.work_center_id"
           item-value="id"
@@ -48,9 +52,9 @@
         ></v-autocomplete>
       </v-col>
 
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="2">
         <v-autocomplete
-          required outlined dense hide-details
+          required outlined dense
           :items="machinelist"
           v-model="datasearch.mch_id"
           item-value="id"
@@ -60,9 +64,9 @@
         ></v-autocomplete>
       </v-col>
 
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="2">
         <v-autocomplete
-          required outlined dense hide-details
+          required outlined dense
           :items="worker_list"
           v-model="datasearch.worker_id"
           item-value="id"
@@ -71,12 +75,10 @@
           clearable
         ></v-autocomplete>
       </v-col>
-    </v-row>
 
-    <v-row dense class="mt-1">
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="2">
         <v-autocomplete
-          required outlined dense hide-details
+          required outlined dense
           :items="ord_list"
           v-model="datasearch.work_order"
           item-value="doc_running_no"
@@ -86,9 +88,10 @@
         ></v-autocomplete>
       </v-col>
 
-      <v-col cols="12" md="3">
+      <v-col cols="12" md="2"></v-col>
+      <v-col cols="12" md="2">
         <v-autocomplete
-          required outlined dense hide-details
+          required outlined dense
           :items="item_master_list"
           v-model="datasearch.item_id"
           item-value="item_id"
@@ -110,7 +113,6 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              hide-details outlined dense
               v-model="datasearch.datefrom"
               persistent-hint
               append-icon="mdi-calendar"
@@ -118,6 +120,8 @@
               readonly
               v-bind="attrs"
               v-on="on"
+              outlined
+              dense
             ></v-text-field>
           </template>
           <v-date-picker
@@ -139,7 +143,7 @@
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-              hide-details outlined dense
+              outlined dense
               v-model="datasearch.dateto"
               persistent-hint
               append-icon="mdi-calendar"
@@ -157,14 +161,14 @@
       </v-col>
 
       <v-col cols="12" md="2">
-        <v-btn color="#254E58" dark @click="searchData" block>
+        <v-btn color="#254E58" dark class="mb-2 mr-2" @click="searchData" >
           <v-icon left>mdi-magnify</v-icon>
           Search
         </v-btn>
       </v-col>
     </v-row>
-  </v-col>
-</v-row>
+</v-col>
+    </v-row>
 
 
       <div v-if="desserts.length > 0">
@@ -986,7 +990,7 @@ export default {
       //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
       let checklineforsig = 10;
       //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 22;
+      let linedetailprpo = 13;
       //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
       let datainlineprpo = 2;
       let addnewbutget = 0;
