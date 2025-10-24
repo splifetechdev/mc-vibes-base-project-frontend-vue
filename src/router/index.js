@@ -124,6 +124,8 @@ import ReceiveFromProductionList from "@/views/Inventory/ReceiveFromProductionLi
 import ReceiveFromProductionEdit from "@/views/Inventory/ReceiveFromProductionEdit.vue";
 
 import ReportClothRegistration from "@/views/report/report_on_inquiries_about_cloth_registration.vue";
+import ReportLostTime from "@/views/report/report_lost_time.vue";
+import ReportWaste from "@/views/report/report_waste.vue";
 
 import DeleteJob from "@/views/deletejob/DeleteJob.vue";
 
@@ -134,9 +136,26 @@ import CalculateCost from "@/views/costing/calculatecost.vue";
 import FileImportSystem from "@/views/fileimportsystem/FileImportSystem.vue";
 
 
+
 Vue.use(VueRouter);
 
 const routes = [
+     {
+    path: "/report-waste",
+    meta: {
+      isSecured: false,
+    },
+    name: "ReportWaste",
+    component: ReportWaste,
+  },
+   {
+    path: "/report-lost-time",
+    meta: {
+      isSecured: false,
+    },
+    name: "ReportLostTime",
+    component: ReportLostTime,
+  },
     {
     path: "/file-import-system",
     meta: {

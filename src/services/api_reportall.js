@@ -45,3 +45,11 @@ export const Getcloth_registration_sum = (data) => {
 export const Getcloth_registration_detail = (data) => {
   return httpClient.post(server.REPORT_ALL + `/cloth_registration_detail`, data);
 };
+
+export const GetListTimeReport = (data) => {
+  return httpClient.post(server.REPORT_ALL + `/report_lost_time`, data);
+};
+
+export const GetWasteReport = (data) => {
+  return httpClient.post(server.REPORT_ALL + `/report_waste`, data);
+};
