@@ -6,13 +6,12 @@
           <v-row>
               <v-col cols="12" md="2">
             <v-toolbar-title class="text-h6 mt-4"
-              >รายงานเวลาที่สูญเสีย :
+              >รายงานของเสีย :
             </v-toolbar-title>
-                     <!-- <v-divider class="mx-4" inset vertical></v-divider> -->
+            <!-- <v-divider class="mx-4" inset vertical></v-divider> -->
             </v-col>
-   
             <v-col cols="12" md="2">
-             <v-autocomplete class="" label="Work Center Group" v-model="datasearch.work_center_group_id" outlined
+              <v-autocomplete class="" label="Work Center Group" v-model="datasearch.work_center_group_id" outlined
               dense :items="workCenterGroups" item-text="label" item-value="id" @change="changworkcentergrouptogetworkcenter" clearable
               @click:clear="
                   $nextTick(() => {
@@ -63,18 +62,45 @@
                <v-autocomplete
                           required
                           outlined
-                          :items="downtime_cause_list"
-                          v-model="datasearch.downtime_id"
+                          :items="worker_list"
+                          v-model="datasearch.worker_id"
                           item-value="id"
-                          :item-text="getgroupnamedowntime"
-                          label="DownTime Cause"
+                          :item-text="getgroupnameworker"
+                          label="Worker"
                           dense
                           clearable
                         ></v-autocomplete>
             </v-col>
 
-            <v-col cols="12" md="2"></v-col>
-            <v-col cols="12" md="2"></v-col>
+               <v-col cols="12" md="2">
+               <v-autocomplete
+                          required
+                          outlined
+                          :items="ord_list"
+                          v-model="datasearch.work_order"
+                          item-value="doc_running_no"
+                          item-text="doc_running_no"
+                          label="ORD"
+                          dense
+                          clearable
+                        ></v-autocomplete>
+            </v-col>
+
+             <v-col cols="12" md="2"></v-col>
+
+               <v-col cols="12" md="2">
+               <v-autocomplete
+                          required
+                          outlined
+                          :items="item_master_list"
+                          v-model="datasearch.item_id"
+                          item-value="id"
+                         item-text="item_id"
+                          label="Item"
+                          dense
+                          clearable
+                        ></v-autocomplete>
+            </v-col>
 
  <v-col cols="12" md="2">
             <v-menu
@@ -149,7 +175,7 @@
       </v-row>
 
       <div v-if="desserts.length > 0">
-         <v-row justify="center" align="center">
+        <v-row justify="center" align="center">
            <v-col cols="12" md="10">
         <v-data-table
           :headers="headers"
@@ -165,15 +191,24 @@
             nextIcon: 'mdi-plus',
           }"
         >
-          <template v-slot:work_hours.time="{ item }">
-            {{ fntolocalestringnumber(item.work_hours) }}
+          <template v-slot:item.qty="{ item }">
+            {{ fntolocalestringnumber(item.qty) }}
+          </template>
+
+          <template v-slot:item.defectqty="{ item }">
+            {{ fntolocalestringnumber(item.defectqty) }}
           </template>
           <!-- <template v-slot:item.due_date="{ item }">
             {{ formatDate(item.due_date) }}
           </template> -->
-          
-                  <template v-slot:body.append>
+                         <template v-slot:body.append>
             <tr class="sticky-table-footer">
+              <td style="text-align: left;">
+              </td>
+              <td style="text-align: left;">
+              </td>
+               <td style="text-align: left;">
+              </td>
                <td style="text-align: left;">
               </td>
                <td style="text-align: left;">
@@ -181,13 +216,35 @@
                <td style="text-align: left;">
               </td>
               <td style="text-align: left;">
-                <h3>รวม</h3>
+              </td>
+               <td style="text-align: left;">
+                  <h3>รวม</h3>
               </td>
               <td style="text-align: right;">
                 <h4>
                   {{
-                      fntolocalestringnumber(dessertssum.reduce(
-                        (sum, item) => sum + item.work_hours,
+                      fntolocalestringnumber(desserts.reduce(
+                        (sum, item) => sum + item.qty,
+                        0
+                      ))
+                  }}
+                </h4>
+              </td>
+                <td style="text-align: right;">
+                <h4>
+                  {{
+                      fntolocalestringnumber(desserts.reduce(
+                        (sum, item) => sum + item.defectqty,
+                        0
+                      ))
+                  }}
+                </h4>
+              </td>
+                    <td style="text-align: right;">
+                <h4>
+                  {{
+                      fntolocalestringnumber(desserts.reduce(
+                        (sum, item) => sum + Number(item.percentqty),
                         0
                       ))
                   }}
@@ -196,65 +253,15 @@
             </tr>
           </template>
         </v-data-table>
-         </v-col>
-          </v-row>
-
-        <v-row class="ma-6">
-            <v-col cols="12" md="12">
-             <h3>สรุปรายงานเวลาที่สูญเสีย</h3> 
-            </v-col>
+        </v-col>
         </v-row>
 
-        <v-row class="ma-2" justify="center" align="center">
-            <v-col cols="12" md="8">
-           <v-data-table
-          :headers="headerssum"
-          :items="dessertssum"
-          :search="search"
-          sort-by="fullname"
-          class="elevation-1"
-          :footer-props="{
-            showFirstLastPage: true,
-            firstIcon: 'mdi-arrow-collapse-left',
-            lastIcon: 'mdi-arrow-collapse-right',
-            prevIcon: 'mdi-minus',
-            nextIcon: 'mdi-plus',
-          }"
-        >
-         <template v-slot:item.work_hours="{ item }">
-            {{ fntolocalestringnumber(item.work_hours) }}
-          </template>
-        <!-- <template v-slot:item.percent="{ item }">
-            {{ fntolocalestringnumber(item.percent) }}
-          </template> -->
-          
-                  <template v-slot:body.append>
-            <tr class="sticky-table-footer">
-              <td style="text-align: left;">
-                <h3>รวม</h3>
-              </td>
-              <td style="text-align: right;">
-                <h4>
-                  {{
-                      fntolocalestringnumber(dessertssum.reduce(
-                        (sum, item) => sum + item.work_hours,
-                        0
-                      ))
-                  }}
-                </h4>
-              </td>
-              <td style="text-align: center;"></td>
-            </tr>
-          </template>
-        </v-data-table>
-            </v-col>
-        </v-row>
          
 
         <div id="mydivhtmltobase" v-if="desserts.length > 0">
           <div v-for="index in pageAll">
             <div class="aligncenter setfontfamily" id="foo">
-              <page size="A4" class="aligncenter">
+              <page size="A4landscape" class="aligncenter">
                 <div class="aligncenter">
                   <!-- <div class="rowprpo mt20prpo">
                     <div class="col-md-6">
@@ -279,64 +286,74 @@
                   <div class="rowprpo aligncenter ">
                     <div class="col-md-12 mb20prpo">
                       <h3>
-                        รายงานเวลาที่สูญเสีย
+                        รายงานของเสีย
                       </h3>
                     </div>
                   </div>
-
-                    <div class="col-md-12">
+                     <div class="col-md-12">
                  <div class="rowprpo mt-30prpo">
-                <div class="col-md-2 textalignleft ">
-                  WC-Group
+                <div class="col-md-10percent textaligncenter">
+                  WC-Group 
                 </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
                   <span >{{ datasearch.wc_group?datasearch.wc_group:"ทั้งหมด" }}</span>
                 </div>
-                <div class="col-md-2 textalignleft pl30prpo">
+                  <div class="col-md-10percent textaligncenter">
                   WC
                 </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                   <span >{{ (() => {
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ (() => {
  const wc = workcenterlist.find(item => item.id == datasearch.work_center_id);
   return wc && datasearch.work_center_id ? `${wc.wc_id}:${wc.wc_name}` : "ทั้งหมด";
 })() }}</span>
-<!-- - ${wc.wc_name} -->
                 </div>
-              </div>
-
-                <div class="rowprpo  mt-10prpo">
-                <div class="col-md-2 textalignleft ">
-                 Machine 
+                  <div class="col-md-10percent textaligncenter">
+                  Machine 
                 </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                                    <span >{{ (() => {
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                 <span >{{ (() => {
  const wc = machinelist.find(item => item.id == datasearch.mch_id);
   return wc && datasearch.mch_id ? `${wc.machine_id}:${wc.name}` : "ทั้งหมด";
 })() }}</span>
                 </div>
-                <div class="col-md-2 textalignleft pl30prpo">
-                   Downtime Cause 
+  <div class="col-md-10percent textaligncenter">
+                  Worker 
                 </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                   <span >{{ (() => {
- const wc = downtime_cause_list.find(item => item.id == datasearch.downtime_id);
-  return wc && datasearch.downtime_id ? `${wc.reason_code}:${wc.description}` : "ทั้งหมด";
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ (() => {
+ const wc = worker_list.find(item => item.id == datasearch.worker_id);
+  return wc && datasearch.worker_id ? `${wc.prename_th} ${wc.firstname} ${wc.lastname}` : "ทั้งหมด";
 })() }}</span>
                 </div>
               </div>
 
-                <div class="rowprpo  mt-30prpo">
-                <div class="col-md-2 textalignleft ">
-                 Date from 
+                     <div class="rowprpo mt10prpo">
+                <div class="col-md-10percent textaligncenter">
+                 Order 
                 </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                                    <span >{{ datasearch.datefrom }}</span>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                                 <span >{{ datasearch.work_order?datasearch.work_order:"ทั้งหมด" }}</span>
                 </div>
-                <div class="col-md-2 textalignleft pl30prpo">
+                  <div class="col-md-10percent textaligncenter">
+                  Item
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ (() => {
+ const wc = item_master_list.find(item => item.id == datasearch.item_id);
+  return wc && datasearch.item_id ? `${wc.item_id}` : "ทั้งหมด";
+})() }}</span>
+                </div>
+                  <div class="col-md-10percent textaligncenter">
+                   Date from 
+                </div>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+               <span >{{ datasearch.datefrom }}</span>
+                </div>
+  <div class="col-md-10percent textaligncenter">
                   to 
                 </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                   <span >{{ datasearch.dateto }}</span>
+                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
+                  <span >{{ datasearch.dateto }}</span>
                 </div>
               </div>
 
@@ -351,33 +368,69 @@
                     <tr>
                       <th
                         scope="colgroup"
-                        class="prborderbottom prbordertop prborderleft width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                        class="prborderbottom prbordertop prborderleft width12 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
                         Date
                       </th>
                       <th
                         scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                        class="prborderbottom prbordertop width12 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
-                        Time
+                        ORD
+                      </th>
+                      <th
+                        scope="colgroup"
+                        class="prborderbottom prbordertop width15 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                      >
+                        MCH
                       </th>
                       <th
                         scope="colgroup"
                         class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
-                        Machine Name
+                       Item ID
                       </th>
                       <th
                         scope="colgroup"
                         class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
-                        Downtime Cause
+                        Item Name
                       </th>
-                      <th
+                       <th
+                        scope="colgroup"
+                        class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                      >
+                        OPN Desc.
+                      </th>
+                       <th
+                        scope="colgroup"
+                        class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                      >
+                        Batch
+                      </th>
+                       <th
                         scope="colgroup"
                         class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
                       >
-                        Hours
+                        Worker
+                      </th>
+                       <th
+                        scope="colgroup"
+                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                      >
+                        QTY
+                      </th>
+                       <th
+                        scope="colgroup"
+                        class="prborderbottom prbordertop width7 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                      >
+                        Defect QTY
+                      </th>
+                       <th
+                        scope="colgroup"
+                        class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
+                      >
+                        % Defect
                       </th>
                     </tr>
 
@@ -395,25 +448,137 @@
                         class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
                         style="padding-left: 2px;"
                       >
-                        {{ data.time ? data.time : "-" }}
+                        {{ data.work_order ? data.work_order : "-" }}
                       </td>
                       <td
                         class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
                          style="padding-left: 2px;"
                       >
-                        {{ data.machine_id ? data.machine_id : "-" }}
+                        {{ data.machine ? data.machine : "-" }}
                       </td>
                       <td
                         class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
                          style="padding-left: 2px;"
                       >
-                        {{ data.description ? data.description : "-" }}
+                        {{ data.itemID ? data.itemID : "-" }}
                       </td>
                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                        {{ data.item_name ? data.item_name : "-" }}
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                        {{ data.opn_desc ? data.opn_desc : "-" }}
+                      </td>
+                       <td
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
                         style="padding-right: 2px;"
                       >
-                        {{ data.work_hours ? fntolocalestringnumber(data.work_hours) : "-" }}
+                        {{ data.batch_count ? data.batch_count : "-" }}
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                        {{ data.worker_name ? data.worker_name : "-" }}
+                      </td>
+                       <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-right: 2px;"
+                      >
+                        {{ data.qty ? fntolocalestringnumber(data.qty) : "-" }}
+                      </td>
+                       <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-right: 2px;"
+                      >
+                        {{ data.defectqty ? fntolocalestringnumber(data.defectqty) : "-" }}
+                      </td>
+                       <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-right: 2px;"
+                      >
+                        {{ data.percentqty ? data.percentqty : "-" }}
+                      </td>
+                    </tr>
+                    <tr class="textfontbold" v-if="pageAll == index">
+                      <td
+                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
+                        style="padding-left: 2px;"
+                      >
+                      </td>
+                       <td
+                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
+                        style="padding-left: 2px;"
+                      >
+                        รวม
+                      </td>
+                      <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
+                        style="padding-right: 2px;"
+                      >
+                        {{
+                      fntolocalestringnumber(desserts.reduce(
+                        (sum, item) => sum + item.qty,
+                        0
+                      ))
+                  }}
+                      </td>
+                       <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
+                        style="padding-right: 2px;"
+                      >
+                      {{
+                      fntolocalestringnumber(desserts.reduce(
+                        (sum, item) => sum + item.defectqty,
+                        0
+                      ))
+                  }}
+                      </td>
+                                             <td
+                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
+                        style="padding-right: 2px;"
+                      >
+                      {{
+                      fntolocalestringnumber(desserts.reduce(
+                        (sum, item) => sum + Number(item.percentqty),
+                        0
+                      ))
+                  }}
                       </td>
                     </tr>
                   </table>
@@ -421,94 +586,6 @@
               </page>
             </div>
           </div>
-          <div class="aligncenter setfontfamily" id="foo">
-              <page size="A4" class="aligncenter">
-                <div class="aligncenter">
-                  <div class="rowprpo aligncenter ">
-                    <div class="col-md-12 mb20prpo">
-                      <h3>
-                        สรุปรายงานเวลาที่สูญเสีย
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  class="rowprpo captiontableheader  ml30prpo mr30prpo"
-                  style="margin-top:3px"
-                >
-                  <table class="captiontableheader">
-                    <tr>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop prborderleft width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Downtime Cause
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Hours
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Percent
-                      </th>
-                    </tr>
-
-                    <tr
-                      v-for="(data, i) in dessertssum"
-                      id="content"
-                    >
-                      <td
-                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="position: relative;padding-left: 2px;"
-                      >
-                        {{ data.description ? data.description : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
-                      >
-                        {{ data.work_hours ? fntolocalestringnumber(data.work_hours) : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
-                      >
-                        {{ data.percent ? data.percent : "-" }}
-                      </td>
-                    </tr>
-                    <tr>
-                       <td
-                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
-                        style="padding-left: 2px;"
-                      >
-                        รวม
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
-                      >
-                        {{ fntolocalestringnumber(dessertssum.reduce((sum, item) => sum + item.work_hours, 0)) }}
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                      >
-                        
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                 <div class="footerprpo ">
-              <div class="alignright mr40prpo">
-                ผู้ปริ้น {{ fullname }} วันที่ {{ datenowFormatted }}
-              </div>
-            </div>
-              </page>
-            </div>
         </div>
         <v-card-actions class="mt-5">
           <v-spacer></v-spacer>
@@ -640,23 +717,29 @@ import {
   XlsxSheet,
   XlsxDownload,
 } from "vue-xlsx";
-import { tolocalestringnumber} from "../jsfunction/tolocalestringnumber";
+import {
+  tolocalestringnumber,
+} from "../jsfunction/tolocalestringnumber";
 
 export default {
   data: (vm) => ({
     fullname:"",
     menusearchdatefrom:false,
      menusearchdateto:false,
-     downtime_cause_list:[],
+     worker_list:[],
     workCenterGroups:[],
      workcenterlist:[],
       machinelist:[],
+      ord_list:[],
+      item_master_list:[],
       datasearch:{
         wc_group:null,
         work_center_group_id:null,
 work_center_id:null,
 mch_id:null,
-downtime_id:null,
+worker_id:null,
+work_order:null,
+item_id:null,
 datefrom:vm.formatDate(
           new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
             .toISOString()
@@ -680,7 +763,7 @@ dateto:vm.formatDate(
         data: [],
       },
     ],
-    exportsumfilename: "รายงานเวลาที่สูญเสีย.xlsx",
+    exportsumfilename: "รายงานของเสีย.xlsx",
     datenow: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(2, 8)
@@ -760,10 +843,16 @@ dateto:vm.formatDate(
         sortable: false,
         value: "tcdate",
       },
-      { text: "Time", value: "time",align: "start" },
-      { text: "Machine Name", value: "machine_id",align: "start" },
-      { text: "Downtime Cause", value: "description",align: "start" },
-       {text: "Hours", value: "work_hours",align: "end" },
+      { text: "ORD", value: "work_order",align: "start" },
+      { text: "MCH", value: "machine",align: "start" },
+      { text: "Item ID", value: "itemID",align: "start" },
+      { text: "Item Name", value: "item_name",align: "start" },
+       { text: "OPN Desc.", value: "opn_desc",align: "start" },
+      { text: "Batch", value: "batch_count",align: "end" },
+       {text: "Worker", value: "worker_name",align: "start" },
+        {text: "QTY", value: "qty",align: "end" },
+        {text: "Defect QTY", value: "defectqty",align: "end" },
+        {text: "% Defect", value: "percentqty",align: "end" },
     ],
     headerssum: [
       {
@@ -960,7 +1049,9 @@ dateto:vm.formatDate(
 
     // ----------------- Check Authorize ---------------------------
     await this.loadWorkCenterGroup();
-    await this.loadDownTimeCause();
+    await this.loadDownWorker();
+    await this.loadORD();
+    await this.loadItemMaster();
     await this.loadAccountsLogin();
     
 
@@ -991,12 +1082,27 @@ dateto:vm.formatDate(
       );
       this.workCenterGroups = response.data.map(data => ({ ...data, label: `${data.work_center_group_id}: ${data.work_center_group_name}` }));
     },
-async loadDownTimeCause() {
-      const response = await api.getAllDownTimeCauseCompany(
+async loadDownWorker() {
+      const response = await api.getWorkerByCompany(
         localStorage.getItem(server.COMPANYID)
       );
-      this.downtime_cause_list = response.data;
+      this.worker_list = response.data;
       // this.workCenterGroups = response.data.map(data => ({ ...data, label: `${data.work_center_group_id}: ${data.work_center_group_name}` }));
+    },
+
+  async loadORD() {
+       const result = await api.getOrderByCompanyID(
+        localStorage.getItem(server.COMPANYID)
+      );
+      this.ord_list = result.data;
+    },
+  
+
+    async loadItemMaster() {
+      const res_get = await api.getItemMasterByCompanyID(
+        localStorage.getItem(server.COMPANYID)
+      );
+      this.item_master_list = res_get.data;
     },
 
     
@@ -1019,11 +1125,18 @@ async loadDownTimeCause() {
       // wb.Sheets.summary_activity_report.F1 = { t: "s", c: 0, v: "" };
       // wb.Sheets.summary_activity_report.G1 = { t: "s", c: 0, v: "" };
 
+
       wb.Sheets.summary_activity_report.A1 = { t: "s", v: "Date" };
-      wb.Sheets.summary_activity_report.B1 = { t: "s", v: "Time" };
-      wb.Sheets.summary_activity_report.C1 = { t: "s", v: "Machine Name" };
-      wb.Sheets.summary_activity_report.D1 = { t: "s", v: "Downtime Cause" };
-      wb.Sheets.summary_activity_report.E1 = { t: "s", v: "Hours" };
+      wb.Sheets.summary_activity_report.B1 = { t: "s", v: "ORD" };
+      wb.Sheets.summary_activity_report.C1 = { t: "s", v: "MCH" };
+      wb.Sheets.summary_activity_report.D1 = { t: "s", v: "Item ID" };
+      wb.Sheets.summary_activity_report.E1 = { t: "s", v: "Item Name" };
+      wb.Sheets.summary_activity_report.F1 = { t: "s", v: "OPN Desc." };
+      wb.Sheets.summary_activity_report.G1 = { t: "s", v: "Batch" };
+      wb.Sheets.summary_activity_report.H1 = { t: "s", v: "Worker" };
+      wb.Sheets.summary_activity_report.I1 = { t: "s", v: "QTY" };
+      wb.Sheets.summary_activity_report.J1 = { t: "s", v: "Defect QTY" };
+      wb.Sheets.summary_activity_report.K1 = { t: "s", v: "% Defect" };
 
       // wb.Sheets.summary_activity_report["!merges"] = merge;
     },
@@ -1040,14 +1153,21 @@ async loadDownTimeCause() {
       //     Total: x.Total,
       //   });
       // });
+
       let setexportxlsx = [];
       dataexport.forEach((x, index) => {
         setexportxlsx.splice(index + 0, 0, {
           tcdate: x.tcdate,
-          time: x.time,
-          machine_id: x.machine_id,
-          description: x.description,
-          work_hours: x.work_hours,
+          work_order: x.work_order,
+          machine: x.machine,
+          itemID: x.itemID,
+          item_name: x.item_name,
+          opn_desc: x.opn_desc,
+          batch_count: x.batch_count,
+          worker_name: x.worker_name,
+          qty: Number(x.qty),
+          defectqty: Number(x.defectqty),
+          percentqty: Number(x.percentqty),
         });
       });
       this.sheets[0].data = setexportxlsx;
@@ -1062,9 +1182,9 @@ async loadDownTimeCause() {
       //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
       let checklineforsig = 10;
       //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 33;
+      let linedetailprpo = 22;
       //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
-      let datainlineprpo = 24;
+      let datainlineprpo = 21;
       let addnewbutget = 0;
       let getdata = [];
       let getnewdata = [];
@@ -1093,7 +1213,7 @@ async loadDownTimeCause() {
         dataprint[i].no = i + 1;
         // this.sumqtyorderpo += dataprint[i].qty;
 
-        stringchecklength = dataprint[i].description ? dataprint[i].description : "";
+        stringchecklength = dataprint[i].item_name?dataprint[i].item_name: "";
         let stringcutnewline = stringchecklength.split("\n");
 
         stringcutnewline.forEach((x, index) => {
@@ -1220,7 +1340,7 @@ async loadDownTimeCause() {
         jsPDF: {
           unit: "cm",
           format: "A4",
-          orientation: "portrait",
+          orientation: "landscape",
           putOnlyUsedFonts: true,
           pagesplit: true,
         },
@@ -1240,8 +1360,8 @@ async loadDownTimeCause() {
           //   pdf.deletePage(totalPages);
           // } else {
           // }
- const totalPages = pdf.internal.getNumberOfPages();
-            pdf.deletePage(totalPages);
+//  const totalPages = pdf.internal.getNumberOfPages();
+//             pdf.deletePage(totalPages);
           return pdf.output("bloburl");
         });
       window.open(abcd);
@@ -1262,10 +1382,11 @@ async loadDownTimeCause() {
       //               (item) => item.id == this.datasearch.work_center_group_id
       //             );
       //             this.datasearch.wc_group = getrcg[0].work_center_group_id;
-                  }else{
+                  }
+                  else{
                     this.datasearch.wc_group = null;
                   }
-      const result =  await api.GetListTimeReport(this.datasearch
+      const result =  await api.GetWasteReport(this.datasearch
       //   {datefrom:this.datefrom,dateto:this.dateto,
       //   wc_group:this.datasearch.wc_group,wc_id:this.datasearch.work_center_id,
       //   mch_id:this.datasearch.mch_id,downtime_id:this.datasearch.downtime_id
@@ -1275,30 +1396,11 @@ async loadDownTimeCause() {
     
       if(result.data.length > 0){
         result.data.forEach(async(x,i)=>{
-        x.time = `${ x.time_start } - ${ x.time_end }`;
+          x.percentqty = (((x.defectqty / x.qty) * 100).toFixed(2) + "") !== "Infinity"?(((x.defectqty / x.qty) * 100).toFixed(2) + ""):0;
         this.desserts.push(x);
         if(i == result.data.length -1){
 await this.checkcontent(this.desserts);
  await this.setexporttoxlsx(this.desserts);
- const grouped = Object.values(
-  this.desserts.reduce((acc, curr) => {
-    if (!acc[curr.description]) {
-      acc[curr.description] = { description: curr.description, work_hours: 0 };
-    }
-    acc[curr.description].work_hours += curr.work_hours;
-    return acc;
-  }, {})
-);
-const totalHours = grouped.reduce((sum, item) => sum + item.work_hours, 0);
-
-const withPercent = [
-  ...grouped.map(item => ({
-    ...item,
-    percent: ((item.work_hours / totalHours) * 100).toFixed(2) + "%"
-  })),
-  // { description: "รวม", work_hours: totalHours, percent: "" }
-];
-this.dessertssum = withPercent;
 
         }
         });
@@ -1810,7 +1912,7 @@ this.dessertssum = withPercent;
     openchangeapproval() {
       this.dialogchangeapproval = true;
     },
-     async changworkcentergrouptogetworkcenter(work_center_group_id) {
+       async changworkcentergrouptogetworkcenter(work_center_group_id) {
       if(work_center_group_id){
        this.$showLoader();
         const getrcg =  this.workCenterGroups.filter(
@@ -1842,8 +1944,8 @@ this.dessertssum = withPercent;
     getgroupnamemachine(item) {
       return `${item.machine_id}:${item.name}`;
     },
-    getgroupnamedowntime(item) {
-      return `${item.reason_code}:${item.description}`;
+    getgroupnameworker(item) { 
+      return `${item.prename_th} ${item.firstname} ${item.lastname}`;
     },
     async savechangeapproval() {
       if (this.itemchangeapproval.oldapproval == "") {
@@ -1912,7 +2014,7 @@ this.dessertssum = withPercent;
     cancelchangeapproval() {
       this.dialogchangeapproval = false;
     },
-    fntolocalestringnumber(price) {
+     fntolocalestringnumber(price) {
       return tolocalestringnumber(price);
     },
     setupAlertDialog(status, title, message, text_color) {
@@ -2468,6 +2570,10 @@ td {
   word-wrap: break-word;
   width: 10%;
 }
+.width12 {
+  word-wrap: break-word;
+  width: 12%;
+}
 .width20 {
   word-wrap: break-word;
   width: 20%;
@@ -2627,7 +2733,7 @@ footer {
 .widthsignature {
   width: 3cm;
   /* height: 1cm; */
-  height: 35px;
+  height: 25px;
   align-content: center;
 }
 .positionrelative {
@@ -2666,10 +2772,21 @@ footer {
   border-top: thin solid rgba(0, 0, 0, 0.12);
 }
 
-.textfontbold {
-  font-weight: 900;
+.col-md-10percent {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 10%;
+  flex: 0 0 10%;
+  max-width: 10%;
 }
 
+.col-md-15percent {
+  word-wrap: break-word;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 15%;
+  flex: 0 0 15%;
+  max-width: 15%;
+}
 .col-md-1 {
   word-wrap: break-word;
   -webkit-box-flex: 0;
@@ -2758,15 +2875,20 @@ footer {
   flex: 0 0 100%;
   max-width: 100%;
 }
+.textfontbold {
+  font-weight: 900;
+}
+
 .bgcolorgray {
   background-color: #b7b4b4 !important;
 }
 
 .setfontfamily {
-  font-family: "TH Sarabun New";
+   font-family: "TH Sarabun New";
   /* font-family: "Roboto", sans-serif; */
 }
 /* .theme--light.v-data-table>.v-data-table__wrapper>table>thead>tr:last-child>th {
     text-align: center !important;
 } */
+
 </style>

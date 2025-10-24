@@ -1210,13 +1210,13 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
-      // cut Production Order Production Costing Report menu
+      // cut Reprot Costing Report menu
       if (item.cmd_route == "re-cal-costing" && item.smd_view == 0) {
         this.subproductionorderrecalcosting = true;
         let getremoveindex = [];
         let indexsubmenu = -1;
         this.menus.forEach((itemmenu, index) => {
-          if (itemmenu.title == "Production Order") {
+          if (itemmenu.title == "Report") {
             indexsubmenu = index;
             this.menus[index].items.forEach((x, i) => {
               if (x.title == "Production Costing Report") {
@@ -1229,6 +1229,8 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
+
+            // cut Reprot รายงานเวลาที่สูญเสีย menu
       if (item.cmd_route == "report-lost-time" && item.smd_view == 0) {
         this.subreportlosttime = true;
         let getremoveindex = [];
@@ -1247,10 +1249,8 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
-      if (
-        item.cmd_route == "report-performance-product" &&
-        item.smd_view == 0
-      ) {
+        // cut Reprot รายงานประสิทธิภาพการผลิต menu
+        if (item.cmd_route == "report-performance-product" && item.smd_view == 0) {
         this.subreportreportperformanceproduct = true;
         let getremoveindex = [];
         let indexsubmenu = -1;
@@ -1268,6 +1268,26 @@ export default {
           this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
       }
 
+   // cut Reprot รายงานเวลาที่สูญเสีย menu
+      if (item.cmd_route == "report-waste" && item.smd_view == 0) {
+        this.subreportwaste = true;
+
+        let getremoveindex = [];
+        let indexsubmenu = -1;
+        this.menus.forEach((itemmenu, index) => {
+            if (itemmenu.title == "Report") {
+            indexsubmenu = index;
+            this.menus[index].items.forEach((x, i) => {
+              if (x.title == "รายงานของเสีย") {
+                getremoveindex.push(i);
+              }
+            });
+          }
+        });
+        for (var i = getremoveindex.length - 1; i >= 0; i--)
+          this.menus[indexsubmenu].items.splice(getremoveindex[i], 1);
+      }
+
       if (
         this.subreporttimecardreport &&
         this.subreportreportoninquiriesaboutclothregistration &&
@@ -1275,7 +1295,9 @@ export default {
         this.subproductionorderproductionstatusreport &&
         this.subproductionorderrecalcosting &&
         this.subreportreportperformanceproduct &&
-        this.subreportlosttime
+        this.subreportlosttime &&
+        this.subreportwaste
+
       ) {
         let getremoveindex = [];
         this.menus.forEach((itemmenu, index) => {
@@ -1308,6 +1330,7 @@ export default {
   data() {
     return {
       subreportreportperformanceproduct: false,
+      subreportwaste:false,
       subreportlosttime:false,
       subholidaymenu: false,
       subkpimastermenu: false,
@@ -1705,15 +1728,21 @@ export default {
               title: "Production Costing Report",
               route: "/re-cal-costing",
             },
-              {
+             {
+
               index: 6,
               title: "รายงานเวลาที่สูญเสีย",
               route: "/report-lost-time",
             },
              {
               index: 6,
+
               title: "รายงานประสิทธิภาพการผลิต",
               route: "/report-performance-product",
+
+              title: "รายงานของเสีย",
+              route: "/report-waste",
+
             },
           ],
         },
