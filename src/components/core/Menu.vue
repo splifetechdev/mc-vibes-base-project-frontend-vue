@@ -1729,20 +1729,19 @@ export default {
               route: "/re-cal-costing",
             },
              {
-
               index: 6,
               title: "รายงานเวลาที่สูญเสีย",
               route: "/report-lost-time",
             },
-             {
+            {
               index: 6,
-
-              title: "รายงานประสิทธิภาพการผลิต",
-              route: "/report-performance-product",
-
               title: "รายงานของเสีย",
               route: "/report-waste",
-
+            },
+            {
+              index: 6,
+              title: "รายงานประสิทธิภาพการผลิต",
+              route: "/report-performance-product",
             },
           ],
         },
