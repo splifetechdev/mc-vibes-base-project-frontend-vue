@@ -125,6 +125,7 @@ import ReceiveFromProductionEdit from "@/views/Inventory/ReceiveFromProductionEd
 
 import ReportClothRegistration from "@/views/report/report_on_inquiries_about_cloth_registration.vue";
 import ReportLostTime from "@/views/report/report_lost_time.vue";
+import ReportPerformance from "@/views/report/report_performance_product.vue";
 
 import DeleteJob from "@/views/deletejob/DeleteJob.vue";
 
@@ -138,6 +139,15 @@ import FileImportSystem from "@/views/fileimportsystem/FileImportSystem.vue";
 Vue.use(VueRouter);
 
 const routes = [
+   {
+    path: "/report-performance-product",
+    meta: {
+      isSecured: false,
+    },
+    name: "ReportPerformance",
+    component: ReportPerformance,
+  },
+
     {
     path: "/report-lost-time",
     meta: {
