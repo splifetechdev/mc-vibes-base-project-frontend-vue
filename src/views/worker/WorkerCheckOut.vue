@@ -610,6 +610,7 @@ export default {
       this.$showLoader();
       const foundTimecard = this.timecards.find((tc) => tc.id == this.targetId);
       if (foundTimecard) {
+        await api.upsertTimecardLog({id:foundTimecard.tbl_time_card_details?foundTimecard.tbl_time_card_details[0].id:0,time_start:foundTimecard.start_time,time_end:foundTimecard.end_time});
         await api.postJobTimecard(
           this.targetId,
           foundTimecard.start_time,
@@ -623,15 +624,30 @@ export default {
     },
     async onClickCheckoutAll() {
       this.$showLoader();
-      await Promise.all(
-        this.timecards.map((timecard) => {
-          return api.postJobTimecard(
-            timecard.id,
-            timecard.start_time,
-            timecard.end_time
-          );
-        })
-      );
+      // await Promise.all(
+      //   this.timecards.map((timecard) => {
+      //     return api.postJobTimecard(
+      //       timecard.id,
+      //       timecard.start_time,
+      //       timecard.end_time
+      //     );
+      //   })
+      // );
+            await Promise.all(
+  this.timecards.map(async (timecard) => {
+    await api.upsertTimecardLog({
+      id:timecard.tbl_time_card_details?timecard.tbl_time_card_details[0].id:0,
+      time_start: timecard.start_time,
+      time_end: timecard.end_time,
+    });
+
+    await api.postJobTimecard(
+      timecard.id,
+      timecard.start_time,
+      timecard.end_time
+    );
+  })
+);
       this.loadTimecard();
       this.confirmCheckoutAllModal = false;
       this.$hideLoader();

@@ -1474,6 +1474,20 @@ export default {
         endDateTime = null;
       }
 
+      const updateDataTimecardLog = {
+        id: this.selectedItem.id,
+        opn_ord_id: this.selectedItem.opn_ord_id || "",
+        mch_id: this.selectedItem.mch_id,
+        wo_running_no: this.selectedItem.wo_running_no,
+        opn_desc: this.selectedItem.opn_desc,
+        item_id: this.selectedItem.item_id,
+        time_card_date: this.selectedItem.start_at,
+        time_start: this.selectedItem.start_time,
+        time_end: this.selectedItem.end_time,
+        worker_id: this.selectedItem.worker_id,
+        qty: await this.getTimecardDetailReceiveQty(this.selectedItem),
+      };
+      
       const updateData = {
         id: this.selectedItem.id,
         opn_ord_id: this.selectedItem.opn_ord_id || "",
@@ -1487,6 +1501,7 @@ export default {
         qty: await this.getTimecardDetailReceiveQty(this.selectedItem),
         end_at: dayjs().format("YYYY-MM-DD HH:mm:ss"),
       };
+      await api.upsertTimecardLog(updateDataTimecardLog);
       await api.endTimecardDetail(updateData);
       // const oldWorkerIdList = this.selectedItem.tbl_job_workers.map(
       //   (jobWorker) => jobWorker.worker_id
