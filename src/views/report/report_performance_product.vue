@@ -1,170 +1,91 @@
 <template>
   <v-container fluid>
     <v-card class="ma-3">
-     <v-row class="mt-5 ml-5 mr-5 mb-3">
-  <v-col cols="12" md="12">
-    <v-row align="center" justify="center" class="mb-3 mt-3">
-      <v-toolbar-title class="text-h6">รายงานประสิทธิภาพการผลิต</v-toolbar-title>
-    </v-row>
+      <v-row class="mt-5 ml-5 mr-5 mb-3">
+        <v-col cols="12" md="12">
+          <v-row align="center" justify="center" class="mb-3 mt-3">
+            <v-toolbar-title class="text-h6">รายงานประสิทธิภาพการผลิต</v-toolbar-title>
+          </v-row>
 
-    <v-row dense>
-      <v-col cols="12" md="3">
-        <v-autocomplete
-          label="Work Center Group"
-          v-model="datasearch.work_center_group_id"
-          hide-details outlined dense
-          :items="workCenterGroups"
-          item-text="label"
-          item-value="id"
-          @change="changworkcentergrouptogetworkcenter"
-          clearable
-          @click:clear="
-            $nextTick(() => {
-              datasearch.work_center_id = null;
-              datasearch.mch_id = null;
-              workcenterlist = [];
-              machinelist = [];
-            })
-          "
-        ></v-autocomplete>
-      </v-col>
+          <v-row dense>
+            <v-col cols="12" md="3">
+              <v-autocomplete label="Work Center Group" v-model="datasearch.work_center_group_id" hide-details outlined
+                dense :items="workCenterGroups" item-text="label" item-value="id"
+                @change="changworkcentergrouptogetworkcenter" clearable @click:clear="
+                  $nextTick(() => {
+                    datasearch.work_center_id = null;
+                    datasearch.mch_id = null;
+                    workcenterlist = [];
+                    machinelist = [];
+                  })
+                  "></v-autocomplete>
+            </v-col>
 
-      <v-col cols="12" md="3">
-        <v-autocomplete
-          required outlined dense hide-details
-          :items="workcenterlist"
-          v-model="datasearch.work_center_id"
-          item-value="id"
-          :item-text="getgroupnameworkcenter"
-          label="Work Center"
-          @change="changworkcentertogetmch"
-          clearable
-          @click:clear="
-            $nextTick(() => {
-              datasearch.mch_id = null;
-              machinelist = [];
-            })
-          "
-        ></v-autocomplete>
-      </v-col>
+            <v-col cols="12" md="3">
+              <v-autocomplete required outlined dense hide-details :items="workcenterlist"
+                v-model="datasearch.work_center_id" item-value="id" :item-text="getgroupnameworkcenter"
+                label="Work Center" @change="changworkcentertogetmch" clearable @click:clear="
+                  $nextTick(() => {
+                    datasearch.mch_id = null;
+                    machinelist = [];
+                  })
+                  "></v-autocomplete>
+            </v-col>
 
-      <v-col cols="12" md="3">
-        <v-autocomplete
-          required outlined dense hide-details
-          :items="machinelist"
-          v-model="datasearch.mch_id"
-          item-value="id"
-          :item-text="getgroupnamemachine"
-          label="Machine"
-          clearable
-        ></v-autocomplete>
-      </v-col>
+            <v-col cols="12" md="3">
+              <v-autocomplete required outlined dense hide-details :items="machinelist" v-model="datasearch.mch_id"
+                item-value="id" :item-text="getgroupnamemachine" label="Machine" clearable></v-autocomplete>
+            </v-col>
 
-      <v-col cols="12" md="3">
-        <v-autocomplete
-          required outlined dense hide-details
-          :items="worker_list"
-          v-model="datasearch.worker_id"
-          item-value="id"
-          :item-text="getgroupnameworker"
-          label="Worker"
-          clearable
-        ></v-autocomplete>
-      </v-col>
-    </v-row>
+            <v-col cols="12" md="3">
+              <v-autocomplete required outlined dense hide-details :items="worker_list" v-model="datasearch.worker_id"
+                item-value="id" :item-text="getgroupnameworker" label="Worker" clearable></v-autocomplete>
+            </v-col>
+          </v-row>
 
-    <v-row dense class="mt-1">
-      <v-col cols="12" md="3">
-        <v-autocomplete
-          required outlined dense hide-details
-          :items="ord_list"
-          v-model="datasearch.work_order"
-          item-value="doc_running_no"
-          item-text="doc_running_no"
-          label="ORD"
-          clearable
-        ></v-autocomplete>
-      </v-col>
+          <v-row dense class="mt-1">
+            <v-col cols="12" md="3">
+              <v-autocomplete required outlined dense hide-details :items="ord_list" v-model="datasearch.work_order"
+                item-value="doc_running_no" item-text="doc_running_no" label="ORD" clearable></v-autocomplete>
+            </v-col>
 
-      <v-col cols="12" md="3">
-        <v-autocomplete
-          required outlined dense hide-details
-          :items="item_master_list"
-          v-model="datasearch.item_id"
-          item-value="item_id"
-          item-text="item_id"
-          label="Item"
-          clearable
-        ></v-autocomplete>
-      </v-col>
+            <v-col cols="12" md="3">
+              <v-autocomplete required outlined dense hide-details :items="item_master_list"
+                v-model="datasearch.item_id" item-value="item_id" item-text="item_id" label="Item"
+                clearable></v-autocomplete>
+            </v-col>
 
-      <v-col cols="12" md="2">
-        <v-menu
-          v-model="menusearchdatefrom"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              hide-details outlined dense
-              v-model="datasearch.datefrom"
-              persistent-hint
-              append-icon="mdi-calendar"
-              label="Date From"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="datefrom"
-            @input="menusearchdatefrom = false"
-          ></v-date-picker>
-        </v-menu>
-      </v-col>
+            <v-col cols="12" md="2">
+              <v-menu v-model="menusearchdatefrom" :close-on-content-click="false" :nudge-right="40"
+                transition="scale-transition" offset-y max-width="290px" min-width="auto">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field hide-details outlined dense v-model="datasearch.datefrom" persistent-hint
+                    append-icon="mdi-calendar" label="Date From" readonly v-bind="attrs" v-on="on"></v-text-field>
+                </template>
+                <v-date-picker v-model="datefrom" @input="menusearchdatefrom = false"></v-date-picker>
+              </v-menu>
+            </v-col>
 
-      <v-col cols="12" md="2">
-        <v-menu
-          v-model="menusearchdateto"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          transition="scale-transition"
-          offset-y
-          max-width="290px"
-          min-width="auto"
-        >
-          <template v-slot:activator="{ on, attrs }">
-            <v-text-field
-              hide-details outlined dense
-              v-model="datasearch.dateto"
-              persistent-hint
-              append-icon="mdi-calendar"
-              label="Date To"
-              readonly
-              v-bind="attrs"
-              v-on="on"
-            ></v-text-field>
-          </template>
-          <v-date-picker
-            v-model="dateto"
-            @input="menusearchdateto = false"
-          ></v-date-picker>
-        </v-menu>
-      </v-col>
+            <v-col cols="12" md="2">
+              <v-menu v-model="menusearchdateto" :close-on-content-click="false" :nudge-right="40"
+                transition="scale-transition" offset-y max-width="290px" min-width="auto">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field hide-details outlined dense v-model="datasearch.dateto" persistent-hint
+                    append-icon="mdi-calendar" label="Date To" readonly v-bind="attrs" v-on="on"></v-text-field>
+                </template>
+                <v-date-picker v-model="dateto" @input="menusearchdateto = false"></v-date-picker>
+              </v-menu>
+            </v-col>
 
-      <v-col cols="12" md="2">
-        <v-btn color="#254E58" dark @click="searchData" block>
-          <v-icon left>mdi-magnify</v-icon>
-          Search
-        </v-btn>
-      </v-col>
-    </v-row>
-  </v-col>
-</v-row>
+            <v-col cols="12" md="2">
+              <v-btn color="#254E58" dark @click="searchData" block>
+                <v-icon left>mdi-magnify</v-icon>
+                Search
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
 
 
       <div v-if="desserts.length > 0">
@@ -177,45 +98,50 @@
             nextIcon: 'mdi-plus',
           }">
           <template v-slot:item.ord_no="{ item }">
-  <div class="text-left">{{ item.ord_no }}</div>
-</template>
-<template v-slot:item.machine="{ item }">
-  <div class="text-left">{{ item.machine }}</div>
-</template>
-<template v-slot:item.item_id="{ item }">
-  <div class="text-left">{{ item.item_id }}</div>
-</template>
-<template v-slot:item.item_name="{ item }">
-  <div class="text-left">{{ item.item_name }}</div>
-</template>
-<template v-slot:item.opn_desc="{ item }">
-  <div class="text-left">{{ item.opn_desc }}</div>
-</template>
-<template v-slot:item.worker_name="{ item }">
-  <div class="text-left">{{ item.worker_name }}</div>
-</template>
-         <template v-slot:item.work_hours="{ item }">
-  <div style="text-align: right;">
-    {{ Number(item.work_hours).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
-  </div>
-</template> 
+            <div class="text-left">{{ item.ord_no }}</div>
+          </template>
+          <template v-slot:item.machine="{ item }">
+            <div class="text-left">{{ item.machine }}</div>
+          </template>
+          <template v-slot:item.item_id="{ item }">
+            <div class="text-left">{{ item.item_id }}</div>
+          </template>
+          <template v-slot:item.item_name="{ item }">
+            <div class="text-left">{{ item.item_name }}</div>
+          </template>
+          <template v-slot:item.opn_desc="{ item }">
+            <div class="text-left">{{ item.opn_desc }}</div>
+          </template>
+          <template v-slot:item.worker_name="{ item }">
+            <div class="text-left">{{ item.worker_name }}</div>
+          </template>
+          <template v-slot:item.work_hours="{ item }">
+            <div style="text-align: right;">
+              {{ Number(item.work_hours).toLocaleString(undefined, {
+                minimumFractionDigits: 2, maximumFractionDigits: 2
+              }) }}
+            </div>
+          </template>
 
-<template v-slot:item.qty="{ item }">
-  <div style="text-align: right;">
-    {{ Number(item.qty).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
-  </div>
-</template>
+          <template v-slot:item.qty="{ item }">
+            <div style="text-align: right;">
+              {{ Number(item.qty).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
+            </div>
+          </template>
 
-<template v-slot:item.stdqty="{ item }">
-  <div style="text-align: right;">
-    {{ Number(item.stdqty).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
-  </div>
-</template>
-<template v-slot:item.performance="{ item }">
-  <div style="text-align: right;">
-    {{ Number(item.performance).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}
-  </div>
-</template>
+          <template v-slot:item.stdqty="{ item }">
+            <div style="text-align: right;">
+              {{ Number(item.stdqty).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+              }}
+            </div>
+          </template>
+          <template v-slot:item.performance="{ item }">
+            <div style="text-align: right;">
+              {{ Number(item.performance).toLocaleString(undefined, {
+                minimumFractionDigits: 2, maximumFractionDigits: 2
+              }) }}
+            </div>
+          </template>
           <!-- <template v-slot:item.time="{ item }">
             {{ item.time_start }} - {{ item.time_end }}
           </template> -->
@@ -228,49 +154,53 @@
               </td>
               <td style="text-align: left;">
               </td>
-               <td style="text-align: left;">
+              <td style="text-align: left;">
               </td>
-               <td style="text-align: left;">
+              <td style="text-align: left;">
               </td>
-               <td style="text-align: left;">
+              <td style="text-align: left;">
               </td>
-               <td style="text-align: center;">
+              <td style="text-align: center;">
                 <h3>รวม</h3>
               </td>
               <td style="text-align: left;">
               </td>
               <td style="text-align: left;">
               </td>
-               <td style="text-align: left;">
-                  
+              <td style="text-align: left;">
+
               </td>
               <td style="text-align: right;">
                 <h4>
                   {{
-                      desserts.reduce(
-                        (sum, item) => sum + item.qty,
-                        0
-                      ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    desserts.reduce(
+                      (sum, item) => sum + item.qty,
+                      0
+                    ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                   }}
                 </h4>
               </td>
-                <td style="text-align: right;">
+              <td style="text-align: right;">
                 <h4>
                   {{
-                      desserts.reduce(
-                        (sum, item) => sum + item.stdqty,
-                        0
-                      ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                    desserts.reduce(
+                      (sum, item) => sum + item.stdqty,
+                      0
+                    ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
                   }}
                 </h4>
               </td>
-                    <td style="text-align: right;">
+              <td style="text-align: right;">
                 <h4>
                   {{
-                      desserts.reduce(
-                        (sum, item) => sum + Number(item.performance),
-                        0
+                    (
+                      (desserts.reduce((sum, item) => sum + Number(item.stdqty), 0) > 0
+                        ? (desserts.reduce((sum, item) => sum + Number(item.qty), 0) /
+                          desserts.reduce((sum, item) => sum + Number(item.stdqty), 0)) *
+                        100
+                        : 0
                       ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                  )
                   }}
                 </h4>
               </td>
@@ -336,31 +266,31 @@
                         class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
                         Item Name
                       </th>
-                       <th scope="colgroup"
+                      <th scope="colgroup"
                         class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
                         OPN Desc.
                       </th>
-                       <th scope="colgroup"
+                      <th scope="colgroup"
                         class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
                         Batch
                       </th>
-                       <th scope="colgroup"
+                      <th scope="colgroup"
                         class="prborderbottom prbordertop width15 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
                         Worker
                       </th>
-                       <th scope="colgroup"
+                      <th scope="colgroup"
                         class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
                         Actual Hours
                       </th>
-                       <th scope="colgroup"
+                      <th scope="colgroup"
                         class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
                         QTY
                       </th>
-                       <th scope="colgroup"
+                      <th scope="colgroup"
                         class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
                         Standard Hours
                       </th>
-                       <th scope="colgroup"
+                      <th scope="colgroup"
                         class="prborderbottom prbordertop width15 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
                         Performance
                       </th>
@@ -408,32 +338,32 @@
                       <td class="width20 textalignright prborderright prborderbottom captionnofontsize  fontsize7"
                         style="padding-right: 2px;">
                         {{ data.qty !== null && data.qty !== undefined
-      ? Number(data.qty).toLocaleString(undefined, { 
-          minimumFractionDigits: 2, 
-          maximumFractionDigits: 2 
-        }) 
-      : "-" 
-  }}
+                          ? Number(data.qty).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                        })
+                        : "-"
+                        }}
                       </td>
                       <td class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize7"
                         style="padding-right: 2px;">
                         {{ data.stdqty !== null && data.stdqty !== undefined
-      ? Number(data.stdqty).toLocaleString(undefined, { 
-          minimumFractionDigits: 2, 
-          maximumFractionDigits: 2 
-        }) 
-      : "-" 
-  }}
+                          ? Number(data.stdqty).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                        })
+                        : "-"
+                        }}
                       </td>
                       <td class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize7"
                         style="padding-right: 2px;">
                         {{ data.performance !== null && data.performance !== undefined
-      ? Number(data.performance).toLocaleString(undefined, { 
-          minimumFractionDigits: 2, 
-          maximumFractionDigits: 2 
-        }) 
-      : "-" 
-  }}
+                          ? Number(data.performance).toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                        })
+                        : "-"
+                        }}
                       </td>
                     </tr>
                   </table>
@@ -543,16 +473,16 @@ export default {
     machinelist: [],
     shifts: [],
     worker_list: [],
-    ord_list:[],
-    item_master_list:[],
+    ord_list: [],
+    item_master_list: [],
     datasearch: {
       wc_group: null,
       work_center_group_id: null,
       work_center_id: null,
       mch_id: null,
-      worker_id:null,
-      work_order:null,
-      item_id:null,
+      worker_id: null,
+      work_order: null,
+      item_id: null,
       datefrom: vm.formatDate(
         new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
           .toISOString()
@@ -666,7 +596,7 @@ export default {
       { text: "Actual Hours", value: "work_hours", align: "center" },
       { text: "QTY", value: "qty", align: "center" },
       { text: "Standard Hours", value: "stdqty", align: "center" },
-      { text: "Performance", value: "performance", align: "center" },
+      { text: "% Performance", value: "performance", align: "center" },
     ],
     headerssum: [
       {
@@ -880,9 +810,9 @@ export default {
       this.$store.state.isLogged = false;
       this.$router.push("/login");
     }
-    
+
   },
-  
+
 
   methods: {
     async loadWorkCenterGroup() {
@@ -892,21 +822,21 @@ export default {
       this.workCenterGroups = response.data.map(data => ({ ...data, label: `${data.work_center_group_id}: ${data.work_center_group_name}` }));
     },
 
- async loadDownWorker() {
+    async loadDownWorker() {
       const response = await api.getWorkerByCompany(
         localStorage.getItem(server.COMPANYID)
       );
       this.worker_list = response.data;
       // this.workCenterGroups = response.data.map(data => ({ ...data, label: `${data.work_center_group_id}: ${data.work_center_group_name}` }));
     },
-     async loadItemMaster() {
+    async loadItemMaster() {
       const res_get = await api.getItemMasterByCompanyID(
         localStorage.getItem(server.COMPANYID)
       );
       this.item_master_list = res_get.data;
     },
     async loadORD() {
-       const result = await api.getOrderByCompanyID(
+      const result = await api.getOrderByCompanyID(
         localStorage.getItem(server.COMPANYID)
       );
       this.ord_list = result.data;
@@ -931,7 +861,7 @@ export default {
       // wb.Sheets.summary_activity_report.F1 = { t: "s", c: 0, v: "" };
       // wb.Sheets.summary_activity_report.G1 = { t: "s", c: 0, v: "" };
 
-        wb.Sheets.summary_activity_report.A1 = { t: "s", v: "Date" };
+      wb.Sheets.summary_activity_report.A1 = { t: "s", v: "Date" };
       wb.Sheets.summary_activity_report.B1 = { t: "s", v: "ORD" };
       wb.Sheets.summary_activity_report.C1 = { t: "s", v: "MCH" };
       wb.Sheets.summary_activity_report.D1 = { t: "s", v: "Item ID" };
@@ -961,14 +891,14 @@ export default {
       let setexportxlsx = [];
       dataexport.forEach((x, index) => {
         setexportxlsx.splice(index + 0, 0, {
-         tcdate: x.tcdate,
-         ord_no: x.ord_no,
-         machine: x.machine,
-         item_id: x.item_id,
-         item_name: x.item_name,
-         opn_desc: x.opn_desc,
-         batch: x.batch, 
-        worker_name: x.worker_name,
+          tcdate: x.tcdate,
+          ord_no: x.ord_no,
+          machine: x.machine,
+          item_id: x.item_id,
+          item_name: x.item_name,
+          opn_desc: x.opn_desc,
+          batch: x.batch,
+          worker_name: x.worker_name,
           qty: Number(x.qty),
           stdqty: Number(x.stdqty),
           performance: Number(x.performance),
@@ -986,9 +916,9 @@ export default {
       //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
       let checklineforsig = 10;
       //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 22;
+      let linedetailprpo = 10;
       //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
-      let datainlineprpo = 2;
+      let datainlineprpo = 21;
       let addnewbutget = 0;
       let getdata = [];
       let getnewdata = [];
@@ -1180,31 +1110,31 @@ export default {
       this.desserts = [];
       this.dessertssum = [];
       this.$showLoader();
-    console.log(this.datasearch);
-      if(this.datasearch.work_center_group_id){
-       const getrcg =  this.workCenterGroups.filter(
-                    (item) => item.id == this.datasearch.work_center_group_id
-                  );
-                  this.datasearch.wc_group = getrcg[0].work_center_group_id;
-                  }
-                  else{
-                    this.datasearch.wc_group = null;
-                  }
-      const result =  await api.GetListPerformanceReport(this.datasearch
-      //   {datefrom:this.datefrom,dateto:this.dateto,
-      //   wc_group:this.datasearch.wc_group,wc_id:this.datasearch.work_center_id,
-      //   mch_id:this.datasearch.mch_id,downtime_id:this.datasearch.downtime_id
-                    
-      // }
-    );
-    console.log(result);
-    
-      if(result.data.length > 0){
-        result.data.forEach(async(x,i)=>{
-        this.desserts.push(x);
-        await this.checkcontent(this.desserts);
-        await this.setexporttoxlsx(this.desserts);
-      });
+      console.log(this.datasearch);
+      if (this.datasearch.work_center_group_id) {
+        const getrcg = this.workCenterGroups.filter(
+          (item) => item.id == this.datasearch.work_center_group_id
+        );
+        this.datasearch.wc_group = getrcg[0].work_center_group_id;
+      }
+      else {
+        this.datasearch.wc_group = null;
+      }
+      const result = await api.GetListPerformanceReport(this.datasearch
+        //   {datefrom:this.datefrom,dateto:this.dateto,
+        //   wc_group:this.datasearch.wc_group,wc_id:this.datasearch.work_center_id,
+        //   mch_id:this.datasearch.mch_id,downtime_id:this.datasearch.downtime_id
+
+        // }
+      );
+      console.log(result);
+
+      if (result.data.length > 0) {
+        result.data.forEach(async (x, i) => {
+          this.desserts.push(x);
+          await this.checkcontent(this.desserts);
+          await this.setexporttoxlsx(this.desserts);
+        });
       }
       this.$hideLoader();
     },
@@ -1741,7 +1671,7 @@ export default {
     getgroupnamemachine(item) {
       return `${item.machine_id}:${item.name}`;
     },
-getgroupnameworker(item) { 
+    getgroupnameworker(item) {
       return `${item.prename_th} ${item.firstname} ${item.lastname}`;
     },
     async savechangeapproval() {
@@ -2577,6 +2507,7 @@ footer {
   overflow: hidden;
   text-align: center;
 }
+
 .fontsize7 {
   font-size: 7px !important;
 }
