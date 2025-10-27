@@ -1097,8 +1097,9 @@ async loadDownWorker() {
     },
 
   async loadORD() {
-       const result = await api.getOrderByCompanyID(
-        localStorage.getItem(server.COMPANYID)
+       const result = await api.getOrderByQuery(
+        localStorage.getItem(server.COMPANYID),
+        {doc_status:""}
       );
       this.ord_list = result.data;
     },
@@ -2171,8 +2172,8 @@ h3 {
 }
 h4 {
   font-size: 1em;
-  font-family: "TH Sarabun New";
-  /* font-family: "Roboto", sans-serif; */
+  /* font-family: "TH Sarabun New"; */
+  font-family: "Roboto", sans-serif;
 }
 
 .test {
