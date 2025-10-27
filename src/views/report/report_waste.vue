@@ -3,15 +3,12 @@
     <v-card class="ma-3">
       <v-row class="mt-5 ml-5 mr-5 mb-3">
         <v-col cols="12" md="12">
+              <v-row align="center" justify="center" class="mb-3 mt-3">
+      <v-toolbar-title class="text-h6">รายงานของเสีย</v-toolbar-title>
+    </v-row>
           <v-row>
-              <v-col cols="12" md="2">
-            <v-toolbar-title class="text-h6 mt-4"
-              >รายงานของเสีย :
-            </v-toolbar-title>
-            <!-- <v-divider class="mx-4" inset vertical></v-divider> -->
-            </v-col>
-            <v-col cols="12" md="2">
-              <v-autocomplete class="" label="Work Center Group" v-model="datasearch.work_center_group_id" outlined
+            <v-col cols="12" md="3">
+              <v-autocomplete class="" label="Work Center Group" v-model="datasearch.work_center_group_id" outlined hide-details
               dense :items="workCenterGroups" item-text="label" item-value="id" @change="changworkcentergrouptogetworkcenter" clearable
               @click:clear="
                   $nextTick(() => {
@@ -23,8 +20,9 @@
                   "></v-autocomplete>
             </v-col>
             
-            <v-col cols="12" md="2">
+            <v-col cols="12" md="3">
                <v-autocomplete
+               hide-details
                           required
                           outlined
                           :items="workcenterlist"
@@ -44,8 +42,9 @@
                         ></v-autocomplete>
             </v-col>
 
-            <v-col cols="12" md="2">
+            <v-col cols="12" md="3">
                <v-autocomplete
+               hide-details
                           required
                           outlined
                           :items="machinelist"
@@ -58,8 +57,9 @@
                         ></v-autocomplete>
             </v-col>
 
-             <v-col cols="12" md="2">
+             <v-col cols="12" md="3">
                <v-autocomplete
+               hide-details
                           required
                           outlined
                           :items="worker_list"
@@ -71,9 +71,12 @@
                           clearable
                         ></v-autocomplete>
             </v-col>
+             </v-row> 
 
-               <v-col cols="12" md="2">
+            <v-row>
+               <v-col cols="12" md="3">
                <v-autocomplete
+               hide-details
                           required
                           outlined
                           :items="ord_list"
@@ -86,10 +89,11 @@
                         ></v-autocomplete>
             </v-col>
 
-             <v-col cols="12" md="2"></v-col>
+             <!-- <v-col cols="12" md="3"></v-col> -->
 
-               <v-col cols="12" md="2">
+               <v-col cols="12" md="3">
                <v-autocomplete
+               hide-details
                           required
                           outlined
                           :items="item_master_list"
@@ -114,10 +118,11 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                  hide-details
                     v-model="datasearch.datefrom"
                     persistent-hint
                     append-icon="mdi-calendar"
-                    label="Date Drom"
+                    label="Date From"
                     readonly
                     v-bind="attrs"
                     v-on="on"
@@ -145,6 +150,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
+                  hide-details
                     v-model="datasearch.dateto"
                     persistent-hint
                     append-icon="mdi-calendar"
@@ -165,7 +171,7 @@
               </v-col>
 
             <v-col cols="12" md="2">
-              <v-btn color="#254E58" dark class="mb-2 mr-2" @click="searchData">
+              <v-btn color="#254E58" dark class="mb-2 mr-2"  @click="searchData" block>
                 <v-icon>mdi-magnify</v-icon>
                 Search
               </v-btn>
@@ -2787,94 +2793,7 @@ footer {
   flex: 0 0 15%;
   max-width: 15%;
 }
-.col-md-1 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 8.333333333333333%;
-  flex: 0 0 8.333333333333333%;
-  max-width: 8.333333333333333%;
-}
-.col-md-2 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 16.66666666666667%;
-  flex: 0 0 16.66666666666667%;
-  max-width: 16.66666666666667%;
-}
 
-.col-md-3 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 20%;
-  flex: 0 0 20%;
-  max-width: 20%;
-}
-
-.col-md-4 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 33.33333333333333%;
-  flex: 0 0 33.33333333333333%;
-  max-width: 33.33333333333333%;
-}
-
-.col-md-5 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 41.66666666666667%;
-  flex: 0 0 41.66666666666667%;
-  max-width: 41.66666666666667%;
-}
-
-.col-md-6 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 50%;
-  flex: 0 0 50%;
-  max-width: 50%;
-}
-.col-md-7 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 58.33333333333333%;
-  flex: 0 0 58.33333333333333%;
-  max-width: 58.33333333333333%;
-}
-.col-md-8 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 66.66666666666667%;
-  flex: 0 0 66.66666666666667%;
-  max-width: 66.66666666666667%;
-}
-.col-md-9 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 75%;
-  flex: 0 0 75%;
-  max-width: 75%;
-}
-.col-md-10 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 83.33333333333333%;
-  flex: 0 0 83.33333333333333%;
-  max-width: 83.33333333333333%;
-}
-.col-md-11 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 91.66666666666667%;
-  flex: 0 0 91.66666666666667%;
-  max-width: 91.66666666666667%;
-}
-.col-md-12 {
-  word-wrap: break-word;
-  -webkit-box-flex: 0;
-  -ms-flex: 0 0 100%;
-  flex: 0 0 100%;
-  max-width: 100%;
-}
 .textfontbold {
   font-weight: 900;
 }
