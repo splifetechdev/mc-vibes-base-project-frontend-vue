@@ -595,7 +595,7 @@ export default {
       { text: "Worker", value: "worker_name", align: "center" },
       { text: "Actual Hours", value: "work_hours", align: "center" },
       { text: "QTY", value: "qty", align: "center" },
-      { text: "Standard Hours", value: "stdqty", align: "center" },
+      { text: "Standard QTY", value: "stdqty", align: "center" },
       { text: "% Performance", value: "performance", align: "center" },
     ],
     headerssum: [
@@ -836,8 +836,9 @@ export default {
       this.item_master_list = res_get.data;
     },
     async loadORD() {
-      const result = await api.getOrderByCompanyID(
-        localStorage.getItem(server.COMPANYID)
+       const result = await api.getOrderByQuery(
+        localStorage.getItem(server.COMPANYID),
+        {doc_status:""}
       );
       this.ord_list = result.data;
     },
