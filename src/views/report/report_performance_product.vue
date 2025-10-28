@@ -288,11 +288,11 @@
                       </th>
                       <th scope="colgroup"
                         class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Standard Hours
+                        Standard QTY
                       </th>
                       <th scope="colgroup"
                         class="prborderbottom prbordertop width15 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Performance
+                        % Performance
                       </th>
 
                     </tr>
@@ -871,8 +871,8 @@ export default {
       wb.Sheets.summary_activity_report.G1 = { t: "s", v: "Batch" };
       wb.Sheets.summary_activity_report.H1 = { t: "s", v: "Worker" };
       wb.Sheets.summary_activity_report.I1 = { t: "s", v: "QTY" };
-      wb.Sheets.summary_activity_report.J1 = { t: "s", v: "Standard Hours" };
-      wb.Sheets.summary_activity_report.K1 = { t: "s", v: "Performance" };
+      wb.Sheets.summary_activity_report.J1 = { t: "s", v: "Standard QTY" };
+      wb.Sheets.summary_activity_report.K1 = { t: "s", v: "% Performance" };
 
       // wb.Sheets.summary_activity_report["!merges"] = merge;
     },
