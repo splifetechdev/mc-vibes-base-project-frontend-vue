@@ -512,16 +512,7 @@
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
                         style="padding-right: 2px;"
                       >
-                        {{
-                    (
-                      (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) > 0
-                        ? (desserts.reduce((sum, item) => sum + Number(item.qty), 0) /
-                          desserts.reduce((sum, item) => sum + Number(item.defectqty), 0)) *
-                        100
-                        : 0
-                      ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                  )
-                  }}
+                        {{ data.percentqty ? data.percentqty : "-" }}
                       </td>
                     </tr>
                     <tr class="textfontbold" v-if="pageAll == index">
