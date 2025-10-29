@@ -512,7 +512,16 @@
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
                         style="padding-right: 2px;"
                       >
-                        {{ data.percentqty ? data.percentqty : "-" }}
+                        {{
+                    (
+                      (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) > 0
+                        ? (desserts.reduce((sum, item) => sum + Number(item.qty), 0) /
+                          desserts.reduce((sum, item) => sum + Number(item.defectqty), 0)) *
+                        100
+                        : 0
+                      ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                  )
+                  }}
                       </td>
                     </tr>
                     <tr class="textfontbold" v-if="pageAll == index">
@@ -584,10 +593,14 @@
                         style="padding-right: 2px;"
                       >
                       {{
-                      fntolocalestringnumber(desserts.reduce(
-                        (sum, item) => sum + Number(item.percentqty),
-                        0
-                      ))
+                    (
+                      (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) > 0
+                        ? (desserts.reduce((sum, item) => sum + Number(item.qty), 0) /
+                          desserts.reduce((sum, item) => sum + Number(item.defectqty), 0)) *
+                        100
+                        : 0
+                      ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                  )
                   }}
                       </td>
                     </tr>
