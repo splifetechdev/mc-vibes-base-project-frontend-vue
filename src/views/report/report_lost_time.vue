@@ -1812,22 +1812,24 @@ this.dessertssum = withPercent;
       this.dialogchangeapproval = true;
     },
      async changworkcentergrouptogetworkcenter(work_center_group_id) {
+      this.workcenterlist = [];
       if(work_center_group_id){
        this.$showLoader();
         const getrcg =  this.workCenterGroups.filter(
                     (item) => item.id == this.datasearch.work_center_group_id
                   );
                   this.datasearch.wc_group = getrcg[0].work_center_group_id;
-      const result = await api.getWorkCenterMaster(work_center_group_id);
+                  if(this.datasearch.wc_group){
+      const result = await api.getbyWorkcentergroup(this.datasearch.wc_group);
       this.datasearch.work_center_id = null;
       this.datasearch.mch_id = null;
       this.workcenterlist = result.data;
+        }
        this.$hideLoader();
       }
-     
     },
     async changworkcentertogetmch(work_center_id) {
-       
+       this.machinelist = [];
          if(work_center_id){
             this.$showLoader();
       const result = await api.listMachineByWorkcenterID(work_center_id);
