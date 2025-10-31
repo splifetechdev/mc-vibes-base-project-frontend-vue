@@ -10,7 +10,7 @@
           <v-row dense>
             <v-col cols="12" md="3">
               <v-autocomplete label="Work Center Group" v-model="datasearch.work_center_group_id" hide-details outlined
-                dense :items="workCenterGroups" item-text="label" item-value="id"
+                dense :items="workCenterGroups" :item-text="getwork_center_group_name" item-value="work_center_group_id"
                 @change="changworkcentergrouptogetworkcenter" clearable @click:clear="
                   $nextTick(() => {
                     datasearch.work_center_id = null;
@@ -1113,10 +1113,10 @@ export default {
       this.$showLoader();
       console.log(this.datasearch);
       if (this.datasearch.work_center_group_id) {
-        const getrcg = this.workCenterGroups.filter(
-          (item) => item.id == this.datasearch.work_center_group_id
-        );
-        this.datasearch.wc_group = getrcg[0].work_center_group_id;
+        // const getrcg = this.workCenterGroups.filter(
+        //   (item) => item.id == this.datasearch.work_center_group_id
+        // );
+        // this.datasearch.wc_group = this.datasearch.work_center_group_id
       }
       else {
         this.datasearch.wc_group = null;
@@ -1647,7 +1647,8 @@ export default {
     async changworkcentergrouptogetworkcenter(work_center_group_id) {
       if (work_center_group_id) {
         this.$showLoader();
-        const result = await api.getWorkCenterMaster(work_center_group_id);
+        this.datasearch.wc_group = this.datasearch.work_center_group_id;
+        const result = await api.getbyWorkcentergroup(work_center_group_id);
         this.datasearch.work_center_id = null;
         this.datasearch.mch_id = null;
         this.workcenterlist = result.data;
@@ -1668,6 +1669,9 @@ export default {
     },
     getgroupnameworkcenter(item) {
       return `${item.wc_id}:${item.wc_name}`;
+    },
+    getwork_center_group_name(item) {
+      return `${item.work_center_group_id}:${item.work_center_group_name}`;
     },
     getgroupnamemachine(item) {
       return `${item.machine_id}:${item.name}`;

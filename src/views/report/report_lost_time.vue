@@ -10,7 +10,7 @@
           <v-row> 
             <v-col cols="12" md="3">
              <v-autocomplete class="" label="Work Center Group" v-model="datasearch.work_center_group_id" outlined hide-details
-              dense :items="workCenterGroups" item-text="label" item-value="id" @change="changworkcentergrouptogetworkcenter" clearable
+              dense :items="workCenterGroups" :item-text="getwork_center_group_name" item-value="work_center_group_id" @change="changworkcentergrouptogetworkcenter" clearable
               @click:clear="
                   $nextTick(() => {
                     datasearch.work_center_id = null;
@@ -1812,33 +1812,31 @@ this.dessertssum = withPercent;
       this.dialogchangeapproval = true;
     },
      async changworkcentergrouptogetworkcenter(work_center_group_id) {
-      if(work_center_group_id){
-       this.$showLoader();
-        const getrcg =  this.workCenterGroups.filter(
-                    (item) => item.id == this.datasearch.work_center_group_id
-                  );
-                  this.datasearch.wc_group = getrcg[0].work_center_group_id;
-      const result = await api.getWorkCenterMaster(work_center_group_id);
-      this.datasearch.work_center_id = null;
-      this.datasearch.mch_id = null;
-      this.workcenterlist = result.data;
-       this.$hideLoader();
+      if (work_center_group_id ) {
+      this.$showLoader();
+      this.datasearch.wc_group = this.datasearch.work_center_group_id;
+      const result = await api.getbyWorkcentergroup(work_center_group_id);
+        this.datasearch.work_center_id = null;
+        this.datasearch.mch_id = null;
+        this.workcenterlist = result.data;
+        this.$hideLoader();
       }
-     
     },
     async changworkcentertogetmch(work_center_id) {
-       
-         if(work_center_id){
-            this.$showLoader();
-      const result = await api.listMachineByWorkcenterID(work_center_id);
-      this.datasearch.mch_id = null;
-      this.machinelist = result.data;
+      if (work_center_id) {
+        this.$showLoader();
+        const result = await api.listMachineByWorkcenterID(work_center_id);
+        this.datasearch.mch_id = null;
+        this.machinelist = result.data;
         this.$hideLoader();
       }
     
     },
     getgroupnameworkcenter(item) {
       return `${item.wc_id}:${item.wc_name}`;
+    },
+     getwork_center_group_name(item) {
+      return `${item.work_center_group_id}:${item.work_center_group_name}`;
     },
     getgroupnamemachine(item) {
       return `${item.machine_id}:${item.name}`;
