@@ -10,7 +10,7 @@
           <v-row dense>
             <v-col cols="12" md="3">
               <v-autocomplete label="Work Center Group" v-model="datasearch.work_center_group_id" hide-details outlined
-                dense :items="workCenterGroups" item-text="label" item-value="id"
+                dense :items="workCenterGroups" :item-text="getwork_center_group_name" item-value="work_center_group_id"
                 @change="changworkcentergrouptogetworkcenter" clearable @click:clear="
                   $nextTick(() => {
                     datasearch.work_center_id = null;
@@ -288,11 +288,11 @@
                       </th>
                       <th scope="colgroup"
                         class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Standard Hours
+                        Standard QTY
                       </th>
                       <th scope="colgroup"
                         class="prborderbottom prbordertop width15 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Performance
+                        % Performance
                       </th>
 
                     </tr>
@@ -595,7 +595,7 @@ export default {
       { text: "Worker", value: "worker_name", align: "center" },
       { text: "Actual Hours", value: "work_hours", align: "center" },
       { text: "QTY", value: "qty", align: "center" },
-      { text: "Standard Hours", value: "stdqty", align: "center" },
+      { text: "Standard QTY", value: "stdqty", align: "center" },
       { text: "% Performance", value: "performance", align: "center" },
     ],
     headerssum: [
@@ -836,8 +836,9 @@ export default {
       this.item_master_list = res_get.data;
     },
     async loadORD() {
-      const result = await api.getOrderByCompanyID(
-        localStorage.getItem(server.COMPANYID)
+       const result = await api.getOrderByQuery(
+        localStorage.getItem(server.COMPANYID),
+        {doc_status:""}
       );
       this.ord_list = result.data;
     },
@@ -870,8 +871,8 @@ export default {
       wb.Sheets.summary_activity_report.G1 = { t: "s", v: "Batch" };
       wb.Sheets.summary_activity_report.H1 = { t: "s", v: "Worker" };
       wb.Sheets.summary_activity_report.I1 = { t: "s", v: "QTY" };
-      wb.Sheets.summary_activity_report.J1 = { t: "s", v: "Standard Hours" };
-      wb.Sheets.summary_activity_report.K1 = { t: "s", v: "Performance" };
+      wb.Sheets.summary_activity_report.J1 = { t: "s", v: "Standard QTY" };
+      wb.Sheets.summary_activity_report.K1 = { t: "s", v: "% Performance" };
 
       // wb.Sheets.summary_activity_report["!merges"] = merge;
     },
@@ -1112,10 +1113,10 @@ export default {
       this.$showLoader();
       console.log(this.datasearch);
       if (this.datasearch.work_center_group_id) {
-        const getrcg = this.workCenterGroups.filter(
-          (item) => item.id == this.datasearch.work_center_group_id
-        );
-        this.datasearch.wc_group = getrcg[0].work_center_group_id;
+        // const getrcg = this.workCenterGroups.filter(
+        //   (item) => item.id == this.datasearch.work_center_group_id
+        // );
+        // this.datasearch.wc_group = this.datasearch.work_center_group_id
       }
       else {
         this.datasearch.wc_group = null;
@@ -1646,7 +1647,8 @@ export default {
     async changworkcentergrouptogetworkcenter(work_center_group_id) {
       if (work_center_group_id) {
         this.$showLoader();
-        const result = await api.getWorkCenterMaster(work_center_group_id);
+        this.datasearch.wc_group = this.datasearch.work_center_group_id;
+        const result = await api.getbyWorkcentergroup(work_center_group_id);
         this.datasearch.work_center_id = null;
         this.datasearch.mch_id = null;
         this.workcenterlist = result.data;
@@ -1667,6 +1669,9 @@ export default {
     },
     getgroupnameworkcenter(item) {
       return `${item.wc_id}:${item.wc_name}`;
+    },
+    getwork_center_group_name(item) {
+      return `${item.work_center_group_id}:${item.work_center_group_name}`;
     },
     getgroupnamemachine(item) {
       return `${item.machine_id}:${item.name}`;
