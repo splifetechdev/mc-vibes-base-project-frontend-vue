@@ -333,7 +333,7 @@ export default {
     },
     async loadWorkers() {
       this.$showLoader();
-      const response = await api.getWorkerByCompany();
+      const response = await api.getWorkerBystatus();
       this.workers = response.data.map((data) => ({
         ...data,
         label: `${data.emp_id}:${data.firstname} ${data.lastname}`,
