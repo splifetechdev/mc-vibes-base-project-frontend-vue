@@ -44,7 +44,7 @@
           </v-col>
           <v-col cols="12" md="3">
             <v-autocomplete outlined clearable label="Production Order" v-model="selectedOperation" hide-details
-              :items="operations" item-value="id" item-text="label" dense></v-autocomplete>
+              :items="operations" item-value="doc_running_no" item-text="label" dense></v-autocomplete>
           </v-col>
         </v-col>
       </v-row>
@@ -111,10 +111,10 @@ export default {
         { text: "OPN", value: "opn_desc" },
         { text: "Item ID", value: "item_id" },
         { text: "Item Name", value: "item_name" },
-        { text: "Hours", value: "hours" },
-        { text: "Standard Pcs", value: "standard_pcs" },
-        { text: "Actual QTY", value: "actual_pcs" },
-        { text: "%P", value: "performance" },
+        { text: "Hours", value: "hours" ,align: "right"},
+        { text: "Standard Pcs", value: "standard_pcs",align: "right" },
+        { text: "Actual QTY", value: "actual_pcs",align: "right" },
+        { text: "%P", value: "performance",align: "right" },
       ],
       workCenterGroups: [],
       workCenters: [],
@@ -257,8 +257,9 @@ export default {
       this.items = response.data
     },
     async loadOpn() {
-      const response = await api.getOpnOrdOption(localStorage.getItem(server.COMPANYID))
-      this.operations = response.data
+      const response = await api.getOrderByQuery(localStorage.getItem(server.COMPANYID),
+        {doc_status:""})
+      this.operations =  response.data.map(data => ({ ...data, label: `${data.doc_running_no}` }));
     },
     getMachineAvailability() {
       this.machineAvailability = this.data.reduce((acc, cur) => {
