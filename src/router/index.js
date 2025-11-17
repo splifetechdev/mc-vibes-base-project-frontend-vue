@@ -136,10 +136,24 @@ import CalculateCost from "@/views/costing/calculatecost.vue";
 import FileImportSystem from "@/views/fileimportsystem/FileImportSystem.vue";
 
 
+import CreditNotePDF from "../views/pdfMake/CreditNotePDF.vue";
+import TestPDFMake from "../views/pdfMake/TestPDFMake.vue";
+
+
 
 Vue.use(VueRouter);
 
 const routes = [
+      {
+    path: "/test-pdf-make",
+    name: "TestPDFMake",
+    component: TestPDFMake,
+  },
+    {
+    path: "/credit-note-pdf",
+    name: "CreditNotePDF",
+    component: CreditNotePDF,
+  },
      {
     path: "/report-waste",
     meta: {
