@@ -247,12 +247,12 @@
                 </h4>
               </td>
                     <td style="text-align: right;">
-                <h4>
+                 <h4>
                   {{
                     (
-                      (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) > 0
-                        ? (desserts.reduce((sum, item) => sum + Number(item.qty), 0) /
-                          desserts.reduce((sum, item) => sum + Number(item.defectqty), 0)) *
+                      (desserts.reduce((sum, item) => sum + Number(item.qty), 0) > 0
+                        ? (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) /
+                          desserts.reduce((sum, item) => sum + Number(item.qty), 0)) *
                         100
                         : 0
                       ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
@@ -583,11 +583,11 @@
                         class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
                         style="padding-right: 2px;"
                       >
-                      {{
+                       {{
                     (
-                      (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) > 0
-                        ? (desserts.reduce((sum, item) => sum + Number(item.qty), 0) /
-                          desserts.reduce((sum, item) => sum + Number(item.defectqty), 0)) *
+                      (desserts.reduce((sum, item) => sum + Number(item.qty), 0) > 0
+                        ? (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) /
+                          desserts.reduce((sum, item) => sum + Number(item.qty), 0)) *
                         100
                         : 0
                       ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
