@@ -209,188 +209,60 @@
           </template>
         </v-data-table>
 
-        <div id="mydivhtmltobase" v-if="desserts.length > 0">
-          <div v-for="index in pageAll">
-            <div class="aligncenter setfontfamily" id="foo">
-              <page size="A4" class="aligncenter">
-                <div class="aligncenter">
-                  <!-- <div class="rowprpo mt20prpo">
-                    <div class="col-md-6">
-                      <img
-                    src="@/assets/sp65.png"
-                    alt=""
-                    width="30%"
-                    contain
-                    class="alignleft colprpo ml30prpo"
-                  />
-                    </div>
-                    <div class="col-md-6">
-                      <p class="alignright colprpo mr30prpo fontsize14">
-                        วันที่เรียกรายงาน :
-                        {{ datenowFormatted }}
-                      </p>
-                      <p class="alignright caption colprpo mr30prpo">
-                    Page {{ index }} of {{ pageAll }}
-                  </p>
-                    </div>
-                  </div> -->
-                  <div class="rowprpo aligncenter ">
-                    <div class="col-md-12 mb20prpo">
-                      <h3>
-                        รายงานประสิทธิภาพการผลิต
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="rowprpo captiontableheader  ml30prpo mr30prpo" style="margin-top:3px">
-                  <table class="captiontableheader">
-                    <tr>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop prborderleft width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Date
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        ORD
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Machine
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Item ID
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Item Name
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        OPN Desc.
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Batch
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width15 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Worker
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Actual Hours
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        QTY
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        Standard QTY
-                      </th>
-                      <th scope="colgroup"
-                        class="prborderbottom prbordertop width15 captiontableheader prborderright bgcolorgray textfontbold fontsize10">
-                        % Performance
-                      </th>
-
-                    </tr>
-
-                    <tr v-for="(data, i) in setdatatoshow[index - 1]" id="content">
-                      <td
-                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize   fontsize7"
-                        style="position: relative;padding-right: 2px;">
-                        {{ data.tcdate ? data.tcdate : "-" }}
-                      </td>
-                      <td class="width20 textalignleft prborderright prborderbottom captionnofontsize   fontsize7"
-                        style="padding-left: 2px;">
-                        {{ data.ord_no ? data.ord_no : "-" }}
-                      </td>
-                      <td class="width20 textalignleft prborderright prborderbottom captionnofontsize   fontsize7"
-                        style="padding-left: 2px;">
-                        {{ data.machine ? data.machine : "-" }}
-                      </td>
-                      <td class="width20 textalignleft prborderright prborderbottom captionnofontsize   fontsize7"
-                        style="padding-left: 2px;">
-                        {{ data.item_id ? data.item_id : "-" }}
-                      </td>
-                      <td class="width20 textalignleft prborderright prborderbottom captionnofontsize  fontsize7"
-                        style="padding-right: 2px;">
-                        {{ data.item_name ? data.item_name : "-" }}
-                      </td>
-                      <td class="width20 textalignleft prborderright prborderbottom captionnofontsize  fontsize7"
-                        style="padding-right: 2px;">
-                        {{ data.opn_desc ? data.opn_desc : "-" }}
-                      </td>
-                      <td class="width20 textalignright prborderright prborderbottom captionnofontsize  fontsize7"
-                        style="padding-right: 2px;">
-                        {{ data.batch ? data.batch : "-" }}
-                      </td>
-                      <td class="width20 textalignleft prborderright prborderbottom captionnofontsize  fontsize7"
-                        style="padding-right: 2px;">
-                        {{ data.worker_name ? data.worker_name : "-" }}
-                      </td>
-                      <td class="width20 textalignright prborderright prborderbottom captionnofontsize  fontsize7"
-                        style="padding-right: 2px;">
-                        {{ data.work_hours ? data.work_hours : "-" }}
-                      </td>
-                      <td class="width20 textalignright prborderright prborderbottom captionnofontsize  fontsize7"
-                        style="padding-right: 2px;">
-                        {{ data.qty !== null && data.qty !== undefined
-                          ? Number(data.qty).toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                        })
-                        : "-"
-                        }}
-                      </td>
-                      <td class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize7"
-                        style="padding-right: 2px;">
-                        {{ data.stdqty !== null && data.stdqty !== undefined
-                          ? Number(data.stdqty).toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                        })
-                        : "-"
-                        }}
-                      </td>
-                      <td class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize7"
-                        style="padding-right: 2px;">
-                        {{ data.performance !== null && data.performance !== undefined
-                          ? Number(data.performance).toLocaleString(undefined, {
-                            minimumFractionDigits: 2,
-                        maximumFractionDigits: 2
-                        })
-                        : "-"
-                        }}
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </page>
-            </div>
-          </div>
-        </div>
+       
         <v-card-actions class="mt-5">
-          <v-spacer></v-spacer>
-
-          <v-btn dark width="200" color="blue white--text" class="mb-2" @click="exportToPDFPreview('portrait')">
-            print
-          </v-btn>
-
-          <xlsx-workbook @change="onChange" @created="onCreated">
-            <xlsx-sheet :collection="sheet.data" v-for="sheet in sheets" :key="sheet.name" :sheet-name="sheet.name" />
-            <xlsx-download :filename="exportsumfilename">
-              <v-btn dark width="200" color="green white--text mb-2 ml-2">
-                <span>Export</span>
-                <v-icon small center>mdi-download</v-icon>
+              <v-spacer></v-spacer>
+              <!-- พิมพ์ PDF -->
+              <v-btn
+                dark
+                width="200"
+                color="blue white--text"
+                class="mb-2"
+                @click="printPerformancePDF"
+              >
+                <v-icon small left>mdi-printer</v-icon>
+                พิมพ์ PDF
               </v-btn>
-            </xlsx-download>
-          </xlsx-workbook>
 
-          <v-spacer></v-spacer>
-        </v-card-actions>
+            
+
+              <!-- ดาวน์โหลด PDF -->
+              <v-btn
+              width="200"
+                color="success"
+                :disabled="!pdfMakeReady || desserts.length === 0"
+                @click="downloadPDF"
+                class="mb-2"
+              >
+                <v-icon left>mdi-download</v-icon>
+                ดาวน์โหลด PDF
+              </v-btn>
+
+              <!-- Export Excel -->
+              <xlsx-workbook @change="onChange" @created="onCreated">
+                <xlsx-sheet
+                  :collection="sheet.data"
+                  v-for="sheet in sheets"
+                  :key="sheet.name"
+                  :sheet-name="sheet.name"
+                />
+
+                <xlsx-download :filename="exportsumfilename">
+                  <v-btn
+                    dark
+                    width="200"
+                    color="green white--text"
+                    class="mb-2 ml-2"
+                  >
+                    <v-icon small left>mdi-download</v-icon>
+                    Export
+                  </v-btn>
+                </xlsx-download>
+
+              </xlsx-workbook>
+
+              <v-spacer></v-spacer>
+            </v-card-actions>
       </div>
 
 
@@ -447,12 +319,13 @@
     </v-card>
   </v-container>
 </template>
+
 <script>
 import SuccessDialog from "@/components/cards/SuccessDialog";
 import api from "@/services/api";
 import { server } from "@/services/constants";
 import { imageUrl } from "@/services/constants";
-import html2pdf from "html2pdf.js";
+
 import {
   XlsxRead,
   XlsxTable,
@@ -467,6 +340,8 @@ export default {
   data: (vm) => ({
     menusearchdatefrom: false,
     menusearchdateto: false,
+    pdfMakeReady: false,
+
 
     workCenterGroups: [],
     workcenterlist: [],
@@ -811,6 +686,15 @@ export default {
       this.$router.push("/login");
     }
 
+    this.waitForPdfMakeReady()
+      .then(() => {
+        this.pdfMakeReady = true;
+        console.log("✅ pdfMake พร้อมใช้งาน");
+      })
+      .catch((error) => {
+        console.error("❌ เกิดข้อผิดพลาด:", error);
+        alert("ไม่สามารถโหลด pdfMake ได้ กรุณาลองใหม่อีกครั้ง");
+      });
   },
 
 
@@ -900,212 +784,15 @@ export default {
           opn_desc: x.opn_desc,
           batch: x.batch,
           worker_name: x.worker_name,
-          qty: Number(x.qty),
-          stdqty: Number(x.stdqty),
-          performance: Number(x.performance),
+          qty: Number(x.qty).toFixed(2),
+          stdqty: Number(x.stdqty).toFixed(2),
+          performance: Number(x.performance).toFixed(2),
         });
       });
       this.sheets[0].data = setexportxlsx;
     },
-    async checkcontent(dataprint) {
-      this.sumqtyorderpo = 0;
-      this.sumlineamountpo = 0;
-      this.sumlinedispo = 0;
-      this.sumlinetaxpo = 0;
-      this.sumlinepercenpo = 0;
-      this.sumgrandtotalpo = 0;
-      //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
-      let checklineforsig = 10;
-      //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 10;
-      //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
-      let datainlineprpo = 21;
-      let addnewbutget = 0;
-      let getdata = [];
-      let getnewdata = [];
-      this.setdatatoshow = [];
-      let hllinedetails = 0;
-      this.pageAll = 1;
-      let newhllinedetails = 0;
-      for (let i = 0; i < dataprint.length; i++) {
-        let stringchecklength = "";
-        // let lengthofdataforshowprpo = dataprint[i].wh_name.length;
-        let maiek = "่"; //ไม้เอก
-        let maito = "้"; //ไม้โท
-        let maitree = "๊"; //ไม้ตรี
-        let maijattawa = "๋"; //ไม้จัตวา
-        let vowelei = "ิ"; //สระอิ
-        let vowelee = "ี"; //สระอี
-        let voweleue = "ึ"; //สระอึ
-        let voweleu = "ื"; //สระอือ
-        let vowelu = "ุ"; //สระอุ
-        let voweluu = "ู"; //สระอู
-        let maihun = "ั"; //ไม้หันอากาศ
-        let maiyamok = "็"; //ไม้เอก
-
-        newhllinedetails = 0;
-        getnewdata = [];
-        dataprint[i].no = i + 1;
-        // this.sumqtyorderpo += dataprint[i].qty;
-
-        stringchecklength = dataprint[i].wh_name ? dataprint[i].wh_name : "";
-        let stringcutnewline = stringchecklength.split("\n");
-
-        stringcutnewline.forEach((x, index) => {
-          let setlangthofdata = x.length;
-          for (let j = 0; j < x.length; j++) {
-            if (
-              x[j] == maiek ||
-              x[j] == maito ||
-              x[j] == maitree ||
-              x[j] == maijattawa ||
-              x[j] == vowelei ||
-              x[j] == vowelee ||
-              x[j] == voweleue ||
-              x[j] == voweleu ||
-              x[j] == vowelu ||
-              x[j] == voweluu ||
-              x[j] == maihun ||
-              x[j] == maiyamok
-            ) {
-              setlangthofdata--;
-            }
-            if (j == x.length - 1) {
-            }
-          }
-          if (Math.ceil(setlangthofdata / datainlineprpo) == 0) {
-            newhllinedetails += 1;
-          } else {
-            newhllinedetails += Math.ceil(setlangthofdata / datainlineprpo);
-          }
-        });
-
-        // newhllinedetails += addnewbutget;
-        getnewdata.push(dataprint[i]);
-        // console.log(hllinedetails, newhllinedetails);
-        if (hllinedetails + newhllinedetails > linedetailprpo) {
-          this.setdatatoshow[this.pageAll - 1] = getdata;
-          this.pageAll++;
-
-          hllinedetails = 0;
-          getdata = [];
-          getdata.push(dataprint[i]);
-          hllinedetails += newhllinedetails;
-          if (i == dataprint.length - 1) {
-            this.setdatatoshow[this.pageAll - 1] = getdata;
-            getdata = [];
-            // if (
-            //   hllinedetails > checklineforsig ||
-            //   this.getnamesignature.length + 1 > 9 ||
-            //   (hllinedetails > 0 && this.getnamesignature.length > 3)
-            // ) {
-            //   this.pageAll++;
-            // }
-          }
-        } else {
-          hllinedetails += newhllinedetails;
-
-          getdata.push(dataprint[i]);
-          if (i == dataprint.length - 1) {
-            this.setdatatoshow[this.pageAll - 1] = getdata;
-            getdata = [];
-            // if (
-            //   hllinedetails > checklineforsig ||
-            //   this.getnamesignature.length + 1 > 9 ||
-            //   (hllinedetails > 0 && this.getnamesignature.length > 3)
-            // ) {
-            //   this.pageAll++;
-            // }
-          }
-        }
-      }
-
-      // const toWords = new ToWords();
-
-      // this.sumgrandtotalpo = this.sumlinepercenpo + this.sumlinetaxpo;
-
-      // this.sumgrandtotalpo = parseFloat(this.sumgrandtotalpo.toFixed(2));
-      // this.textsumlineamountpo = THBText(this.sumgrandtotalpo.toString());
-      // this.textsumlineamountpo = this.textsumlineamountpo.replace(
-      //   "undefined",
-      //   "ลบ"
-      // );
-      // this.textsumlineamountpo_en = toWords.convert(this.sumgrandtotalpo);
-      // this.textsumlineamountpo_en = convert.toWords(this.sumgrandtotalpo);
-
-      // this.pageAll++;
-      // this.pageAll += 2;
-      this.opensummarizepo = true;
-
-      this.setdatatoshow.forEach((x, index) => {
-        if (x.length == 0) {
-          this.setdatatoshow.splice(index, 1);
-          this.pageAll--;
-        }
-      });
-
-      // console.log(this.pageAll);
-      // console.log(this.setdatatoshow);
-    },
-    async exportToPDFPreview(orientation) {
-      this.$showLoader();
-      this.showprint = "";
-      const element = document.getElementById("mydivhtmltobase");
-      // let element;
-      // if (orientation == "landscape") {
-      //   element = document.getElementById("mydivhtmltobasesum");
-      // } else if (orientation == "portrait") {
-      //   element = document.getElementById("mydivhtmltobase");
-      // } else {
-      // }
-
-      const opt = {
-        margin: [0, 0, 0, 0],
-        image: {
-          type: "jpeg",
-          quality: 0.98,
-        },
-        // enableLinks: false,
-        html2canvas: {
-          scale: 2,
-          dpi: 192,
-          letterRendering: true,
-          useCORS: true,
-        },
-        jsPDF: {
-          unit: "cm",
-          format: "A4",
-          orientation: "portrait",
-          putOnlyUsedFonts: true,
-          pagesplit: true,
-        },
-        // pagebreak: { mode: ["avoid-all"], after: ".cke_pagebreak" },
-      };
-
-      let abcd = await html2pdf()
-        .from(element)
-        .set(opt)
-        .toPdf()
-        .get("pdf")
-        // .output("bloburl")
-        .then(function (pdf) {
-          // if (orientation == "landscape") {
-          // } else if (orientation == "portrait") {
-          //   const totalPages = pdf.internal.getNumberOfPages();
-          //   pdf.deletePage(totalPages);
-          // } else {
-          // }
-          const totalPages = pdf.internal.getNumberOfPages();
-          pdf.deletePage(totalPages);
-          return pdf.output("bloburl");
-        });
-      window.open(abcd);
-      let blob = await fetch(abcd).then((r) => r.blob());
-      this.showprint = "display:none;";
-      this.showtemplatehtml = false;
-      this.$hideLoader();
-      // return blob;
-    },
+    
+    
 
     async searchData() {
       this.desserts = [];
@@ -1133,7 +820,6 @@ export default {
       if (result.data.length > 0) {
         result.data.forEach(async (x, i) => {
           this.desserts.push(x);
-          await this.checkcontent(this.desserts);
           await this.setexporttoxlsx(this.desserts);
         });
       }
@@ -1752,6 +1438,252 @@ export default {
       this.dialogAdd = status;
       this.text_color = text_color;
     },
+    waitForPdfMakeReady() {
+  return new Promise((resolve, reject) => {
+    const checkInterval = setInterval(() => {
+      if (typeof pdfMake !== "undefined" && pdfMake.vfs && pdfMake.fonts) {
+        clearInterval(checkInterval);
+        resolve(true);
+      }
+    }, 100);
+    setTimeout(() => {
+      clearInterval(checkInterval);
+      reject(new Error("pdfMake โหลดไม่สำเร็จภายใน 10 วินาที"));
+    }, 10000);
+  });
+},
+
+// ฟอร์แมตตัวเลข
+formatNumber(value) {
+  if (value == null) return "0.00";
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Number(value));
+},
+
+// สร้างเนื้อหา PDF
+generateDocDefinition() {
+  const content = [];
+
+  // ============================
+  // HEADER REPORT (ปรับให้กระชับ)
+  // ============================
+  content.push({
+    columns: [
+      {
+        width: '*',
+        stack: [
+          {
+            text: "รายงานประสิทธิภาพการผลิต",
+            fontSize: 16,
+            bold: true,
+            color: "#1a56a0",
+          },
+          {
+            text: `ช่วงวันที่: ${this.datefrom} ถึง ${this.dateto}`,
+            fontSize: 9,
+            color: "#555",
+            margin: [0, 2, 0, 0],
+          },
+        ],
+      },
+      {
+        width: 'auto',
+        stack: [
+          { 
+            text: new Date().toLocaleDateString("th-TH"), 
+            fontSize: 9, 
+            alignment: 'right',
+            color: "#666"
+          },
+          { 
+            text: new Date().toLocaleTimeString("th-TH", { hour: '2-digit', minute: '2-digit' }), 
+            fontSize: 8, 
+            alignment: 'right',
+            color: "#888"
+          },
+        ],
+      },
+    ],
+    margin: [0, 0, 0, 8],
+  });
+
+  content.push({
+    canvas: [
+      {
+        type: "line",
+        x1: 0,
+        y1: 0,
+        x2: 810,
+        y2: 0,
+        lineWidth: 1.5,
+        lineColor: "#1a56a0",
+      },
+    ],
+    margin: [0, 0, 0, 10],
+  });
+
+  // ============================
+  // TABLE (ปรับขนาดฟอนต์และ spacing)
+  // ============================
+  const tableBody = [];
+
+  tableBody.push([
+    { text: "Date", style: "tableHeader" },
+    { text: "ORD", style: "tableHeader" },
+    { text: "Machine", style: "tableHeader" },
+    { text: "Item ID", style: "tableHeader" },
+    { text: "Item Name", style: "tableHeader" },
+    { text: "OPN Desc.", style: "tableHeader" },
+    { text: "Batch", style: "tableHeader" },
+    { text: "Worker", style: "tableHeader" },
+    { text: "Actual Hours", style: "tableHeader" },
+    { text: "QTY", style: "tableHeader" },
+    { text: "Standard QTY", style: "tableHeader" },
+    { text: "%Performance", style: "tableHeader" },
+  ]);
+
+  // BODY - สีเดียวกันทั้งหมด
+  this.desserts.forEach((item) => {
+    tableBody.push([
+      { text: item.tcdate || "-" },
+      { text: item.ord_no || "-" },
+      { text: item.machine || "-" },
+      { text: item.item_id || "-" },
+      { text: item.item_name || "-" },
+      { text: item.opn_desc || "-" },
+      { text: item.batch || "-", alignment: "center" },
+      { text: item.worker_name || "-" },
+      { text: this.formatNumber(item.work_hours), alignment: "right" },
+      { text: this.formatNumber(item.qty), alignment: "right" },
+      { text: this.formatNumber(item.stdqty), alignment: "right" },
+      { 
+        text: this.formatNumber(item.performance), 
+        alignment: "right", 
+      },
+    ]);
+  });
+
+  // ============================
+  // SUMMARY FOOTER ROW
+  // ============================
+  const totalQty = this.desserts.reduce((sum, i) => sum + Number(i.qty || 0), 0);
+  const totalStd = this.desserts.reduce((sum, i) => sum + Number(i.stdqty || 0), 0);
+  const avgPerformance = totalStd > 0 ? (totalQty / totalStd) * 100 : 0;
+
+  tableBody.push([
+    { text: "รวมทั้งหมด", colSpan: 8, style: "tableFooter", alignment: "center" },
+    {}, {}, {}, {}, {}, {}, {},
+    { text: "-", style: "tableFooter", alignment: "right" },
+    { text: this.formatNumber(totalQty), style: "tableFooter" },
+    { text: this.formatNumber(totalStd), style: "tableFooter" },
+    { text: this.formatNumber(avgPerformance), style: "tableFooter", bold: true },
+  ]);
+
+  content.push({
+    table: {
+      headerRows: 1,
+      widths: [
+        48, 50, 48, 48, "*", 55, 35, 110, 32, 55, 55, 42
+      ],
+      body: tableBody,
+    },
+    layout: {
+      fillColor: (rowIndex) => {
+        if (rowIndex === 0) return "#1a56a0";
+        if (rowIndex === tableBody.length - 1) return "#000000";
+        return "#ffffff";
+      },
+      paddingLeft: () => 3,
+      paddingRight: () => 3,
+      paddingTop: () => 2,
+      paddingBottom: () => 2,
+      hLineWidth: (i, node) => (i === 0 || i === 1 || i === node.table.body.length) ? 1 : 0.5,
+      vLineWidth: () => 0.5,
+      hLineColor: (i) => (i === 0 || i === 1) ? "#000000" : "#000000",
+      vLineColor: () => "#000000",
+    },
+    margin: [0, 0, 0, 12],
+    fontSize: 8,
+  });
+  // ============================
+  // RETURN DOC DEFINITION
+  // ============================
+  return {
+    pageSize: "A4",
+    pageOrientation: "landscape", 
+    pageMargins: [15, 20, 15, 30],
+
+    footer: (currentPage, pageCount) => {
+      return {
+        columns: [
+          { 
+            text: ``, 
+            fontSize: 7, 
+            color: "#888",
+            margin: [15, 0, 0, 0] 
+          },
+          { 
+            text: `หน้า ${currentPage} / ${pageCount}`, 
+            alignment: "right", 
+            margin: [0, 0, 15, 0], 
+            fontSize: 7,
+            color: "#888"
+          },
+        ],
+      };
+    },
+
+    content: content,
+
+    defaultStyle: {
+      font: "Sarabun",
+      fontSize: 8,
+      lineHeight: 1.2,
+    },
+
+    styles: {
+      tableHeader: {
+        bold: true,
+        fontSize: 7.5,
+        alignment: "center",
+        color: "#ffffff",
+        lineHeight: 1.1,
+      },
+      tableFooter: {
+        bold: true,
+        fontSize: 8,
+        fillColor: "#e8f0f7",
+        alignment: "right",
+        color: "#1a56a0",
+      },
+    },
+  };
+},
+
+// ดาวน์โหลด PDF
+downloadPDF() {
+  if (!this.pdfMakeReady) {
+    alert("กรุณารอให้ระบบโหลด PDF เสร็จก่อน");
+    return;
+  }
+  const docDef = this.generateDocDefinition();
+  const fileName = `Performance_Report_${new Date().toISOString().slice(0, 10)}.pdf`;
+  pdfMake.createPdf(docDef).download(fileName);
+},
+
+// ฟังก์ชันพิมพ์ PDF ด้วย pdfMake
+async printPerformancePDF() {
+  try {
+    await this.waitForPdfMakeReady();
+    const docDef = this.generateDocDefinition();
+    pdfMake.createPdf(docDef).open(); 
+  } catch (error) {
+    console.error("❌ สร้าง PDF ไม่สำเร็จ:", error);
+    alert("ไม่สามารถสร้าง PDF ได้: " + error.message);
+  }
+},
   },
   beforeCreate() {
     this.$store.state.navMenu = true;

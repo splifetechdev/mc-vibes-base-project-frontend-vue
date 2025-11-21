@@ -250,279 +250,32 @@
         </v-data-table>
             </v-col>
         </v-row>
-         
 
-        <div id="mydivhtmltobase" v-if="desserts.length > 0">
-          <div v-for="index in pageAll">
-            <div class="aligncenter setfontfamily" id="foo">
-              <page size="A4" class="aligncenter">
-                <div class="aligncenter">
-                  <!-- <div class="rowprpo mt20prpo">
-                    <div class="col-md-6">
-                      <img
-                    src="@/assets/sp65.png"
-                    alt=""
-                    width="30%"
-                    contain
-                    class="alignleft colprpo ml30prpo"
-                  />
-                    </div>
-                    <div class="col-md-6">
-                      <p class="alignright colprpo mr30prpo fontsize14">
-                        วันที่เรียกรายงาน :
-                        {{ datenowFormatted }}
-                      </p>
-                      <p class="alignright caption colprpo mr30prpo">
-                    Page {{ index }} of {{ pageAll }}
-                  </p>
-                    </div>
-                  </div> -->
-                  <div class="rowprpo aligncenter ">
-                    <div class="col-md-12 mb20prpo">
-                      <h3>
-                        รายงานเวลาที่สูญเสีย
-                      </h3>
-                    </div>
-                  </div>
-
-                    <div class="col-md-12">
-                 <div class="rowprpo mt-30prpo">
-                <div class="col-md-2 textalignleft ">
-                  WC-Group
-                </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                  <span >{{ datasearch.wc_group?datasearch.wc_group:"ทั้งหมด" }}</span>
-                </div>
-                <div class="col-md-2 textalignleft pl30prpo">
-                  WC
-                </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                   <span >{{ (() => {
- const wc = workcenterlist.find(item => item.id == datasearch.work_center_id);
-  return wc && datasearch.work_center_id ? `${wc.wc_id}:${wc.wc_name}` : "ทั้งหมด";
-})() }}</span>
-<!-- - ${wc.wc_name} -->
-                </div>
-              </div>
-
-                <div class="rowprpo  mt-10prpo">
-                <div class="col-md-2 textalignleft ">
-                 Machine 
-                </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                                    <span >{{ (() => {
- const wc = machinelist.find(item => item.id == datasearch.mch_id);
-  return wc && datasearch.mch_id ? `${wc.machine_id}:${wc.name}` : "ทั้งหมด";
-})() }}</span>
-                </div>
-                <div class="col-md-2 textalignleft pl30prpo">
-                   Downtime Cause 
-                </div>
-                <div class="col-md-4-31percent textalignleft ml-20prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                   <span >{{ (() => {
- const wc = downtime_cause_list.find(item => item.id == datasearch.downtime_id);
-  return wc && datasearch.downtime_id ? `${wc.reason_code}:${wc.description}` : "ทั้งหมด";
-})() }}</span>
-                </div>
-              </div>
-
-                <div class="rowprpo  mt-10prpo">
-                <div class="col-md-2 textalignleft ">
-                 Date from 
-                </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                                    <span >{{ datasearch.datefrom }}</span>
-                </div>
-                <div class="col-md-2 textalignleft pl30prpo">
-                  to 
-                </div>
-                <div class="col-md-4 textalignleft ml-30prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                   <span >{{ datasearch.dateto }}</span>
-                </div>
-              </div>
-
-              </div>
-                </div>
-
-                <div
-                  class="rowprpo captiontableheader  ml30prpo mr30prpo"
-                  style="margin-top:3px"
-                >
-                  <table class="captiontableheader">
-                    <tr>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop prborderleft width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Date
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Time
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Machine Name
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Downtime Cause
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Hours
-                      </th>
-                    </tr>
-
-                    <tr
-                      v-for="(data, i) in setdatatoshow[index - 1]"
-                      id="content"
-                    >
-                      <td
-                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="position: relative;padding-left: 2px;"
-                      >
-                        {{ data.tcdate ? data.tcdate : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                        {{ data.time ? data.time : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                         style="padding-left: 2px;"
-                      >
-                        {{ data.machine_id ? data.machine_id : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                         style="padding-left: 2px;"
-                      >
-                        {{ data.description ? data.description : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
-                      >
-                        {{ data.work_hours ? fntolocalestringnumber(data.work_hours) : "-" }}
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </page>
-            </div>
-          </div>
-          <div class="aligncenter setfontfamily" id="foo">
-              <page size="A4" class="aligncenter">
-                <div class="aligncenter">
-                  <div class="rowprpo aligncenter ">
-                    <div class="col-md-12 mb20prpo">
-                      <h3>
-                        สรุปรายงานเวลาที่สูญเสีย
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  class="rowprpo captiontableheader  ml30prpo mr30prpo"
-                  style="margin-top:3px"
-                >
-                  <table class="captiontableheader">
-                    <tr>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop prborderleft width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Downtime Cause
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Hours
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Percent
-                      </th>
-                    </tr>
-
-                    <tr
-                      v-for="(data, i) in dessertssum"
-                      id="content"
-                    >
-                      <td
-                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="position: relative;padding-left: 2px;"
-                      >
-                        {{ data.description ? data.description : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
-                      >
-                        {{ data.work_hours ? fntolocalestringnumber(data.work_hours) : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
-                      >
-                        {{ data.percent ? data.percent : "-" }}
-                      </td>
-                    </tr>
-                    <tr>
-                       <td
-                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
-                        style="padding-left: 2px;"
-                      >
-                        รวม
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
-                      >
-                        {{ fntolocalestringnumber(dessertssum.reduce((sum, item) => sum + item.work_hours, 0)) }}
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                      >
-                        
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-                 <div class="footerprpo ">
-              <div class="alignright mr40prpo">
-                ผู้ปริ้น {{ fullname }} วันที่ {{ datenowFormatted }}
-              </div>
-            </div>
-              </page>
-            </div>
-        </div>
         <v-card-actions class="mt-5">
           <v-spacer></v-spacer>
 
-          <v-btn
-            dark
-            width="200"
-            color="blue white--text"
-            class="mb-2"
-            @click="exportToPDFPreview('portrait')"
-          >
-            print
-          </v-btn>
+           <v-btn
+                dark
+                width="200"
+                color="blue white--text"
+                class="mb-2"
+                @click="printPerformancePDF"
+              >
+                <v-icon small left>mdi-printer</v-icon>
+                พิมพ์ PDF
+              </v-btn>
+
+              <!-- ดาวน์โหลด PDF -->
+              <v-btn
+              width="200"
+                color="success"
+                :disabled="!pdfMakeReady || desserts.length === 0"
+                @click="downloadPDF"
+                class="mb-2"
+              >
+                <v-icon left>mdi-download</v-icon>
+                ดาวน์โหลด PDF
+              </v-btn>
 
           <xlsx-workbook @change="onChange" @created="onCreated">
             <xlsx-sheet
@@ -648,6 +401,7 @@ export default {
     fullname:"",
     menusearchdatefrom:false,
      menusearchdateto:false,
+     pdfMakeReady: false,
      downtime_cause_list:[],
     workCenterGroups:[],
      workcenterlist:[],
@@ -977,6 +731,15 @@ dateto:vm.formatDate(
       this.$store.state.isLogged = false;
       this.$router.push("/login");
     }
+      this.waitForPdfMakeReady()
+      .then(() => {
+        this.pdfMakeReady = true;
+        console.log("✅ pdfMake พร้อมใช้งาน");
+      })
+      .catch((error) => {
+        console.error("❌ เกิดข้อผิดพลาด:", error);
+        alert("ไม่สามารถโหลด pdfMake ได้ กรุณาลองใหม่อีกครั้ง");
+      });
   },
 
   methods: {
@@ -1053,205 +816,6 @@ async loadDownTimeCause() {
       });
       this.sheets[0].data = setexportxlsx;
     },
-    async checkcontent(dataprint) {
-      this.sumqtyorderpo = 0;
-      this.sumlineamountpo = 0;
-      this.sumlinedispo = 0;
-      this.sumlinetaxpo = 0;
-      this.sumlinepercenpo = 0;
-      this.sumgrandtotalpo = 0;
-      //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
-      let checklineforsig = 10;
-      //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 33;
-      //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
-      let datainlineprpo = 24;
-      let addnewbutget = 0;
-      let getdata = [];
-      let getnewdata = [];
-      this.setdatatoshow = [];
-      let hllinedetails = 0;
-      this.pageAll = 1;
-      let newhllinedetails = 0;
-      for (let i = 0; i < dataprint.length; i++) {
-        let stringchecklength = "";
-        // let lengthofdataforshowprpo = dataprint[i].wh_name.length;
-        let maiek = "่"; //ไม้เอก
-        let maito = "้"; //ไม้โท
-        let maitree = "๊"; //ไม้ตรี
-        let maijattawa = "๋"; //ไม้จัตวา
-        let vowelei = "ิ"; //สระอิ
-        let vowelee = "ี"; //สระอี
-        let voweleue = "ึ"; //สระอึ
-        let voweleu = "ื"; //สระอือ
-        let vowelu = "ุ"; //สระอุ
-        let voweluu = "ู"; //สระอู
-        let maihun = "ั"; //ไม้หันอากาศ
-        let maiyamok = "็"; //ไม้เอก
-
-        newhllinedetails = 0;
-        getnewdata = [];
-        dataprint[i].no = i + 1;
-        // this.sumqtyorderpo += dataprint[i].qty;
-
-        stringchecklength = dataprint[i].description ? dataprint[i].description : "";
-        let stringcutnewline = stringchecklength.split("\n");
-
-        stringcutnewline.forEach((x, index) => {
-          let setlangthofdata = x.length;
-          for (let j = 0; j < x.length; j++) {
-            if (
-              x[j] == maiek ||
-              x[j] == maito ||
-              x[j] == maitree ||
-              x[j] == maijattawa ||
-              x[j] == vowelei ||
-              x[j] == vowelee ||
-              x[j] == voweleue ||
-              x[j] == voweleu ||
-              x[j] == vowelu ||
-              x[j] == voweluu ||
-              x[j] == maihun ||
-              x[j] == maiyamok
-            ) {
-              setlangthofdata--;
-            }
-            if (j == x.length - 1) {
-            }
-          }
-          if (Math.ceil(setlangthofdata / datainlineprpo) == 0) {
-            newhllinedetails += 1;
-          } else {
-            newhllinedetails += Math.ceil(setlangthofdata / datainlineprpo);
-          }
-        });
-
-        // newhllinedetails += addnewbutget;
-        getnewdata.push(dataprint[i]);
-        // console.log(hllinedetails, newhllinedetails);
-        if (hllinedetails + newhllinedetails > linedetailprpo) {
-          this.setdatatoshow[this.pageAll - 1] = getdata;
-          this.pageAll++;
-
-          hllinedetails = 0;
-          getdata = [];
-          getdata.push(dataprint[i]);
-          hllinedetails += newhllinedetails;
-          if (i == dataprint.length - 1) {
-            this.setdatatoshow[this.pageAll - 1] = getdata;
-            getdata = [];
-            // if (
-            //   hllinedetails > checklineforsig ||
-            //   this.getnamesignature.length + 1 > 9 ||
-            //   (hllinedetails > 0 && this.getnamesignature.length > 3)
-            // ) {
-            //   this.pageAll++;
-            // }
-          }
-        } else {
-          hllinedetails += newhllinedetails;
-
-          getdata.push(dataprint[i]);
-          if (i == dataprint.length - 1) {
-            this.setdatatoshow[this.pageAll - 1] = getdata;
-            getdata = [];
-            // if (
-            //   hllinedetails > checklineforsig ||
-            //   this.getnamesignature.length + 1 > 9 ||
-            //   (hllinedetails > 0 && this.getnamesignature.length > 3)
-            // ) {
-            //   this.pageAll++;
-            // }
-          }
-        }
-      }
-
-      // const toWords = new ToWords();
-
-      // this.sumgrandtotalpo = this.sumlinepercenpo + this.sumlinetaxpo;
-
-      // this.sumgrandtotalpo = parseFloat(this.sumgrandtotalpo.toFixed(2));
-      // this.textsumlineamountpo = THBText(this.sumgrandtotalpo.toString());
-      // this.textsumlineamountpo = this.textsumlineamountpo.replace(
-      //   "undefined",
-      //   "ลบ"
-      // );
-      // this.textsumlineamountpo_en = toWords.convert(this.sumgrandtotalpo);
-      // this.textsumlineamountpo_en = convert.toWords(this.sumgrandtotalpo);
-
-      // this.pageAll++;
-      // this.pageAll += 2;
-      this.opensummarizepo = true;
-
-      this.setdatatoshow.forEach((x, index) => {
-        if (x.length == 0) {
-          this.setdatatoshow.splice(index, 1);
-          this.pageAll--;
-        }
-      });
-
-      // console.log(this.pageAll);
-      // console.log(this.setdatatoshow);
-    },
-    async exportToPDFPreview(orientation) {
-      this.$showLoader();
-      this.showprint = "";
-      const element = document.getElementById("mydivhtmltobase");
-      // let element;
-      // if (orientation == "landscape") {
-      //   element = document.getElementById("mydivhtmltobasesum");
-      // } else if (orientation == "portrait") {
-      //   element = document.getElementById("mydivhtmltobase");
-      // } else {
-      // }
-
-      const opt = {
-        margin: [0, 0, 0, 0],
-        image: {
-          type: "jpeg",
-          quality: 0.98,
-        },
-        // enableLinks: false,
-        html2canvas: {
-          scale: 2,
-          dpi: 192,
-          letterRendering: true,
-          useCORS: true,
-        },
-        jsPDF: {
-          unit: "cm",
-          format: "A4",
-          orientation: "portrait",
-          putOnlyUsedFonts: true,
-          pagesplit: true,
-        },
-        // pagebreak: { mode: ["avoid-all"], after: ".cke_pagebreak" },
-      };
-
-      let abcd = await html2pdf()
-        .from(element)
-        .set(opt)
-        .toPdf()
-        .get("pdf")
-        // .output("bloburl")
-        .then(function(pdf) {
-          // if (orientation == "landscape") {
-          // } else if (orientation == "portrait") {
-          //   const totalPages = pdf.internal.getNumberOfPages();
-          //   pdf.deletePage(totalPages);
-          // } else {
-          // }
- const totalPages = pdf.internal.getNumberOfPages();
-            pdf.deletePage(totalPages);
-          return pdf.output("bloburl");
-        });
-      window.open(abcd);
-      let blob = await fetch(abcd).then((r) => r.blob());
-      this.showprint = "display:none;";
-      this.showtemplatehtml = false;
-      this.$hideLoader();
-      // return blob;
-    },
 
     async searchData() {
       this.desserts = [];
@@ -1279,7 +843,7 @@ async loadDownTimeCause() {
         x.time = `${ x.time_start } - ${ x.time_end }`;
         this.desserts.push(x);
         if(i == result.data.length -1){
-await this.checkcontent(this.desserts);
+// await this.checkcontent(this.desserts);
  await this.setexporttoxlsx(this.desserts);
  const grouped = Object.values(
   this.desserts.reduce((acc, curr) => {
@@ -1922,6 +1486,403 @@ this.dessertssum = withPercent;
       this.dialogAdd = status;
       this.text_color = text_color;
     },
+    waitForPdfMakeReady() {
+  return new Promise((resolve, reject) => {
+    const checkInterval = setInterval(() => {
+      if (typeof pdfMake !== "undefined" && pdfMake.vfs && pdfMake.fonts) {
+        clearInterval(checkInterval);
+        resolve(true);
+      }
+    }, 100);
+    setTimeout(() => {
+      clearInterval(checkInterval);
+      reject(new Error("pdfMake โหลดไม่สำเร็จภายใน 10 วินาที"));
+    }, 10000);
+  });
+},
+
+formatNumber(value) {
+  if (value == null) return "0.00";
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Number(value));
+},
+
+generateDocDefinition() {
+  const detailContent = [];
+
+
+  detailContent.push({
+    columns: [
+      {
+        width: '*',
+        stack: [
+          {
+            text: "รายงานเวลาที่สูญเสีย",
+            fontSize: 16,
+            bold: true,
+            color: "#1a56a0",
+          },
+          {
+            text: `ช่วงวันที่: ${this.datefrom} ถึง ${this.dateto}`,
+            fontSize: 9,
+            color: "#555",
+            margin: [0, 2, 0, 6],
+          },
+          {
+            table: {
+              widths: ['*', '*', '*',],
+              body: [
+                [
+                  { 
+                    text: 'WC-Group : ' + (this.datasearch.wc_group ? this.datasearch.wc_group : "ทั้งหมด"), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                  { 
+                    text: 'WC : ' + (() => {
+                      const wc = this.workcenterlist.find(item => item.id == this.datasearch.work_center_id);
+                      return wc && this.datasearch.work_center_id ? `${wc.wc_id}:${wc.wc_name}` : "ทั้งหมด";
+                    })(), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                  { 
+                    text: 'Machine : ' + (() => {
+                      const wc = this.machinelist.find(item => item.id == this.datasearch.mch_id);
+                      return wc && this.datasearch.mch_id ? `${wc.machine_id}:${wc.name}` : "ทั้งหมด";
+                    })(), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                ],
+                [
+                  { 
+                    text: 'Downtime Cause : ' + (() => {
+                      const wc = this.downtime_cause_list.find(item => item.id == this.datasearch.downtime_id);
+                      return wc && this.datasearch.downtime_id ? `${wc.reason_code}:${wc.description}` : "ทั้งหมด";
+                    })(), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                  { 
+                    text: 'Date from : ' + (this.datasearch.datefrom), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                  { 
+                    text: 'to : ' + (this.datasearch.dateto), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                ],
+              ],
+            },
+            layout: {
+              paddingLeft: () => 0,
+              paddingRight: () => 10,
+              paddingTop: () => 2,
+              paddingBottom: () => 2,
+            },
+          },
+        ],
+      },
+      {
+        width: 'auto',
+        stack: [
+          { 
+            text: new Date().toLocaleDateString("th-TH"), 
+            fontSize: 9, 
+            alignment: 'right',
+            color: "#666"
+          },
+          { 
+            text: new Date().toLocaleTimeString("th-TH", { hour: '2-digit', minute: '2-digit' }), 
+            fontSize: 8, 
+            alignment: 'right',
+            color: "#888"
+          },
+        ],
+      },
+    ],
+    margin: [0, 0, 0, 8],
+  });
+
+  detailContent.push({
+    canvas: [
+      {
+        type: "line",
+        x1: 0,
+        y1: 0,
+        x2: 565,
+        y2: 0,
+        lineWidth: 1.5,
+        lineColor: "#1a56a0",
+      },
+    ],
+    margin: [0, 0, 0, 10],
+  });
+
+  const tableBody = [];
+
+  tableBody.push([
+    { text: "Date", style: "tableHeader" },
+    { text: "Time", style: "tableHeader" },
+    { text: "Machine Name", style: "tableHeader" },
+    { text: "Downtime Cause", style: "tableHeader" },
+    { text: "Hours", style: "tableHeader" },
+  ]);
+
+  this.desserts.forEach((item) => {
+    tableBody.push([
+      { text: item.tcdate || "-" },
+      { text: item.time || "-" },
+      { text: item.machine_id || "-" },
+      { text: item.description || "-" },
+      { text: item.work_hours || "-", alignment: "right" },
+    ]);
+  });
+
+  detailContent.push({
+    table: {
+      headerRows: 1,
+      widths: [
+        70, 50, "*", "*", 60],
+        body: tableBody,
+    },
+    layout: {
+      fillColor: (rowIndex) => {
+        if (rowIndex === 0) return "#1a56a0";
+        return "#ffffff";
+      },
+      paddingLeft: () => 3,
+      paddingRight: () => 3,
+      paddingTop: () => 2,
+      paddingBottom: () => 2,
+      hLineWidth: (i, node) => (i === 0 || i === 1 || i === node.table.body.length) ? 1 : 0.5,
+      vLineWidth: () => 0.5,
+      hLineColor: (i) => (i === 0 || i === 1) ? "#000000" : "#000000",
+      vLineColor: () => "#000000",
+    },
+    margin: [0, 0, 0, 12],
+    fontSize: 8,
+  });
+
+  const summaryContent = [];
+
+
+  summaryContent.push({
+    columns: [
+      {
+        width: '*',
+        stack: [
+          {
+            text: "สรุปรายงานเวลาที่สูญเสีย",
+            fontSize: 16,
+            bold: true,
+            color: "#1a56a0",
+          },
+          {
+            text: `ช่วงวันที่: ${this.datefrom} ถึง ${this.dateto}`,
+            fontSize: 9,
+            color: "#555",
+            margin: [0, 2, 0, 6],
+          },
+        ],
+      },
+      {
+        width: 'auto',
+        stack: [
+          { 
+            text: new Date().toLocaleDateString("th-TH"), 
+            fontSize: 9, 
+            alignment: 'right',
+            color: "#666"
+          },
+          { 
+            text: new Date().toLocaleTimeString("th-TH", { hour: '2-digit', minute: '2-digit' }), 
+            fontSize: 8, 
+            alignment: 'right',
+            color: "#888"
+          },
+        ],
+      },
+    ],
+    margin: [0, 0, 0, 8],
+  });
+
+  summaryContent.push({
+    canvas: [
+      {
+        type: "line",
+        x1: 0,
+        y1: 0,
+        x2: 565,
+        y2: 0,
+        lineWidth: 1.5,
+        lineColor: "#1a56a0",
+      },
+    ],
+    margin: [0, 0, 0, 10],
+  });
+
+
+  const groupedData = {};
+  let totalAllHours = 0;
+
+  this.desserts.forEach((item) => {
+    const cause = item.description || "ไม่ระบุสาเหตุ";
+    const hours = Number(item.work_hours || 0);
+    
+    if (!groupedData[cause]) {
+      groupedData[cause] = 0;
+    }
+    groupedData[cause] += hours;
+    totalAllHours += hours;
+  });
+
+
+  const summaryTableBody = [];
+
+  summaryTableBody.push([
+    { text: "Downtime Cause", style: "tableHeader" },
+    { text: "Hours", style: "tableHeader" },
+    { text: "Percent", style: "tableHeader" },
+  ]);
+
+
+  const sortedData = Object.entries(groupedData).sort((a, b) => b[1] - a[1]);
+
+  sortedData.forEach(([cause, hours]) => {
+    const percent = totalAllHours > 0 ? (hours / totalAllHours) * 100 : 0;
+    
+    summaryTableBody.push([
+      { text: cause },
+      { text: this.formatNumber(hours), alignment: "right" },
+      { text: this.formatNumber(percent) +"%", alignment: "right" },
+    ]);
+  });
+
+  summaryTableBody.push([
+    { text: "รวมทั้งหมด", style: "tableFooter", alignment: "center" },
+    { text: this.formatNumber(totalAllHours), style: "tableFooter", bold: true },
+    { text: "", style: "tableFooter", bold: true },
+  ]);
+
+
+  summaryContent.push({
+    table: {
+      headerRows: 1,
+      widths: [
+         "*", "*","*"],
+        body: summaryTableBody,
+    },
+    layout: {
+      fillColor: (rowIndex) => {
+        if (rowIndex === 0) return "#1a56a0";
+        return "#ffffff";
+      },
+      paddingLeft: () => 3,
+      paddingRight: () => 3,
+      paddingTop: () => 2,
+      paddingBottom: () => 2,
+      hLineWidth: (i, node) => (i === 0 || i === 1 || i === node.table.body.length) ? 1 : 0.5,
+      vLineWidth: () => 0.5,
+      hLineColor: (i) => (i === 0 || i === 1) ? "#000000" : "#000000",
+      vLineColor: () => "#000000",
+    },
+    margin: [0, 0, 0, 12],
+    fontSize: 8,
+  });
+  
+
+ const baseConfig = {
+    pageSize: "A4",
+    pageOrientation: "portrait", 
+    pageMargins: [15, 20, 15, 30],
+
+    footer: (currentPage, pageCount) => {
+      return {
+        columns: [
+          { 
+            text: ``, 
+            fontSize: 7, 
+            color: "#888",
+            margin: [15, 0, 0, 0] 
+          },
+          { 
+            text: `หน้า ${currentPage} / ${pageCount}`, 
+            alignment: "right", 
+            margin: [0, 0, 15, 0], 
+            fontSize: 7,
+            color: "#888"
+          },
+        ],
+      };
+    },
+
+    defaultStyle: {
+      font: "Sarabun",
+      fontSize: 8,
+      lineHeight: 1.2,
+    },
+
+    styles: {
+      tableHeader: {
+        bold: true,
+        fontSize: 7.5,
+        alignment: "center",
+        color: "#ffffff",
+        lineHeight: 1.1,
+      },
+      tableFooter: {
+        bold: true,
+        fontSize: 8,
+        fillColor: "#d1dce8",
+        alignment: "right",
+        color: "#1a56a0",
+      },
+    },
+  };
+
+ return {
+  ...baseConfig,
+  content: [
+    ...detailContent,
+    { text: '', pageBreak: 'after' },
+    ...summaryContent,
+  ]
+};
+},
+
+downloadPDF() {
+  if (!this.pdfMakeReady) {
+    alert("กรุณารอให้ระบบโหลด PDF เสร็จก่อน");
+    return;
+  }
+  const docDef = this.generateDocDefinition();
+  const fileName = `LostTime_Report_${new Date().toISOString().slice(0, 10)}.pdf`;
+  pdfMake.createPdf(docDef).download(fileName);
+},
+
+
+async printPerformancePDF() {
+  try {
+    await this.waitForPdfMakeReady();
+    const docDef = this.generateDocDefinition();
+    pdfMake.createPdf(docDef).open(); 
+  } catch (error) {
+    console.error("❌ สร้าง PDF ไม่สำเร็จ:", error);
+    alert("ไม่สามารถสร้าง PDF ได้: " + error.message);
+  }
+},
   },
   beforeCreate() {
     this.$store.state.navMenu = true;

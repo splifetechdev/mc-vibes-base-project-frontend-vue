@@ -266,353 +266,31 @@
         </v-col>
         </v-row>
 
-         
-
-        <div id="mydivhtmltobase" v-if="desserts.length > 0">
-          <div v-for="index in pageAll">
-            <div class="aligncenter setfontfamily" id="foo">
-              <page size="A4landscape" class="aligncenter">
-                <div class="aligncenter">
-                  <!-- <div class="rowprpo mt20prpo">
-                    <div class="col-md-6">
-                      <img
-                    src="@/assets/sp65.png"
-                    alt=""
-                    width="30%"
-                    contain
-                    class="alignleft colprpo ml30prpo"
-                  />
-                    </div>
-                    <div class="col-md-6">
-                      <p class="alignright colprpo mr30prpo fontsize14">
-                        วันที่เรียกรายงาน :
-                        {{ datenowFormatted }}
-                      </p>
-                      <p class="alignright caption colprpo mr30prpo">
-                    Page {{ index }} of {{ pageAll }}
-                  </p>
-                    </div>
-                  </div> -->
-                  <div class="rowprpo aligncenter ">
-                    <div class="col-md-12 mb20prpo">
-                      <h3>
-                        รายงานของเสีย
-                      </h3>
-                    </div>
-                  </div>
-                     <div class="col-md-12">
-                 <div class="rowprpo mt-30prpo">
-                <div class="col-md-10percent textaligncenter">
-                  WC-Group 
-                </div>
-                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                  <span >{{ datasearch.wc_group?datasearch.wc_group:"ทั้งหมด" }}</span>
-                </div>
-                  <div class="col-md-10percent textaligncenter">
-                  WC
-                </div>
-                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                  <span >{{ (() => {
- const wc = workcenterlist.find(item => item.id == datasearch.work_center_id);
-  return wc && datasearch.work_center_id ? `${wc.wc_id}:${wc.wc_name}` : "ทั้งหมด";
-})() }}</span>
-                </div>
-                  <div class="col-md-10percent textaligncenter">
-                  Machine 
-                </div>
-                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                 <span >{{ (() => {
- const wc = machinelist.find(item => item.id == datasearch.mch_id);
-  return wc && datasearch.mch_id ? `${wc.machine_id}:${wc.name}` : "ทั้งหมด";
-})() }}</span>
-                </div>
-  <div class="col-md-10percent textaligncenter">
-                  Worker 
-                </div>
-                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                  <span >{{ (() => {
- const wc = worker_list.find(item => item.id == datasearch.worker_id);
-  return wc && datasearch.worker_id ? `${wc.prename_th} ${wc.firstname} ${wc.lastname}` : "ทั้งหมด";
-})() }}</span>
-                </div>
-              </div>
-
-                     <div class="rowprpo mt10prpo">
-                <div class="col-md-10percent textaligncenter">
-                 Order 
-                </div>
-                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                                 <span >{{ datasearch.work_order?datasearch.work_order:"ทั้งหมด" }}</span>
-                </div>
-                  <div class="col-md-10percent textaligncenter">
-                  Item
-                </div>
-                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                  <span >{{ (() => {
- const wc = item_master_list.find(item => item.id == datasearch.item_id);
-  return wc && datasearch.item_id ? `${wc.item_id}` : "ทั้งหมด";
-})() }}</span>
-                </div>
-                  <div class="col-md-10percent textaligncenter">
-                   Date from 
-                </div>
-                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-               <span >{{ datasearch.datefrom }}</span>
-                </div>
-  <div class="col-md-10percent textaligncenter">
-                  to 
-                </div>
-                <div class="col-md-15percent textalignleft ml-10prpo bordersignature widthsignature mt-0prpo fontsize14 fixonerow">
-                  <span >{{ datasearch.dateto }}</span>
-                </div>
-              </div>
-
-              </div>
-                </div>
-
-                <div
-                  class="rowprpo captiontableheader  ml30prpo mr30prpo"
-                  style="margin-top:3px"
-                >
-                  <table class="captiontableheader">
-                    <tr>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop prborderleft width12 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Date
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width12 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        ORD
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width15 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        MCH
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                       Item ID
-                      </th>
-                      <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width20 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Item Name
-                      </th>
-                       <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        OPN Desc.
-                      </th>
-                       <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Batch
-                      </th>
-                       <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Worker
-                      </th>
-                       <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width10 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        QTY
-                      </th>
-                       <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width7 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        Defect QTY
-                      </th>
-                       <th
-                        scope="colgroup"
-                        class="prborderbottom prbordertop width5 captiontableheader prborderright bgcolorgray textfontbold fontsize16"
-                      >
-                        % Defect
-                      </th>
-                    </tr>
-
-                    <tr
-                      v-for="(data, i) in setdatatoshow[index - 1]"
-                      id="content"
-                    >
-                      <td
-                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="position: relative;padding-left: 2px;"
-                      >
-                        {{ data.tcdate ? data.tcdate : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                        {{ data.work_order ? data.work_order : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                         style="padding-left: 2px;"
-                      >
-                        {{ data.machine ? data.machine : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                         style="padding-left: 2px;"
-                      >
-                        {{ data.itemID ? data.itemID : "-" }}
-                      </td>
-                      <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                        {{ data.item_name ? data.item_name : "-" }}
-                      </td>
-                       <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                        {{ data.opn_desc ? data.opn_desc : "-" }}
-                      </td>
-                       <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
-                      >
-                        {{ data.batch_count ? data.batch_count : "-" }}
-                      </td>
-                       <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                        {{ data.worker_name ? data.worker_name : "-" }}
-                      </td>
-                       <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
-                      >
-                        {{ data.qty ? fntolocalestringnumber(data.qty) : "-" }}
-                      </td>
-                       <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
-                      >
-                        {{ data.defectqty ? fntolocalestringnumber(data.defectqty) : "-" }}
-                      </td>
-                       <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-right: 2px;"
-                      >
-                        {{ data.percentqty ? data.percentqty : "-" }}
-                      </td>
-                    </tr>
-                    <tr class="textfontbold" v-if="pageAll == index">
-                      <td
-                        class="width20 textalignleft prborderleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                      </td>
-                       <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                      </td>
-                       <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                      </td>
-                       <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                      </td>
-                       <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                      </td>
-                       <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                      </td>
-                       <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14"
-                        style="padding-left: 2px;"
-                      >
-                      </td>
-                       <td
-                        class="width20 textalignleft prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
-                        style="padding-left: 2px;"
-                      >
-                        รวม
-                      </td>
-                      <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
-                        style="padding-right: 2px;"
-                      >
-                        {{
-                      fntolocalestringnumber(desserts.reduce(
-                        (sum, item) => sum + item.qty,
-                        0
-                      ))
-                  }}
-                      </td>
-                       <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
-                        style="padding-right: 2px;"
-                      >
-                      {{
-                      fntolocalestringnumber(desserts.reduce(
-                        (sum, item) => sum + item.defectqty,
-                        0
-                      ))
-                  }}
-                      </td>
-                                             <td
-                        class="width20 textalignright prborderright prborderbottom captionnofontsize fontsize14 textfontbold"
-                        style="padding-right: 2px;"
-                      >
-                       {{
-                    (
-                      (desserts.reduce((sum, item) => sum + Number(item.qty), 0) > 0
-                        ? (desserts.reduce((sum, item) => sum + Number(item.defectqty), 0) /
-                          desserts.reduce((sum, item) => sum + Number(item.qty), 0)) *
-                        100
-                        : 0
-                      ).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                  )
-                  }}
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </page>
-            </div>
-          </div>
-        </div>
         <v-card-actions class="mt-5">
           <v-spacer></v-spacer>
+              <!-- พิมพ์ PDF -->
+              <v-btn
+                dark
+                width="200"
+                color="blue white--text"
+                class="mb-2"
+                @click="printPerformancePDF"
+              >
+                <v-icon small left>mdi-printer</v-icon>
+                พิมพ์ PDF
+              </v-btn>
 
-          <v-btn
-            dark
-            width="200"
-            color="blue white--text"
-            class="mb-2"
-            @click="exportToPDFPreview('portrait')"
-          >
-            print
-          </v-btn>
+              <!-- ดาวน์โหลด PDF -->
+              <v-btn
+              width="200"
+                color="success"
+                :disabled="!pdfMakeReady || desserts.length === 0"
+                @click="downloadPDF"
+                class="mb-2"
+              >
+                <v-icon left>mdi-download</v-icon>
+                ดาวน์โหลด PDF
+              </v-btn>
 
           <xlsx-workbook @change="onChange" @created="onCreated">
             <xlsx-sheet
@@ -740,6 +418,7 @@ export default {
     fullname:"",
     menusearchdatefrom:false,
      menusearchdateto:false,
+     pdfMakeReady: false,
      worker_list:[],
     workCenterGroups:[],
      workcenterlist:[],
@@ -1081,6 +760,15 @@ dateto:vm.formatDate(
       this.$store.state.isLogged = false;
       this.$router.push("/login");
     }
+     this.waitForPdfMakeReady()
+      .then(() => {
+        this.pdfMakeReady = true;
+        console.log("✅ pdfMake พร้อมใช้งาน");
+      })
+      .catch((error) => {
+        console.error("❌ เกิดข้อผิดพลาด:", error);
+        alert("ไม่สามารถโหลด pdfMake ได้ กรุณาลองใหม่อีกครั้ง");
+      });
   },
 
   methods: {
@@ -1187,206 +875,7 @@ async loadDownWorker() {
       });
       this.sheets[0].data = setexportxlsx;
     },
-    async checkcontent(dataprint) {
-      this.sumqtyorderpo = 0;
-      this.sumlineamountpo = 0;
-      this.sumlinedispo = 0;
-      this.sumlinetaxpo = 0;
-      this.sumlinepercenpo = 0;
-      this.sumgrandtotalpo = 0;
-      //checklineforsig = เช็คบรรทัดของ detail เพื่อแสดงลายเซ็น
-      let checklineforsig = 10;
-      //linedetailprpo คือ บรรทัดทั้งหมดของหน้า
-      let linedetailprpo = 22;
-      //datainlineprpo คือ ข้อมูลแต่ละบรรทัด
-      let datainlineprpo = 21;
-      let addnewbutget = 0;
-      let getdata = [];
-      let getnewdata = [];
-      this.setdatatoshow = [];
-      let hllinedetails = 0;
-      this.pageAll = 1;
-      let newhllinedetails = 0;
-      for (let i = 0; i < dataprint.length; i++) {
-        let stringchecklength = "";
-        // let lengthofdataforshowprpo = dataprint[i].wh_name.length;
-        let maiek = "่"; //ไม้เอก
-        let maito = "้"; //ไม้โท
-        let maitree = "๊"; //ไม้ตรี
-        let maijattawa = "๋"; //ไม้จัตวา
-        let vowelei = "ิ"; //สระอิ
-        let vowelee = "ี"; //สระอี
-        let voweleue = "ึ"; //สระอึ
-        let voweleu = "ื"; //สระอือ
-        let vowelu = "ุ"; //สระอุ
-        let voweluu = "ู"; //สระอู
-        let maihun = "ั"; //ไม้หันอากาศ
-        let maiyamok = "็"; //ไม้เอก
-
-        newhllinedetails = 0;
-        getnewdata = [];
-        dataprint[i].no = i + 1;
-        // this.sumqtyorderpo += dataprint[i].qty;
-
-        stringchecklength = dataprint[i].item_name?dataprint[i].item_name: "";
-        let stringcutnewline = stringchecklength.split("\n");
-
-        stringcutnewline.forEach((x, index) => {
-          let setlangthofdata = x.length;
-          for (let j = 0; j < x.length; j++) {
-            if (
-              x[j] == maiek ||
-              x[j] == maito ||
-              x[j] == maitree ||
-              x[j] == maijattawa ||
-              x[j] == vowelei ||
-              x[j] == vowelee ||
-              x[j] == voweleue ||
-              x[j] == voweleu ||
-              x[j] == vowelu ||
-              x[j] == voweluu ||
-              x[j] == maihun ||
-              x[j] == maiyamok
-            ) {
-              setlangthofdata--;
-            }
-            if (j == x.length - 1) {
-            }
-          }
-          if (Math.ceil(setlangthofdata / datainlineprpo) == 0) {
-            newhllinedetails += 1;
-          } else {
-            newhllinedetails += Math.ceil(setlangthofdata / datainlineprpo);
-          }
-        });
-
-        // newhllinedetails += addnewbutget;
-        getnewdata.push(dataprint[i]);
-        // console.log(hllinedetails, newhllinedetails);
-        if (hllinedetails + newhllinedetails > linedetailprpo) {
-          this.setdatatoshow[this.pageAll - 1] = getdata;
-          this.pageAll++;
-
-          hllinedetails = 0;
-          getdata = [];
-          getdata.push(dataprint[i]);
-          hllinedetails += newhllinedetails;
-          if (i == dataprint.length - 1) {
-            this.setdatatoshow[this.pageAll - 1] = getdata;
-            getdata = [];
-            // if (
-            //   hllinedetails > checklineforsig ||
-            //   this.getnamesignature.length + 1 > 9 ||
-            //   (hllinedetails > 0 && this.getnamesignature.length > 3)
-            // ) {
-            //   this.pageAll++;
-            // }
-          }
-        } else {
-          hllinedetails += newhllinedetails;
-
-          getdata.push(dataprint[i]);
-          if (i == dataprint.length - 1) {
-            this.setdatatoshow[this.pageAll - 1] = getdata;
-            getdata = [];
-            // if (
-            //   hllinedetails > checklineforsig ||
-            //   this.getnamesignature.length + 1 > 9 ||
-            //   (hllinedetails > 0 && this.getnamesignature.length > 3)
-            // ) {
-            //   this.pageAll++;
-            // }
-          }
-        }
-      }
-
-      // const toWords = new ToWords();
-
-      // this.sumgrandtotalpo = this.sumlinepercenpo + this.sumlinetaxpo;
-
-      // this.sumgrandtotalpo = parseFloat(this.sumgrandtotalpo.toFixed(2));
-      // this.textsumlineamountpo = THBText(this.sumgrandtotalpo.toString());
-      // this.textsumlineamountpo = this.textsumlineamountpo.replace(
-      //   "undefined",
-      //   "ลบ"
-      // );
-      // this.textsumlineamountpo_en = toWords.convert(this.sumgrandtotalpo);
-      // this.textsumlineamountpo_en = convert.toWords(this.sumgrandtotalpo);
-
-      // this.pageAll++;
-      // this.pageAll += 2;
-      this.opensummarizepo = true;
-
-      this.setdatatoshow.forEach((x, index) => {
-        if (x.length == 0) {
-          this.setdatatoshow.splice(index, 1);
-          this.pageAll--;
-        }
-      });
-
-      // console.log(this.pageAll);
-      // console.log(this.setdatatoshow);
-    },
-    async exportToPDFPreview(orientation) {
-      this.$showLoader();
-      this.showprint = "";
-      const element = document.getElementById("mydivhtmltobase");
-      // let element;
-      // if (orientation == "landscape") {
-      //   element = document.getElementById("mydivhtmltobasesum");
-      // } else if (orientation == "portrait") {
-      //   element = document.getElementById("mydivhtmltobase");
-      // } else {
-      // }
-
-      const opt = {
-        margin: [0, 0, 0, 0],
-        image: {
-          type: "jpeg",
-          quality: 0.98,
-        },
-        // enableLinks: false,
-        html2canvas: {
-          scale: 2,
-          dpi: 192,
-          letterRendering: true,
-          useCORS: true,
-        },
-        jsPDF: {
-          unit: "cm",
-          format: "A4",
-          orientation: "landscape",
-          putOnlyUsedFonts: true,
-          pagesplit: true,
-        },
-        // pagebreak: { mode: ["avoid-all"], after: ".cke_pagebreak" },
-      };
-
-      let abcd = await html2pdf()
-        .from(element)
-        .set(opt)
-        .toPdf()
-        .get("pdf")
-        // .output("bloburl")
-        .then(function(pdf) {
-          // if (orientation == "landscape") {
-          // } else if (orientation == "portrait") {
-          //   const totalPages = pdf.internal.getNumberOfPages();
-          //   pdf.deletePage(totalPages);
-          // } else {
-          // }
-//  const totalPages = pdf.internal.getNumberOfPages();
-//             pdf.deletePage(totalPages);
-          return pdf.output("bloburl");
-        });
-      window.open(abcd);
-      let blob = await fetch(abcd).then((r) => r.blob());
-      this.showprint = "display:none;";
-      this.showtemplatehtml = false;
-      this.$hideLoader();
-      // return blob;
-    },
-
+    
     async searchData() {
       this.desserts = [];
       this.dessertssum = [];
@@ -1414,7 +903,7 @@ async loadDownWorker() {
           x.percentqty = (((x.defectqty / x.qty) * 100).toFixed(2) + "") !== "Infinity"?(((x.defectqty / x.qty) * 100).toFixed(2) + ""):0;
         this.desserts.push(x);
         if(i == result.data.length -1){
-await this.checkcontent(this.desserts);
+
  await this.setexporttoxlsx(this.desserts);
 
         }
@@ -2038,6 +1527,292 @@ await this.checkcontent(this.desserts);
       this.dialogAdd = status;
       this.text_color = text_color;
     },
+    waitForPdfMakeReady() {
+  return new Promise((resolve, reject) => {
+    const checkInterval = setInterval(() => {
+      if (typeof pdfMake !== "undefined" && pdfMake.vfs && pdfMake.fonts) {
+        clearInterval(checkInterval);
+        resolve(true);
+      }
+    }, 100);
+    setTimeout(() => {
+      clearInterval(checkInterval);
+      reject(new Error("pdfMake โหลดไม่สำเร็จภายใน 10 วินาที"));
+    }, 10000);
+  });
+},
+
+formatNumber(value) {
+  if (value == null) return "0.00";
+  return new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(Number(value));
+},
+
+generateDocDefinition() {
+  const content = [];
+
+   content.push({
+    columns: [
+      {
+        width: '*',
+        stack: [
+          {
+            text: "รายงานของเสีย",
+            fontSize: 16,
+            bold: true,
+            color: "#1a56a0",
+          },
+          {
+            text: `ช่วงวันที่: ${this.datefrom} ถึง ${this.dateto}`,
+            fontSize: 9,
+            color: "#555",
+            margin: [0, 2, 0, 6],
+          },
+          {
+            table: {
+              widths: ['*', '*', '*', '*'],
+              body: [
+                [
+                  { text: 'WC-Group : ' + (this.datasearch.wc_group ? this.datasearch.wc_group : "ทั้งหมด"), fontSize: 9, color: "#555", border: [false, false, false, false] },
+                  { 
+                    text: 'WC : ' + (() => {
+                      const wc = this.workcenterlist.find(item => item.id == this.datasearch.work_center_id);
+                      return wc && this.datasearch.work_center_id ? `${wc.wc_id}:${wc.wc_name}` : "ทั้งหมด";
+                    })(), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                  { 
+                    text: 'Machine : ' + (() => {
+                      const wc = this.machinelist.find(item => item.id == this.datasearch.mch_id);
+                      return wc && this.datasearch.mch_id ? `${wc.machine_id}:${wc.name}` : "ทั้งหมด";
+                    })(), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                  { 
+                    text: 'Worker : ' + (() => {
+                      const wc = this.worker_list.find(item => item.id == this.datasearch.worker_id);
+                      return wc && this.datasearch.worker_id ? `${wc.prename_th} ${wc.firstname} ${wc.lastname}` : "ทั้งหมด";
+                    })(), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                ],
+                [
+                  { text: 'Order : ' + (this.datasearch.work_order ? this.datasearch.work_order : 'ทั้งหมด'), fontSize: 9, color: "#555", border: [false, false, false, false] },
+                  { 
+                    text: 'Item : ' + (() => {
+                      const wc = this.item_master_list.find(item => item.id == this.datasearch.item_id);
+                      return wc && this.datasearch.item_id ? `${wc.item_id}` : "ทั้งหมด";
+                    })(), 
+                    fontSize: 9, 
+                    color: "#555", 
+                    border: [false, false, false, false] 
+                  },
+                  { text: 'Date from: ' + (this.datasearch.datefrom), fontSize: 9, color: "#555", border: [false, false, false, false] },
+                  { text: 'to: ' + (this.datasearch.dateto), fontSize: 9, color: "#555", border: [false, false, false, false] },
+                ],
+              ],
+            },
+            layout: {
+              paddingLeft: () => 0,
+              paddingRight: () => 8,
+              paddingTop: () => 2,
+              paddingBottom: () => 2,
+            },
+          },
+        ],
+      },
+      {
+        width: 'auto',
+        stack: [
+          { 
+            text: new Date().toLocaleDateString("th-TH"), 
+            fontSize: 9, 
+            alignment: 'right',
+            color: "#666"
+          },
+          { 
+            text: new Date().toLocaleTimeString("th-TH", { hour: '2-digit', minute: '2-digit' }), 
+            fontSize: 8, 
+            alignment: 'right',
+            color: "#888"
+          },
+        ],
+      },
+    ],
+    margin: [0, 0, 0, 8],
+  });
+
+  content.push({
+    canvas: [
+      {
+        type: "line",
+        x1: 0,
+        y1: 0,
+        x2: 810,
+        y2: 0,
+        lineWidth: 1.5,
+        lineColor: "#1a56a0",
+      },
+    ],
+    margin: [0, 0, 0, 10],
+  });
+
+  const tableBody = [];
+
+  tableBody.push([
+    { text: "Date", style: "tableHeader" },
+    { text: "ORD", style: "tableHeader" },
+    { text: "Machine", style: "tableHeader" },
+    { text: "Item ID", style: "tableHeader" },
+    { text: "Item Name", style: "tableHeader" },
+    { text: "OPN Desc.", style: "tableHeader" },
+    { text: "Batch", style: "tableHeader" },
+    { text: "Worker", style: "tableHeader" },
+    { text: "QTY", style: "tableHeader" },
+    { text: "Defect QTY", style: "tableHeader" },
+    { text: "%Defect", style: "tableHeader" },
+  ]);
+
+  this.desserts.forEach((item) => {
+    tableBody.push([
+      { text: item.tcdate || "-" },
+      { text: item.work_order || "-" },
+      { text: item.machine || "-" },
+      { text: item.itemID || "-" },
+      { text: item.item_name || "-" },
+      { text: item.opn_desc || "-" },
+      { text: item.batch_count || "-", alignment: "center" },
+      { text: item.worker_name || "-" },
+      { text: this.formatNumber(item.qty), alignment: "right" },
+      { text: this.formatNumber(item.defectqty), alignment: "right" },
+      { 
+        text: this.formatNumber(item.percentqty), 
+        alignment: "right", 
+      },
+    ]);
+  });
+
+  const totalQty = this.desserts.reduce((sum, i) => sum + Number(i.qty || 0), 0);
+  const totalDefectqty = this.desserts.reduce((sum, i) => sum + Number(i.defectqty || 0), 0);
+  const avgPercentqty = totalQty > 0 ? (totalDefectqty / totalQty) * 100 : 0;
+
+  tableBody.push([
+    { text: "รวมทั้งหมด", colSpan: 8, style: "tableFooter", alignment: "center"  },
+    {}, {}, {}, {}, {}, {}, {},
+    { text: this.formatNumber(totalQty), style: "tableFooter" },
+    { text: this.formatNumber(totalDefectqty), style: "tableFooter" },
+    { text: this.formatNumber(avgPercentqty), style: "tableFooter", bold: true },
+  ]);
+
+  content.push({
+    table: {
+      headerRows: 1,
+      widths: [
+        48, 50, 48, 48, "*", 55, 35, "*", 55, 40, 40,
+      ],
+      body: tableBody,
+    },
+    layout: {
+      fillColor: (rowIndex) => {
+        if (rowIndex === 0) return "#1a56a0";
+        if (rowIndex === tableBody.length - 1) return "#000000";
+        return "#ffffff";
+      },
+      paddingLeft: () => 3,
+      paddingRight: () => 3,
+      paddingTop: () => 2,
+      paddingBottom: () => 2,
+      hLineWidth: (i, node) => (i === 0 || i === 1 || i === node.table.body.length) ? 1 : 0.5,
+      vLineWidth: () => 0.5,
+      hLineColor: (i) => (i === 0 || i === 1) ? "#000000" : "#000000",
+      vLineColor: () => "#000000",
+    },
+    margin: [0, 0, 0, 12],
+    fontSize: 8,
+  });
+
+  return {
+    pageSize: "A4",
+    pageOrientation: "landscape", 
+    pageMargins: [15, 20, 15, 30],
+
+    footer: (currentPage, pageCount) => {
+      return {
+        columns: [
+          { 
+            text: ``, 
+            fontSize: 7, 
+            color: "#888",
+            margin: [15, 0, 0, 0] 
+          },
+          { 
+            text: `หน้า ${currentPage} / ${pageCount}`, 
+            alignment: "right", 
+            margin: [0, 0, 15, 0], 
+            fontSize: 7,
+            color: "#888"
+          },
+        ],
+      };
+    },
+
+    content: content,
+
+    defaultStyle: {
+      font: "Sarabun",
+      fontSize: 8,
+      lineHeight: 1.2,
+    },
+
+    styles: {
+      tableHeader: {
+        bold: true,
+        fontSize: 7.5,
+        alignment: "center",
+        color: "#ffffff",
+        lineHeight: 1.1,
+      },
+      tableFooter: {
+        bold: true,
+        fontSize: 8,
+        fillColor: "#e8f0f7",
+        alignment: "right",
+        color: "#1a56a0",
+      },
+    },
+  };
+},
+
+
+downloadPDF() {
+  if (!this.pdfMakeReady) {
+    alert("กรุณารอให้ระบบโหลด PDF เสร็จก่อน");
+    return;
+  }
+  const docDef = this.generateDocDefinition();
+  const fileName = `Waste_Report_${new Date().toISOString().slice(0, 10)}.pdf`;
+  pdfMake.createPdf(docDef).download(fileName);
+},
+
+
+async printPerformancePDF() {
+  try {
+    await this.waitForPdfMakeReady();
+    const docDef = this.generateDocDefinition();
+    pdfMake.createPdf(docDef).open(); 
+  } catch (error) {
+    console.error("❌ สร้าง PDF ไม่สำเร็จ:", error);
+    alert("ไม่สามารถสร้าง PDF ได้: " + error.message);
+  }
+},
   },
   beforeCreate() {
     this.$store.state.navMenu = true;
