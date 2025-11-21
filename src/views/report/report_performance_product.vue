@@ -381,7 +381,7 @@ export default {
         data: [],
       },
     ],
-    exportsumfilename: "รายงานเวลาที่สูญเสีย.xlsx",
+    exportsumfilename: "รายงานรายงานประสิทธิภาพการผลิต.xlsx",
     datenow: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
       .toISOString()
       .substr(2, 8)
