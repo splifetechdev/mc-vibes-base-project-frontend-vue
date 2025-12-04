@@ -1481,7 +1481,7 @@ export default {
         wo_running_no: this.selectedItem.wo_running_no,
         opn_desc: this.selectedItem.opn_desc,
         item_id: this.selectedItem.item_id,
-        time_card_date: this.selectedItem.start_at,
+        time_card_date: `${this.selectedItem.start_at} 00:00:00`,
         time_start: this.selectedItem.start_time,
         time_end: this.selectedItem.end_time,
         worker_id: this.selectedItem.worker_id,
