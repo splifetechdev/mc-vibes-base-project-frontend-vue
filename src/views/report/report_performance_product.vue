@@ -168,7 +168,10 @@
               <td style="text-align: left;">
               </td>
               <td style="text-align: left;">
-
+              </td>
+              <td style="text-align: left;">
+              </td>
+              <td style="text-align: left;">
               </td>
               <td style="text-align: right;">
                 <h4>
@@ -461,12 +464,14 @@ export default {
         sortable: false,
         value: "tcdate",
       },
+      { text: "Time", value: "times", align: "center" },
       { text: "ORD", value: "ord_no", align: "center" },
       { text: "Machine", value: "machine", align: "center" },
       { text: "Item ID", value: "item_id", align: "center" },
       { text: "Item Name", value: "item_name", align: "center" },
       { text: "OPN Desc.", value: "opn_desc", align: "center" },
       { text: "Batch", value: "batch", align: "center" },
+      { text: "Leader", value: "leader", align: "center" },
       { text: "Worker", value: "worker_name", align: "center" },
       { text: "Actual Hours", value: "work_hours", align: "center" },
       { text: "QTY", value: "qty", align: "center" },
@@ -747,16 +752,18 @@ export default {
       // wb.Sheets.summary_activity_report.G1 = { t: "s", c: 0, v: "" };
 
       wb.Sheets.summary_activity_report.A1 = { t: "s", v: "Date" };
-      wb.Sheets.summary_activity_report.B1 = { t: "s", v: "ORD" };
-      wb.Sheets.summary_activity_report.C1 = { t: "s", v: "MCH" };
-      wb.Sheets.summary_activity_report.D1 = { t: "s", v: "Item ID" };
-      wb.Sheets.summary_activity_report.E1 = { t: "s", v: "Item Name" };
-      wb.Sheets.summary_activity_report.F1 = { t: "s", v: "OPN Desc." };
-      wb.Sheets.summary_activity_report.G1 = { t: "s", v: "Batch" };
-      wb.Sheets.summary_activity_report.H1 = { t: "s", v: "Worker" };
-      wb.Sheets.summary_activity_report.I1 = { t: "s", v: "QTY" };
-      wb.Sheets.summary_activity_report.J1 = { t: "s", v: "Standard QTY" };
-      wb.Sheets.summary_activity_report.K1 = { t: "s", v: "% Performance" };
+      wb.Sheets.summary_activity_report.B1 = { t: "s", v: "Time" };
+      wb.Sheets.summary_activity_report.C1 = { t: "s", v: "ORD" };
+      wb.Sheets.summary_activity_report.D1 = { t: "s", v: "MCH" };
+      wb.Sheets.summary_activity_report.E1 = { t: "s", v: "Item ID" };
+      wb.Sheets.summary_activity_report.F1 = { t: "s", v: "Item Name" };
+      wb.Sheets.summary_activity_report.G1 = { t: "s", v: "OPN Desc." };
+      wb.Sheets.summary_activity_report.H1 = { t: "s", v: "Batch" };
+      wb.Sheets.summary_activity_report.I1 = { t: "s", v: "Leader" };
+      wb.Sheets.summary_activity_report.J1 = { t: "s", v: "Worker" };
+      wb.Sheets.summary_activity_report.K1 = { t: "s", v: "QTY" };
+      wb.Sheets.summary_activity_report.L1 = { t: "s", v: "Standard QTY" };
+      wb.Sheets.summary_activity_report.M1 = { t: "s", v: "% Performance" };
 
       // wb.Sheets.summary_activity_report["!merges"] = merge;
     },
@@ -777,12 +784,14 @@ export default {
       dataexport.forEach((x, index) => {
         setexportxlsx.splice(index + 0, 0, {
           tcdate: x.tcdate,
+          times: x.times,
           ord_no: x.ord_no,
           machine: x.machine,
           item_id: x.item_id,
           item_name: x.item_name,
           opn_desc: x.opn_desc,
           batch: x.batch,
+          leader: x.leader,
           worker_name: x.worker_name,
           qty: Number(x.qty).toFixed(2),
           stdqty: Number(x.stdqty).toFixed(2),
@@ -1531,12 +1540,14 @@ generateDocDefinition() {
 
   tableBody.push([
     { text: "Date", style: "tableHeader" },
+    { text: "Time", style: "tableHeader" },
     { text: "ORD", style: "tableHeader" },
     { text: "Machine", style: "tableHeader" },
     { text: "Item ID", style: "tableHeader" },
     { text: "Item Name", style: "tableHeader" },
     { text: "OPN Desc.", style: "tableHeader" },
     { text: "Batch", style: "tableHeader" },
+    { text: "Leader", style: "tableHeader" },
     { text: "Worker", style: "tableHeader" },
     { text: "Actual Hours", style: "tableHeader" },
     { text: "QTY", style: "tableHeader" },
@@ -1547,20 +1558,23 @@ generateDocDefinition() {
   // BODY - สีเดียวกันทั้งหมด
   this.desserts.forEach((item) => {
     tableBody.push([
-      { text: item.tcdate || "-" },
-      { text: item.ord_no || "-" },
-      { text: item.machine || "-" },
-      { text: item.item_id || "-" },
-      { text: item.item_name || "-" },
-      { text: item.opn_desc || "-" },
-      { text: item.batch || "-", alignment: "center" },
-      { text: item.worker_name || "-" },
-      { text: this.formatNumber(item.work_hours), alignment: "right" },
-      { text: this.formatNumber(item.qty), alignment: "right" },
-      { text: this.formatNumber(item.stdqty), alignment: "right" },
+      { text: item.tcdate || "-", fontSize: 7 },
+      { text: item.times || "-", fontSize: 7 },
+      { text: item.ord_no || "-", fontSize: 7 },
+      { text: item.machine || "-", fontSize: 7 },
+      { text: item.item_id || "-", fontSize: 7 },
+      { text: item.item_name || "-", fontSize: 7 },
+      { text: item.opn_desc || "-", fontSize: 7 },
+      { text: item.batch || "-", alignment: "center", fontSize: 7 },
+      { text: item.leader || "-", fontSize: 7 },
+      { text: item.worker_name || "-", fontSize: 7 },
+      { text: this.formatNumber(item.work_hours), alignment: "right", fontSize: 7 },
+      { text: this.formatNumber(item.qty), alignment: "right", fontSize: 7 },
+      { text: this.formatNumber(item.stdqty), alignment: "right", fontSize: 7 },
       { 
         text: this.formatNumber(item.performance), 
         alignment: "right", 
+        fontSize: 7 
       },
     ]);
   });
@@ -1573,8 +1587,8 @@ generateDocDefinition() {
   const avgPerformance = totalStd > 0 ? (totalQty / totalStd) * 100 : 0;
 
   tableBody.push([
-    { text: "รวมทั้งหมด", colSpan: 8, style: "tableFooter", alignment: "center" },
-    {}, {}, {}, {}, {}, {}, {},
+    { text: "รวมทั้งหมด", colSpan: 10, style: "tableFooter", alignment: "center" },
+    {}, {}, {}, {}, {}, {}, {}, {}, {},
     { text: "-", style: "tableFooter", alignment: "right" },
     { text: this.formatNumber(totalQty), style: "tableFooter" },
     { text: this.formatNumber(totalStd), style: "tableFooter" },
@@ -1585,7 +1599,20 @@ generateDocDefinition() {
     table: {
       headerRows: 1,
       widths: [
-        48, 50, 48, 48, "*", 55, 35, 110, 32, 55, 55, 42
+        40,   // Date
+        40,   // Time
+        35,   // ORD
+        40,   // Machine
+        40,   // Item ID
+        '*',  // Item Name (ยืดหยุ่นตามพื้นที่ว่าง)
+        50,   // OPN Desc.
+        28,   // Batch
+        55,   // Leader
+        55,   // Worker
+        40,   // Actual Hours
+        35,   // QTY
+        45,   // Standard QTY
+        50    // %Performance
       ],
       body: tableBody,
     },
@@ -1595,8 +1622,8 @@ generateDocDefinition() {
         if (rowIndex === tableBody.length - 1) return "#000000";
         return "#ffffff";
       },
-      paddingLeft: () => 3,
-      paddingRight: () => 3,
+      paddingLeft: () => 2,
+      paddingRight: () => 2,
       paddingTop: () => 2,
       paddingBottom: () => 2,
       hLineWidth: (i, node) => (i === 0 || i === 1 || i === node.table.body.length) ? 1 : 0.5,
@@ -1639,21 +1666,21 @@ generateDocDefinition() {
 
     defaultStyle: {
       font: "Sarabun",
-      fontSize: 8,
+      fontSize: 7,
       lineHeight: 1.2,
     },
 
     styles: {
       tableHeader: {
         bold: true,
-        fontSize: 7.5,
+        fontSize: 7,
         alignment: "center",
         color: "#ffffff",
         lineHeight: 1.1,
       },
       tableFooter: {
         bold: true,
-        fontSize: 8,
+        fontSize: 7.5,
         fillColor: "#e8f0f7",
         alignment: "right",
         color: "#1a56a0",
